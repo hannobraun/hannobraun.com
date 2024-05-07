@@ -11,21 +11,21 @@ const app = new Hono({
 
 // This is the default domain for the Deno Deploy project. I don't want to use
 // that.
-app.all("/hannobraun.deno.dev", (c) => {
-  return c.redirect(`https://archive.hannobraun.com/`, 308);
-});
 app.all("/hannobraun.deno.dev/:path", (c) => {
   const { path } = c.req.param();
   return c.redirect(`https://archive.hannobraun.com/${path}`, 308);
 });
-
-// Legacy domain
-app.all("/archive.braun-odw.eu", (c) => {
+app.all("/hannobraun.deno.dev", (c) => {
   return c.redirect(`https://archive.hannobraun.com/`, 308);
 });
+
+// Legacy domain
 app.all("/archive.braun-odw.eu/:path", (c) => {
   const { path } = c.req.param();
   return c.redirect(`https://archive.hannobraun.com/${path}`, 308);
+});
+app.all("/archive.braun-odw.eu", (c) => {
+  return c.redirect(`https://archive.hannobraun.com/`, 308);
 });
 
 app.use(
