@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>Flott - Motion Control in Rust</title>
+	<link href="https://archive.braun-odw.eu/flott/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://archive.braun-odw.eu/flott"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2021-06-02T00:00:00+00:00</updated>
+	<id>https://archive.braun-odw.eu/flott/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Winding Down Flott</title>
+		<published>2021-06-02T00:00:00+00:00</published>
+		<updated>2021-06-02T00:00:00+00:00</updated>
+		<link href="https://archive.braun-odw.eu/flott/news/winding-down-flott/" type="text/html"/>
+		<id>https://archive.braun-odw.eu/flott/news/winding-down-flott/</id>
+		<content type="html">&lt;p&gt;Instead of a monthly newsletter, here&#x27;s a bit of sad news: I&#x27;ve decided to not continue the Flott project in its current form. Before I go into some background and the reasons that led me to this decision, here are the specific steps I plan to take next:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;I will move all repositories that contain useful software (so &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&quot;&gt;Stepper&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&quot;&gt;RampMaker&lt;&#x2F;a&gt;, and &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper-terminal&quot;&gt;Stepper Terminal&lt;&#x2F;a&gt;) to the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;braun-embedded&quot;&gt;Braun Embedded GitHub organization&lt;&#x2F;a&gt;, where &lt;strong&gt;I will keep maintaining them indefinitely&lt;&#x2F;strong&gt;. Braun Embedded is my own business that focuses on Embedded Rust, and that GitHub organization is where I keep all my embedded-related open source repositories.&lt;&#x2F;li&gt;
+&lt;li&gt;I will archive the remaining repositories (the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;flott&quot;&gt;meta repository&lt;&#x2F;a&gt; and the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;flott&quot;&gt;website repository&lt;&#x2F;a&gt;).&lt;&#x2F;li&gt;
+&lt;li&gt;I will repurpose my &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;GitHub Sponsors profile&lt;&#x2F;a&gt; to cover my development and maintenance activities in the Embedded Rust ecosystem (which will include the then former Flott repositories).&lt;&#x2F;li&gt;
+&lt;li&gt;Longer-term, I will archive the website at a subdomain under my personal domain (braun-odw.eu). I do not plan to renew the flott-motion.org domain, so eventually the website will no longer be reachable at its current location.&lt;&#x2F;li&gt;
+&lt;li&gt;As I already said, I will keep maintaining the former Flott repositories. I will also develop new features (and possibly create more libraries) according to my own needs. However, there are no firm plans for doing so, no timeline, and I will not go to any great lengths to make these features and libraries generally useful beyond my own requirements.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;I would like to thank all my GitHub Sponsors who have supported me this far. It means a lot! A special shout out goes to Noah Hüsser who has started supporting me at the 32$ tier since I posted the last newsletter.&lt;&#x2F;p&gt;
+&lt;p&gt;Okay then, now that the minutiae is out of the way, let&#x27;s dive into how I came to this decision.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;the-reasons-i-started-flott&quot;&gt;The Reasons I Started Flott&lt;&#x2F;h3&gt;
+&lt;p&gt;My work on Flott can be divided into two parts, for each of which I have separate reasons for doing them:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Development of Stepper and RampMaker.&lt;&#x2F;li&gt;
+&lt;li&gt;Marketing those libraries under the Flott name.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;I created Stepper and RampMaker because I am interested in the field of motion control, because I think these libraries enrich the Embedded Rust ecosystem in a meaningful way, and not least because I have plans for some projects that I want to use those libraries for. None of this has changed, which is why I will keep maintaining them going forward.&lt;&#x2F;p&gt;
+&lt;p&gt;But why didn&#x27;t I just create those libraries and leave it at that? Why did I create this website, wrote announcements and a monthly newsletter, and set up a GitHub Sponsors profile? Well, that&#x27;s because I was (and, to a degree, still am) unhappy with my existing business. Because I wanted to do work that is more meaningful to me. And because I wanted that work to serve as marketing material for my existing business, helping me move the business as a whole into a more meaningful direction.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;plans-meet-reality&quot;&gt;Plans Meet Reality&lt;&#x2F;h3&gt;
+&lt;p&gt;From the beginning, I knew that this was going to take a while, possibly years. But there is a big difference between &amp;quot;knowing&amp;quot; and &amp;quot;understanding&amp;quot;. After I had launched the Flott website, the GitHub Sponsors profile, and had started marketing them, nothing happened for a while. That&#x27;s when I understood what that long-term strategy meant: That I had to keep working in my existing business for likely years to come, always struggling to find enough time for Flott on the side.&lt;&#x2F;p&gt;
+&lt;p&gt;This started a thought process that led me to coming up with other strategies. More incremental ways to improve my business, that are likely to start showing results much more quickly. I don&#x27;t want to make this post any longer by going into what these strategies are, but the result is simply that I don&#x27;t have much time left to work on Flott. There are only so many hours in a work day, and for a while now, Flott has been getting the short end of that stick.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;the-simple-math&quot;&gt;The Simple Math&lt;&#x2F;h3&gt;
+&lt;p&gt;Since launching Flott to deafening silence, things have improved, a lot actually! I have sponsors now that are supporting me with 104$ per month! I consider that a great success, and I am very thankful to all of you who helped get me here.&lt;&#x2F;p&gt;
+&lt;p&gt;However, while this is a non-trivial amount of money, it is only a fraction of what I need to cover my monthly costs. And even if sponsorship grows to a point where it can cover my monthly cost, there&#x27;s still a long way to go until I can make a decent living, that will allow me to buy a house and save for my future.&lt;&#x2F;p&gt;
+&lt;p&gt;And let&#x27;s consider what it took me to get me here: 3 months of work on the side (October to December 2020), 3 months of being fully focused on Flott (January to March 2021), and another 2 months of working on Flott on the side (April 2021 until now). Most of the growth (in GitHub stars, website traffic, and most importantly sponsorship income) happened while I was fully focused on Flott. And I simply can&#x27;t afford to do that for long enough to get the project to anywhere near sustainability.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h3&gt;
+&lt;p&gt;Given that I can no longer afford to give Flott the time it needs to keep growing, and to give my sponsors a worthwhile return for their monthly investment in me, I have to call it quits. It&#x27;s a bit sad, but that&#x27;s just how it is. I considered other ways, and started talking to companies that would be in a position to sponsor Flott a few months back. But it seems to me that the kind of big professional company that would be in a position to make a dent short-term also has big professional needs that Flott simply can&#x27;t meet at this stage in its development.&lt;&#x2F;p&gt;
+&lt;p&gt;The fact of the matter is, there don&#x27;t seem to be a whole lot of people who are clamoring for a Rust-based solution to their motion control needs. If this is wrong, I don&#x27;t know where they are or how to reach them. I think that&#x27;s a matter of timing. If I were in a position to stick it out for a few years, things might change. I&#x27;m not though, so I have to move on to other endeavors.&lt;&#x2F;p&gt;
+&lt;p&gt;Thank you all for your interest in Flott, and thanks again to my sponsors for supporting me along the way! With your support, I managed to build Stepper and RampMaker, useful libraries that are available as open source today, for everyone to use. I wasn&#x27;t able to take things further, but I think that&#x27;s something.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Last Month in Flott - May 2021</title>
+		<published>2021-05-03T00:00:00+00:00</published>
+		<updated>2021-05-03T00:00:00+00:00</updated>
+		<link href="https://archive.braun-odw.eu/flott/news/last-month-in-flott-may-2021/" type="text/html"/>
+		<id>https://archive.braun-odw.eu/flott/news/last-month-in-flott-may-2021/</id>
+		<content type="html">&lt;p&gt;This is the monthly newsletter for &lt;a href=&quot;https:&#x2F;&#x2F;flott-motion.org&#x2F;&quot;&gt;Flott&lt;&#x2F;a&gt;, the toolkit for motion control software in Rust. Flott aims to make developing motion control software easy, by providing libraries that abstract over hardware commonly used for motion control, like motors, encoders, and other sensors and actuators.&lt;&#x2F;p&gt;
+&lt;p&gt;Work last month was focused on documentation, in the form of new high-level guides for &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&quot;&gt;Stepper&lt;&#x2F;a&gt;, and some tweaks and addition to the website.&lt;&#x2F;p&gt;
+&lt;aside&gt;
+&lt;p&gt;
+    Flott&#x27;s is supported by my generous sponsors. If you want to support Flott&#x27;s continued development, please consider &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;sponsoring my work&lt;&#x2F;a&gt; as well.
+&lt;&#x2F;p&gt;
+&lt;&#x2F;aside&gt;
+&lt;h3 id=&quot;highlights&quot;&gt;Highlights&lt;&#x2F;h3&gt;
+&lt;h4 id=&quot;stepper&quot;&gt;Stepper&lt;&#x2F;h4&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&quot;&gt;Stepper&lt;&#x2F;a&gt;&#x27;s API was already fully documented, but there were some missing pieces of information on how to use it. That&#x27;s hopefully solved now, with the new guides on &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&#x2F;blob&#x2F;main&#x2F;documentation&#x2F;platform-support.md&quot;&gt;platform support&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&#x2F;blob&#x2F;main&#x2F;documentation&#x2F;how-to-write-a-driver.md&quot;&gt;how to write a driver&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;website-tweaks&quot;&gt;Website Tweaks&lt;&#x2F;h4&gt;
+&lt;p&gt;The website has seen a bit of work this month, with some tweaks to content and design, and most notably, the addition of an email newsletter. If you want to stay up to date on what&#x27;s happening with Flott, feel free to sign up at the bottom of this page.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;other-work&quot;&gt;Other work&lt;&#x2F;h3&gt;
+&lt;p&gt;If you&#x27;re interested in all the details, here&#x27;s the full list of pull request that were merged last month.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&#x2F;pulls?q=is%3Apr+is%3Aclosed+created%3A2021-04-01..2021-04-30&quot;&gt;Stepper&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&#x2F;pulls?q=is%3Apr+is%3Aclosed+created%3A2021-04-01..2021-04-30&quot;&gt;RampMaker&lt;&#x2F;a&gt; (no work this month)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper-terminal&#x2F;pulls?q=is%3Apr+is%3Aclosed+created%3A2021-04-01..2021-04-30&quot;&gt;Stepper Terminal&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;flott-motion.org&#x2F;pulls?q=is%3Apr+is%3Aclosed+created%3A2021-04-01..2021-04-30&quot;&gt;Website&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;what-i-m-working-on&quot;&gt;What I&#x27;m working on&lt;&#x2F;h3&gt;
+&lt;p&gt;With the documentation work on &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&quot;&gt;Stepper&lt;&#x2F;a&gt; wrapped up for now, I&#x27;ve turned my attention to testing. Stepper &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&#x2F;tree&#x2F;main&#x2F;test-stand&quot;&gt;already has a test stand&lt;&#x2F;a&gt;, but that was a bit of a &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&#x2F;issues&#x2F;49&quot;&gt;failed experiment&lt;&#x2F;a&gt;. I want to try and revive it. Automated end-to-end testing would be a great boon for Stepper&#x27;s further development.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;funding&quot;&gt;Funding&lt;&#x2F;h3&gt;
+&lt;p&gt;Right now, Flott is focused on stepper motors, but I want to build it into a full-featured toolkit for motion control software, by abstracting over other kinds of hardware (like encoders, or other motor types), as well as creating more useful building blocks on top of those hardware interfaces.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Doing this will take a lot of effort. Please consider supporting my work by &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;sponsoring me&lt;&#x2F;a&gt;.&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;thank-you&quot;&gt;Thank you&lt;&#x2F;h3&gt;
+&lt;p&gt;Thank you for your interest in Flott! If you want to follow its development, feel free to &lt;a href=&quot;&#x2F;atom.xml&quot;&gt;subscribe to the news feed&lt;&#x2F;a&gt; or sign up for the newsletter using the form below.&lt;&#x2F;p&gt;
+&lt;p&gt;The next newsletter is expected to arrive in early June. If you have any feedback or questions, please don&#x27;t hesitate to &lt;a href=&quot;mailto:hanno@braun-odw.eu&quot;&gt;contact me&lt;&#x2F;a&gt;!&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Last Month in Flott - April 2021</title>
+		<published>2021-04-06T00:00:00+00:00</published>
+		<updated>2021-04-06T00:00:00+00:00</updated>
+		<link href="https://archive.braun-odw.eu/flott/news/last-month-in-flott-april-2021/" type="text/html"/>
+		<id>https://archive.braun-odw.eu/flott/news/last-month-in-flott-april-2021/</id>
+		<content type="html">&lt;p&gt;This is the monthly newsletter for &lt;a href=&quot;https:&#x2F;&#x2F;flott-motion.org&#x2F;&quot;&gt;Flott&lt;&#x2F;a&gt;, the toolkit for motion control software in Rust. Flott aims to make developing motion control software easy, by providing libraries that abstract over hardware commonly used for motion control, like motors, encoders, and other sensors and actuators.&lt;&#x2F;p&gt;
+&lt;p&gt;Last month saw a new release of &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&quot;&gt;Stepper&lt;&#x2F;a&gt;, the universal stepper motor interface. I&#x27;ve also published &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper-terminal&quot;&gt;Stepper Terminal&lt;&#x2F;a&gt;, a new application, built on top of Stepper, for controlling a stepper motor from the command-line on your computer.&lt;&#x2F;p&gt;
+&lt;aside&gt;
+&lt;p&gt;
+    Flott&#x27;s development is supported by my generous sponsors. Special thanks to &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;lthiery&quot;&gt;Louis Thiery&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;ahdinosaur&quot;&gt;Mikey&lt;&#x2F;a&gt;, who have started sponsoring me in March!
+&lt;&#x2F;p&gt;
+&lt;p&gt;
+    If you want to support Flott&#x27;s continued development, please consider &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;sponsoring my work&lt;&#x2F;a&gt; as well.
+&lt;&#x2F;p&gt;
+&lt;&#x2F;aside&gt;
+&lt;h3 id=&quot;stepper&quot;&gt;Stepper&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&quot;&gt;Stepper&lt;&#x2F;a&gt; (formerly known as Step&#x2F;Dir) is a library that provides a unified interface for controlling stepper motors. March saw continued development of the high-level motion control API, culminating in the release of &lt;a href=&quot;https:&#x2F;&#x2F;flott-motion.org&#x2F;news&#x2F;stepper-0-5&#x2F;&quot;&gt;version 0.5&lt;&#x2F;a&gt;. This is also the first release under the new name, Stepper.&lt;&#x2F;p&gt;
+&lt;p&gt;Highlights:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;98&quot;&gt;#98&lt;&#x2F;a&gt; - Change motion control API to accept absolute target position&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;100&quot;&gt;#100&lt;&#x2F;a&gt; - Support setting step mode for software-motion-controlled driver&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;107&quot;&gt;#107&lt;&#x2F;a&gt; - Add method for resetting internal position to new value&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;108&quot;&gt;#108&lt;&#x2F;a&gt; - Remove the need for a custom numeric type&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;112&quot;&gt;#112&lt;&#x2F;a&gt; - Rename to Stepper&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;113&quot;&gt;#113&lt;&#x2F;a&gt; - Update documentation&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;116&quot;&gt;#116&lt;&#x2F;a&gt; - Make &lt;code&gt;SetDirection&lt;&#x2F;code&gt;&#x2F;&lt;code&gt;Step&lt;&#x2F;code&gt; errors less weird, more flexible&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;118&quot;&gt;#118&lt;&#x2F;a&gt; - Implement &lt;code&gt;SetDirection&lt;&#x2F;code&gt; and &lt;code&gt;Step&lt;&#x2F;code&gt; for &lt;code&gt;SoftwareMotionControl&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;This is just a selection of the pull requests that were merged last month. Check out the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&#x2F;pulls?q=is%3Apr+is%3Aclosed+created%3A2021-03-01..2021-03-31&quot;&gt;full list&lt;&#x2F;a&gt; on GitHub, if you&#x27;re interested in all the details.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;stepper-terminal&quot;&gt;Stepper Terminal&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper-terminal&quot;&gt;Stepper Terminal&lt;&#x2F;a&gt; is a CLI and firmware application that saw its &lt;a href=&quot;https:&#x2F;&#x2F;flott-motion.org&#x2F;news&#x2F;announcing-stepper-terminal&#x2F;&quot;&gt;initial release&lt;&#x2F;a&gt; in March. It is a tool for manual testing of Stepper, but also serves as a full usage example of the library. Going forward, it will be extended in lock-step with Stepper, as new features are being added.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;what-i-m-working-on&quot;&gt;What I&#x27;m working on&lt;&#x2F;h3&gt;
+&lt;p&gt;I just came back from vacation (or rather staycation, as they call it these days) and I&#x27;m looking forward to getting back into Flott. My next focus area is a high-level guide for &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&quot;&gt;Stepper&lt;&#x2F;a&gt;. Its API is already fully documented, but there are some crucial pieces of information required to use it and to implement new drivers. That information is currently scattered across a bunch of GitHub issues, if available at all.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;funding&quot;&gt;Funding&lt;&#x2F;h3&gt;
+&lt;p&gt;Right now, Flott is focused on stepper motors, but I want to build it into a full-featured toolkit for motion control software, by abstracting over other kinds of hardware (like encoders, or other motor types), as well as creating more useful building blocks on top of those hardware interfaces.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Doing this will take a lot of effort. Please consider supporting my work by &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;sponsoring me&lt;&#x2F;a&gt;.&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;thank-you&quot;&gt;Thank you&lt;&#x2F;h3&gt;
+&lt;p&gt;Thank you for your interest in Flott! If you want to follow its development, feel free to &lt;a href=&quot;&#x2F;atom.xml&quot;&gt;subscribe to the news feed&lt;&#x2F;a&gt;. I also plan to set up an email newsletter, but &lt;em&gt;still&lt;&#x2F;em&gt; haven&#x27;t gotten around to it. Again, I&#x27;m hoping to have it ready for next month&#x27;s newsletter.&lt;&#x2F;p&gt;
+&lt;p&gt;The next newsletter is expected to arrive in early May. If you have any questions or feedback, please don&#x27;t hesitate to &lt;a href=&quot;mailto:hanno@braun-odw.eu&quot;&gt;contact me&lt;&#x2F;a&gt;!&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Announcing Stepper Terminal</title>
+		<published>2021-03-17T00:00:00+00:00</published>
+		<updated>2021-03-17T00:00:00+00:00</updated>
+		<link href="https://archive.braun-odw.eu/flott/news/announcing-stepper-terminal/" type="text/html"/>
+		<id>https://archive.braun-odw.eu/flott/news/announcing-stepper-terminal/</id>
+		<content type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper-terminal&quot;&gt;Stepper Terminal&lt;&#x2F;a&gt; is a CLI application and microcontroller firmware that allows you to control a stepper motor from your terminal. It is based on the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&quot;&gt;Stepper&lt;&#x2F;a&gt; library.&lt;&#x2F;p&gt;
+&lt;video controls&gt;
+    &lt;source src=&quot;stepper-terminal.webm&quot; type=&quot;video&#x2F;webm&quot; &#x2F;&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;Looks like your browser doesn&#x27;t support embedding video. Sorry!
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;video&gt;
+&lt;p&gt;Stepper Terminal is a tool intended for manual testing of Stepper. But it also serves as a full usage example for Stepper. So if you&#x27;ve been wondering how you can use Stepper in your own application, maybe Stepper Terminal can provide some inspiration.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;flott&quot;&gt;Flott&lt;&#x2F;h3&gt;
+&lt;p&gt;Stepper Terminal and Stepper are part of &lt;a href=&quot;https:&#x2F;&#x2F;flott-motion.org&#x2F;&quot;&gt;Flott&lt;&#x2F;a&gt;, the open source toolkit for motion control software in Rust. For now, Flott is restricted to interfacing with stepper motors, but I plan to eventually grow it into a comprehensive toolkit that covers all common motion control needs.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;funding&quot;&gt;Funding&lt;&#x2F;h3&gt;
+&lt;p&gt;Creating and maintaining open source software is time-consuming! If you want to support my work on Stepper and Flott, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;please consider sponsoring me&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Stepper 0.5 (formerly Step&#x2F;Dir)</title>
+		<published>2021-03-11T00:00:00+00:00</published>
+		<updated>2021-03-11T00:00:00+00:00</updated>
+		<link href="https://archive.braun-odw.eu/flott/news/stepper-0-5/" type="text/html"/>
+		<id>https://archive.braun-odw.eu/flott/news/stepper-0-5/</id>
+		<content type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;stepper&quot;&gt;Stepper 0.5.0&lt;&#x2F;a&gt; is now available on crates.io. Stepper is a library for controlling stepper motors. It abstracts over the actual hardware used to control the stepper motor (like a stepper driver or motion control chip) and provides a unified API on top. This library was formerly known as Step&#x2F;Dir.&lt;&#x2F;p&gt;
+&lt;p&gt;The new version introduces a high-level motion control API. Before, you had to tell it when to make each single step, whereas now you have a nice API that lets you make a smooth movement to a target position, without having to take care of the details.&lt;&#x2F;p&gt;
+&lt;aside&gt;
+Please consider &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;sponsoring my work&lt;&#x2F;a&gt; on Stepper and other open source projects for motion control software in Rust.
+&lt;&#x2F;aside&gt;
+&lt;h3 id=&quot;highlights&quot;&gt;Highlights&lt;&#x2F;h3&gt;
+&lt;p&gt;This section summarizes the highlights of the release. You can find a more complete picture in the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&#x2F;blob&#x2F;main&#x2F;CHANGELOG.md#v050-2021-03-10&quot;&gt;changelog&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;new-name&quot;&gt;New Name&lt;&#x2F;h4&gt;
+&lt;p&gt;When I originally started working on Stepper (then known as Step&#x2F;Dir) I thought I was building a library to abstract over stepper drivers that are controlled via STEP and DIR pins. I expected the higher-level motion control API (and the chips it abstracts over) to live in a separate library.&lt;&#x2F;p&gt;
+&lt;p&gt;Turns out reality is a bit messier than that. Not all chips cleanly fall into either category, belonging to both or being something in between. I eventually decided that the best bet for now is to support everything in a single library. The old name directly refers the the STEP an DIR pins and no longer fits the new scope.&lt;&#x2F;p&gt;
+&lt;p&gt;Stepper is a more general name, which fits the library&#x27;s new role as the universal stepper motor interface. But the crate name &lt;code&gt;stepper&lt;&#x2F;code&gt; was already used by another library, which provided the capabilities of &lt;a href=&quot;https:&#x2F;&#x2F;doc.rust-lang.org&#x2F;std&#x2F;iter&#x2F;struct.StepBy.html&quot;&gt;&lt;code&gt;std::iter::StepBy&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;, while that was still unstable. &lt;code&gt;StepBy&lt;&#x2F;code&gt; has long since been stabilized, and the &lt;code&gt;stepper&lt;&#x2F;code&gt; library has fulfilled its original purpose and become obsolete.&lt;&#x2F;p&gt;
+&lt;p&gt;Its author, &lt;a href=&quot;https:&#x2F;&#x2F;saghm.com&#x2F;&quot;&gt;Saghm Rossi&lt;&#x2F;a&gt;, gracefully allowed me to take over the name and use it as the new name for Step&#x2F;Dir. Thank you, Saghm! If you&#x27;re interested, also check out the old library at its &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;saghm&#x2F;stepper&quot;&gt;original repository&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;motion-control-api&quot;&gt;Motion Control API&lt;&#x2F;h4&gt;
+&lt;p&gt;The old API only abstracted over the ability of stepper drivers to make steps in a given direction, which left it to the user to get the timing right and produce a smooth movement (which is a decidedly non-trivial task).&lt;&#x2F;p&gt;
+&lt;p&gt;The new motion control API provides a much higher-level interface, so the caller doesn&#x27;t have to worry about the details.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; max_speed = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1000.0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; steps per second
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; target_step = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2000&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; 10 revolutions on a typical stepper motor
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;stepper
+    .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;move_to_position&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(max_speed, target_step)
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; We could do other work in parallel, but here we just wait until the
+    &#x2F;&#x2F; movement has finished.
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;wait&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;()?; 
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The API is designed to work with minimal software interaction, if motion control hardware is available, but can also use a software fallback, where hardware support is lacking (see next section). As of now, no motion control chips are supported.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;rampmaker-integration&quot;&gt;RampMaker Integration&lt;&#x2F;h4&gt;
+&lt;p&gt;The &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&quot;&gt;RampMaker&lt;&#x2F;a&gt; library has been integrated to provide a software implementation of the motion control API for all hardware, even if hardware support for motion control is not natively supported.&lt;&#x2F;p&gt;
+&lt;p&gt;This makes the motion control API available for all currently supported drivers.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;what-s-next&quot;&gt;What&#x27;s next&lt;&#x2F;h3&gt;
+&lt;p&gt;The new API makes Stepper much more capable and opens up a whole lot of possibilities. However, the library is still lacking in some key areas:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Platform support:&lt;&#x2F;strong&gt; To talk to the platform it&#x27;s running on, Stepper only uses abstract interfaces that can be implemented basically everywhere. However, the combination of interfaces it uses is not implemented on most platforms.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Support for more drivers:&lt;&#x2F;strong&gt; Currently, only two stepper drivers are supported. Support for more stepper drivers and motion control chips is highly desirable.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;High-level documentation:&lt;&#x2F;strong&gt; The &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;stepper&quot;&gt;API Reference&lt;&#x2F;a&gt; is somewhat extensive, but there is no high-level guide yet. Specifically, documentation on how to address the two previous shortcomings would be very useful.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;You can check out the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&#x2F;issues&quot;&gt;list of open issues&lt;&#x2F;a&gt; for more information on these and other problems.&lt;&#x2F;p&gt;
+&lt;p&gt;In due time, I intend to work on all of these issues, but for now, I am going to focus on something else: Providing a complete usage example. I intend to create a microcontroller-based application that controls a motor using Stepper, and accepts commands from a CLI app on the host computer. Besides rounding out the available documentation, this will be helpful for testing.&lt;&#x2F;p&gt;
+&lt;p&gt;In the meantime, contributions to these or other areas are highly welcome! Feel free to open issues and submit pull requests on the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;stepper&quot;&gt;GitHub repository&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;flott&quot;&gt;Flott&lt;&#x2F;h3&gt;
+&lt;p&gt;Stepper is part of &lt;a href=&quot;https:&#x2F;&#x2F;flott-motion.org&#x2F;&quot;&gt;Flott&lt;&#x2F;a&gt;, the open source toolkit for motion control software in Rust. For now, Flott is restricted to interfacing with stepper motors, but I plan to eventually grow it into a comprehensive toolkit that covers all common motion control needs.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;funding&quot;&gt;Funding&lt;&#x2F;h3&gt;
+&lt;p&gt;Creating and maintaining open source software is time-consuming! If you want to support my work on Stepper and Flott, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;please consider sponsoring me&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Last Month in Flott - March 2021</title>
+		<published>2021-03-01T00:00:00+00:00</published>
+		<updated>2021-03-01T00:00:00+00:00</updated>
+		<link href="https://archive.braun-odw.eu/flott/news/last-month-in-flott-march-2021/" type="text/html"/>
+		<id>https://archive.braun-odw.eu/flott/news/last-month-in-flott-march-2021/</id>
+		<content type="html">&lt;p&gt;This is the monthly newsletter for &lt;a href=&quot;https:&#x2F;&#x2F;flott-motion.org&#x2F;&quot;&gt;Flott&lt;&#x2F;a&gt;, the toolkit for motion control software in Rust. Flott aims to make developing motion control software easy, by providing libraries that abstract over hardware commonly used for motion control, like motors, encoders, and other sensors and actuators.&lt;&#x2F;p&gt;
+&lt;p&gt;Last month saw lots of progress on &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&quot;&gt;RampMaker&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&quot;&gt;Step&#x2F;Dir&lt;&#x2F;a&gt;, libraries that can be used to control stepper motors.&lt;&#x2F;p&gt;
+&lt;aside&gt;
+If you want to support Flott&#x27;s continued development, please consider &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;sponsoring my work&lt;&#x2F;a&gt;.
+&lt;&#x2F;aside&gt;
+&lt;h3 id=&quot;rampmaker&quot;&gt;RampMaker&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&quot;&gt;RampMaker&lt;&#x2F;a&gt; is a library that generates acceleration ramps for stepper motors. It saw its initial release in late January. Building on that, lots of work has gone into making it more powerful, flexible, and downright more useful. This has culminated in &lt;a href=&quot;https:&#x2F;&#x2F;flott-motion.org&#x2F;news&#x2F;ramp-maker-0-2&#x2F;&quot;&gt;version 0.2&lt;&#x2F;a&gt; being published.&lt;&#x2F;p&gt;
+&lt;p&gt;Highlights:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&#x2F;pull&#x2F;17&quot;&gt;#17&lt;&#x2F;a&gt; - Rename &lt;code&gt;AccelerationProfile&lt;&#x2F;code&gt; to &lt;code&gt;MotionProfile&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&#x2F;pull&#x2F;20&quot;&gt;#20&lt;&#x2F;a&gt; - Improve usability of &lt;code&gt;MotionProfile&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&#x2F;pull&#x2F;26&quot;&gt;#26&lt;&#x2F;a&gt; - Add reusable testing infrastructure&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&#x2F;pull&#x2F;28&quot;&gt;#28&lt;&#x2F;a&gt; - Improve accuracy of trapezoidal motion profile&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&#x2F;pull&#x2F;30&quot;&gt;#30&lt;&#x2F;a&gt; - Make &lt;code&gt;MotionProfile&lt;&#x2F;code&gt; more powerful and flexible&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&#x2F;pull&#x2F;31&quot;&gt;#31&lt;&#x2F;a&gt; - Add additional iterators to &lt;code&gt;MotionProfile&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&#x2F;pull&#x2F;32&quot;&gt;#32&lt;&#x2F;a&gt; - Clean up trapezoidal ramp generation&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&#x2F;pull&#x2F;33&quot;&gt;#33&lt;&#x2F;a&gt; - Make trapezoidal ramp generation more flexible&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;This is just a selection of pull requests that were merged last month. Check out the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&#x2F;pulls?q=is%3Apr+is%3Aclosed+created%3A2021-02-01..2021-02-28&quot;&gt;full list&lt;&#x2F;a&gt; on GitHub, if you&#x27;re interested in all the details.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;step-dir&quot;&gt;Step&#x2F;Dir&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&quot;&gt;Step&#x2F;Dir&lt;&#x2F;a&gt; is a library that provides a unified interface for controlling stepper motors. Its development took a bit of a back-seat last month, due to the work on RampMaker. Still, some things got done, mostly clean-ups, small improvements, and the addition of a high-level motion control API.&lt;&#x2F;p&gt;
+&lt;p&gt;Highlights:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;83&quot;&gt;#83&lt;&#x2F;a&gt; - Rename &lt;code&gt;Driver&lt;&#x2F;code&gt; to &lt;code&gt;Stepper&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;87&quot;&gt;#87&lt;&#x2F;a&gt; - Clarify nomenclature used by &lt;code&gt;Stepper&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;91&quot;&gt;#91&lt;&#x2F;a&gt; - Make API more flexible by allowing reuse of futures&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;93&quot;&gt;#93&lt;&#x2F;a&gt; - Make futures more flexible&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pull&#x2F;96&quot;&gt;#96&lt;&#x2F;a&gt; - Add high-level motion control interface&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;This is just a selection of pull requests that were merged last month. Check out the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&#x2F;pulls?q=is%3Apr+is%3Aclosed+created%3A2021-02-01..2021-02-28&quot;&gt;full list&lt;&#x2F;a&gt; on GitHub, if you&#x27;re interested in all the details.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;what-i-m-working-on&quot;&gt;What I&#x27;m working on&lt;&#x2F;h3&gt;
+&lt;p&gt;Now that &lt;a href=&quot;https:&#x2F;&#x2F;flott-motion.org&#x2F;news&#x2F;ramp-maker-0-2&#x2F;&quot;&gt;RampMaker 0.2&lt;&#x2F;a&gt; is out, I&#x27;m focused on integrating it into &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&quot;&gt;Step&#x2F;Dir&lt;&#x2F;a&gt; to provide a high-level motion control API for chips that don&#x27;t support that in hardware. The initial version of that is already done, but it needs some polishing.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;funding&quot;&gt;Funding&lt;&#x2F;h3&gt;
+&lt;p&gt;Right now, Flott is focused on stepper motors, but I want to build it into a full-featured toolkit for motion control software, by abstracting over other kinds of hardware (like encoders, or other motor types), as well as creating more useful building blocks on top of those hardware interfaces.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Doing this will take a lot of effort. Please consider supporting my work by &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;sponsoring me&lt;&#x2F;a&gt;.&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;thank-you&quot;&gt;Thank you&lt;&#x2F;h3&gt;
+&lt;p&gt;Thank you for your interest in Flott! If you&#x27;re interested in following its development, feel free to &lt;a href=&quot;&#x2F;atom.xml&quot;&gt;subscribe to the news feed&lt;&#x2F;a&gt;. I also plan to set up an email newsletter, but haven&#x27;t gotten around to it yet. Next month, hopefully!&lt;&#x2F;p&gt;
+&lt;p&gt;The next newsletter is expected to arrive in early April. If you have any questions or feedback, please don&#x27;t hesitate to &lt;a href=&quot;mailto:hanno@braun-odw.eu&quot;&gt;contact me&lt;&#x2F;a&gt;!&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>RampMaker 0.2</title>
+		<published>2021-02-26T00:00:00+00:00</published>
+		<updated>2021-02-26T00:00:00+00:00</updated>
+		<link href="https://archive.braun-odw.eu/flott/news/ramp-maker-0-2/" type="text/html"/>
+		<id>https://archive.braun-odw.eu/flott/news/ramp-maker-0-2/</id>
+		<content type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;ramp-maker&quot;&gt;RampMaker 0.2.0&lt;&#x2F;a&gt; is now available on crates.io. RampMaker is a library for generating motion profiles for stepper motors. Telling a stepper motor to accelerate faster than it is physically able to will result in lost steps, and thus inaccurate movement. A motion profile limits the acceleration required of the motor, helping to achieve an accurate motion.&lt;&#x2F;p&gt;
+&lt;p&gt;This release is a huge step forward for RampMaker. After the initial release, which provided very limited capabilities, this new version is more powerful, flexible, accurate, and overall more useful.&lt;&#x2F;p&gt;
+&lt;aside&gt;
+Please consider &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;sponsoring my work&lt;&#x2F;a&gt; on RampMaker and other open source projects for motion control software in Rust.
+&lt;&#x2F;aside&gt;
+&lt;h3 id=&quot;highlights&quot;&gt;Highlights&lt;&#x2F;h3&gt;
+&lt;p&gt;This section summarizes the highlights of the release. You can find a more complete picture in the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&#x2F;blob&#x2F;main&#x2F;CHANGELOG.md#v020-2021-02-25&quot;&gt;changelog&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;improved-power-and-flexibility&quot;&gt;Improved power and flexibility&lt;&#x2F;h4&gt;
+&lt;p&gt;The previous version only allowed for planning very simple movements, starting and stopping at a stand-still. Now you can adjust the target step of an ongoing motion.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Move 200 steps while staying under the maximum velocity.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; max_velocity = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1000.0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; steps per second
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;profile.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;enter_position_mode&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(max_velocity, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;200&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;);
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;while let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;Some(delay) = profile.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;next_delay&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;() {
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Make a step. This functionality is not part of RampMaker and how it looks
+    &#x2F;&#x2F; exactly depends on your use case. Maybe consider using the Step&#x2F;Dir
+    &#x2F;&#x2F; library.
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;make_step&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;();
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;sleep&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(delay);
+
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;need_to_move_farther&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;() {
+        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Let&amp;#39;s move another 1000 steps from this point on. The motion profile
+        &#x2F;&#x2F; will react as necessary, for example by staying at maximum velocity
+        &#x2F;&#x2F; for longer, or accelerating again if it started decelerating already.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;        profile.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;enter_position_mode&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(max_velocity, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1000&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;);
+    }
+}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Or you can adjust the maximum velocity mid-movement.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Start a long movement at a slow speed.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; num_steps = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10_000&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;;
+profile.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;enter_position_mode&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;200.0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;, num_steps);
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;while let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;Some(delay) = profile.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;next_delay&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;() {
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; TODO: Make a step.
+
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;too_slow&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;() {
+        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Let&amp;#39;s go faster for the rest of the way!
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;        profile.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;enter_position_mode&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1000.0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;, num_steps);
+    }
+
+    num_steps -= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;;
+}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This provides a lot more flexibility, opening up more use cases.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;more-accurate-trapezoidal-profile&quot;&gt;More accurate trapezoidal profile&lt;&#x2F;h4&gt;
+&lt;p&gt;RampMaker is designed to run everywhere, even microcontrollers. Since computing an accurate trapezoidal motion profile can be quite expensive, RampMaker employs some clever math to generate an approximated version that is much cheaper to compute.&lt;&#x2F;p&gt;
+&lt;p&gt;There are still trade-offs, however. The previous version used a very cheap, but not that accurate algorithm. The new version has been upgraded to generate much more accurate trapezoidal motion profiles, at the cost of additional operations per step (only addition and multiplication though, so nothing too wild).&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;what-s-next&quot;&gt;What&#x27;s next&lt;&#x2F;h3&gt;
+&lt;p&gt;I&#x27;m now working on integrating the new version of RampMaker into &lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;step-dir&quot;&gt;Step&#x2F;Dir&lt;&#x2F;a&gt;, the universal stepper motor interface, where it will be used to provide a high-level motion control API, even it the stepper driver doesn&#x27;t support that in hardware.&lt;&#x2F;p&gt;
+&lt;p&gt;Aside from that, there is a lot more work that can be done: Support for more motion profiles (an s-shaped one would be great), or a velocity mode (when you just want to move at a given velocity without knowing or caring how far). At this point I don&#x27;t have concrete plans to work on either of those, but contributions are always welcome!&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;flott&quot;&gt;Flott&lt;&#x2F;h3&gt;
+&lt;p&gt;RampMaker is part of &lt;a href=&quot;https:&#x2F;&#x2F;flott-motion.org&#x2F;&quot;&gt;Flott&lt;&#x2F;a&gt;, the open source toolkit for motion control software in Rust. For now, Flott is restricted to interfacing with stepper motors, but I plan to eventually grow it into a comprehensive toolkit that covers all common motion control needs.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;funding&quot;&gt;Funding&lt;&#x2F;h3&gt;
+&lt;p&gt;Creating and maintaining open source software is time-consuming! If you want to support my work on RampMaker and Flott, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;please consider sponsoring me&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Announcing RampMaker</title>
+		<published>2021-02-02T00:00:00+00:00</published>
+		<updated>2021-02-02T00:00:00+00:00</updated>
+		<link href="https://archive.braun-odw.eu/flott/news/announcing-ramp-maker/" type="text/html"/>
+		<id>https://archive.braun-odw.eu/flott/news/announcing-ramp-maker/</id>
+		<content type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;ramp-maker&quot;&gt;RampMaker&lt;&#x2F;a&gt; is a library for creating stepper motor acceleration profiles. You give it a target acceleration, a maximum speed, and a number of steps. From this information, RampMaker will create a series of step delays that constitute an acceleration ramp over that number of steps, with smooth acceleration and deceleration.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Required to call the `ramp` method.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;ramp_maker::AccelerationProfile as _;
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Let&amp;#39;s use floating point numbers here to keep the example simple.
+&#x2F;&#x2F; RampMaker also supports fixed-point numbers though.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; target_accel = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1000.0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; meters per second^2
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; max_speed = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1500.0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; meters per second
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; profile = ramp_maker::Trapezoidal::new(target_accel, max_speed);
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; num_steps = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2000&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; delay in profile.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;ramp&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(num_steps) {
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; How you handle a delay depends on the platform you&amp;#39;re running on
+    &#x2F;&#x2F; (RampMaker works pretty much everywhere). Here, we use a fake `Timer`
+    &#x2F;&#x2F; API, to demonstrate how the delays produced by RampMaker must be
+    &#x2F;&#x2F; used.
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; timer = Timer::start(delay);
+
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; RampMaker doesn&amp;#39;t care how you actually interface with the stepper motor,
+    &#x2F;&#x2F; so we use this fake `step` method to demonstrate the principle. If you
+    &#x2F;&#x2F; haven&amp;#39;t settled on a solution, why not check out Step&#x2F;Dir, another
+    &#x2F;&#x2F; library from the Flott toolkit?
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;step&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;();
+
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Wait until the delay is over before making the next step.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;    timer.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;wait&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;();
+}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;RampMaker is designed to be used on resource-constrained systems, like microcontrollers. It implements an efficient algorithm to generate approximate trapezoidal acceleration ramps in real-time.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;why-bother&quot;&gt;Why bother?&lt;&#x2F;h3&gt;
+&lt;p&gt;Motors can&#x27;t just change their speed instantly. If you try to do that with a stepper motor, you will likely lose steps. Since stepper motors are often driven in an open loop, without feedback about how they actually moved, this will significantly reduce the accuracy you can achieve, or even prevent movement completely.&lt;&#x2F;p&gt;
+&lt;p&gt;The solution is to use a controlled acceleration to ramp up to and down from the desired speed. There are many ways to do this. RampMaker currently implements generation of trapezoidal ramps (here&#x27;s an &lt;a href=&quot;https:&#x2F;&#x2F;www.trinamic.com&#x2F;technology&#x2F;motion-control-technology&#x2F;&quot;&gt;overview over different ramp types&lt;&#x2F;a&gt;).&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;what-s-next&quot;&gt;What&#x27;s next?&lt;&#x2F;h3&gt;
+&lt;p&gt;RampMaker has quite a few limitations right now (check out the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&#x2F;issues&quot;&gt;GitHub issues&lt;&#x2F;a&gt; for a list of known problems). I hope to address everything in due time, but for now, the following points are my priority:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Integrate RampMaker into the &lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;step-dir&quot;&gt;Step&#x2F;Dir&lt;&#x2F;a&gt; library, using it there to provide a more powerful and convenient interface than what is currently available.&lt;&#x2F;li&gt;
+&lt;li&gt;Right now, only movement from and back to stand-still, over a defined number of steps, is supported. To support more use cases, more flexibility is required, like changing the target speed mid-movement.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Both tasks go hand in hand, so I expect to be working on them in parallel.&lt;&#x2F;p&gt;
+&lt;p&gt;RampMaker is open source and &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;ramp-maker&quot;&gt;developed on GitHub&lt;&#x2F;a&gt;. If you have any thoughts on what the priorities should be, please open new issues, comment on existing ones, or send a pull request to help out.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;flott&quot;&gt;Flott&lt;&#x2F;h3&gt;
+&lt;p&gt;RampMaker is part of &lt;a href=&quot;https:&#x2F;&#x2F;flott-motion.org&#x2F;&quot;&gt;Flott&lt;&#x2F;a&gt;, the open source toolkit for motion control software in Rust. For now, Flott is restricted to interfacing with stepper motors, but I plan to eventually grow it into a comprehensive toolkit that covers all common motion control needs.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;funding&quot;&gt;Funding&lt;&#x2F;h3&gt;
+&lt;p&gt;Creating and maintaining open source software is time-consuming! If you want to support my work on RampMaker and Flott, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;please consider sponsoring me&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Announcing Step&#x2F;Dir</title>
+		<published>2021-01-29T00:00:00+00:00</published>
+		<updated>2021-01-29T00:00:00+00:00</updated>
+		<link href="https://archive.braun-odw.eu/flott/news/announcing-step-dir/" type="text/html"/>
+		<id>https://archive.braun-odw.eu/flott/news/announcing-step-dir/</id>
+		<content type="html">&lt;p&gt;Step&#x2F;Dir is a library that abstracts over stepper motors. It aims to provide a unified interface for controlling stepper motors, no matter which driver or controller chip you use to do that.&lt;&#x2F;p&gt;
+&lt;p&gt;Step&#x2F;Dir has been published for a few months and already went through a few design iterations (the &lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;step-dir&quot;&gt;latest version on crates.io&lt;&#x2F;a&gt; is 0.4.1). However, its still early days for the library. So far it only supports two stepper motor drivers, and provides a very low-level interface. There&#x27;s still lots more to do, but its a start.&lt;&#x2F;p&gt;
+&lt;p&gt;To learn more about Step&#x2F;Dir, check out the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&#x2F;step-dir&quot;&gt;repository on GitHub&lt;&#x2F;a&gt; or the &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;step-dir&quot;&gt;reference documentation&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;vision&quot;&gt;Vision&lt;&#x2F;h3&gt;
+&lt;p&gt;Step&#x2F;Dir aims to provide a comprehensive abstraction over stepper driver and controller chips. Those chips are very different in their capabilities. Some have only STEP and DIR pins, to make single steps in a given direction. Others provide a high-level interface and can generate smooth movement over some distance.&lt;&#x2F;p&gt;
+&lt;p&gt;My original plan was to write different libraries for driver and controller chips respectively, but it turns out that reality is not so clean-cut. The lines are really blurry, with some driver chips providing varying amounts of controller features. I now believe that trying to write two different libraries would create lots of friction.&lt;&#x2F;p&gt;
+&lt;p&gt;Instead, the plan is for Step&#x2F;Dir to become the one library for controlling stepper motors. It will provide a low-level interface, where available, and a high-level interface everywhere, either directly backed by hardware capabilities or using a software-based fallback.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;flott&quot;&gt;Flott&lt;&#x2F;h3&gt;
+&lt;p&gt;Step&#x2F;Dir is part of &lt;a href=&quot;https:&#x2F;&#x2F;flott-motion.org&#x2F;&quot;&gt;Flott&lt;&#x2F;a&gt;, the toolkit for motion control software in Rust. For now, Flott is restricted to interfacing with stepper motors, but I plan to eventually grow it into a comprehensive toolkit that covers all common motion control needs.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;funding&quot;&gt;Funding&lt;&#x2F;h3&gt;
+&lt;p&gt;I&#x27;ve already spent lots of time working on Step&#x2F;Dir, and lots more work will be required to realize the vision I laid out above. If you want to support my work on Step&#x2F;Dir and Flott, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sponsors&#x2F;hannobraun&quot;&gt;please consider sponsoring me&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Flott exists</title>
+		<published>2021-01-15T00:00:00+00:00</published>
+		<updated>2021-01-15T00:00:00+00:00</updated>
+		<link href="https://archive.braun-odw.eu/flott/news/flott-exists/" type="text/html"/>
+		<id>https://archive.braun-odw.eu/flott/news/flott-exists/</id>
+		<content type="html">&lt;p&gt;Flott, the motion control toolkit for Rust applications, exists. I don&#x27;t have much else to say right now, but I plan to post an announcement with some more details, specifically the libraries that are already available and the larger vision, at a later date.&lt;&#x2F;p&gt;
+&lt;p&gt;For now, feel free to check out the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flott-motion&quot;&gt;Flott repositories on GitHub&lt;&#x2F;a&gt;. If you&#x27;re interested and want to follow the project, please sign up to the &lt;a href=&quot;&#x2F;atom.xml&quot;&gt;Atom feed&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+</feed>

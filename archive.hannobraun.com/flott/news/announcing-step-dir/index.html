@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <title>Announcing Step&#x2F;Dir - Flott</title>
+        
+
+        <base href="/flott/" />
+
+        <link href="base.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="news-page.css" rel="stylesheet" type="text/css" media="all" />
+
+        <link href="atom.xml" rel="alternate" type="application/atom+xml" />
+    </head>
+
+    <body>
+        <p>
+            This project is currently winding down. Please see <a href="news/winding-down-flott/">the announcement</a> for more information.
+        </p>
+
+        <header>
+            <a class="title" href="/">
+                <h1>Flott</h1>
+                <p>Motion Control in Rust</p>
+            </a>
+
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="news">News</a></li>
+                    <li><a href="contact">Contact</a></li>
+                    <li><a href="https://github.com/flott-motion" target="_blank">GitHub ↪</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            
+    <div class="title">
+        <h2>Announcing Step&#x2F;Dir</h2>
+        <p>
+            Posted on 2021-01-29 by <a href="https:&#x2F;&#x2F;github.com&#x2F;hannobraun">Hanno Braun</a>
+        </p>
+    </div>
+
+    <p>Step/Dir is a library that abstracts over stepper motors. It aims to provide a unified interface for controlling stepper motors, no matter which driver or controller chip you use to do that.</p>
+<p>Step/Dir has been published for a few months and already went through a few design iterations (the <a href="https://crates.io/crates/step-dir">latest version on crates.io</a> is 0.4.1). However, its still early days for the library. So far it only supports two stepper motor drivers, and provides a very low-level interface. There's still lots more to do, but its a start.</p>
+<p>To learn more about Step/Dir, check out the <a href="https://github.com/flott-motion/step-dir">repository on GitHub</a> or the <a href="https://docs.rs/step-dir">reference documentation</a>.</p>
+<h3 id="vision">Vision</h3>
+<p>Step/Dir aims to provide a comprehensive abstraction over stepper driver and controller chips. Those chips are very different in their capabilities. Some have only STEP and DIR pins, to make single steps in a given direction. Others provide a high-level interface and can generate smooth movement over some distance.</p>
+<p>My original plan was to write different libraries for driver and controller chips respectively, but it turns out that reality is not so clean-cut. The lines are really blurry, with some driver chips providing varying amounts of controller features. I now believe that trying to write two different libraries would create lots of friction.</p>
+<p>Instead, the plan is for Step/Dir to become the one library for controlling stepper motors. It will provide a low-level interface, where available, and a high-level interface everywhere, either directly backed by hardware capabilities or using a software-based fallback.</p>
+<h3 id="flott">Flott</h3>
+<p>Step/Dir is part of <a href="https://flott-motion.org/">Flott</a>, the toolkit for motion control software in Rust. For now, Flott is restricted to interfacing with stepper motors, but I plan to eventually grow it into a comprehensive toolkit that covers all common motion control needs.</p>
+<h3 id="funding">Funding</h3>
+<p>I've already spent lots of time working on Step/Dir, and lots more work will be required to realize the vision I laid out above. If you want to support my work on Step/Dir and Flott, <a href="https://github.com/sponsors/hannobraun">please consider sponsoring me</a>.</p>
+
+
+        </main>
+        <footer>
+            
+
+        </footer>
+    </body>
+</html>

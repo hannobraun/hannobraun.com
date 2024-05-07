@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <title>Last Month in Flott - April 2021 - Flott</title>
+        
+
+        <base href="/flott/" />
+
+        <link href="base.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="news-page.css" rel="stylesheet" type="text/css" media="all" />
+
+        <link href="atom.xml" rel="alternate" type="application/atom+xml" />
+    </head>
+
+    <body>
+        <p>
+            This project is currently winding down. Please see <a href="news/winding-down-flott/">the announcement</a> for more information.
+        </p>
+
+        <header>
+            <a class="title" href="/">
+                <h1>Flott</h1>
+                <p>Motion Control in Rust</p>
+            </a>
+
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="news">News</a></li>
+                    <li><a href="contact">Contact</a></li>
+                    <li><a href="https://github.com/flott-motion" target="_blank">GitHub ↪</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            
+    <div class="title">
+        <h2>Last Month in Flott - April 2021</h2>
+        <p>
+            Posted on 2021-04-06 by <a href="https:&#x2F;&#x2F;github.com&#x2F;hannobraun">Hanno Braun</a>
+        </p>
+    </div>
+
+    <p>This is the monthly newsletter for <a href="https://flott-motion.org/">Flott</a>, the toolkit for motion control software in Rust. Flott aims to make developing motion control software easy, by providing libraries that abstract over hardware commonly used for motion control, like motors, encoders, and other sensors and actuators.</p>
+<p>Last month saw a new release of <a href="https://github.com/flott-motion/stepper">Stepper</a>, the universal stepper motor interface. I've also published <a href="https://github.com/flott-motion/stepper-terminal">Stepper Terminal</a>, a new application, built on top of Stepper, for controlling a stepper motor from the command-line on your computer.</p>
+<aside>
+<p>
+    Flott's development is supported by my generous sponsors. Special thanks to <a href="https://github.com/lthiery">Louis Thiery</a> and <a href="https://github.com/ahdinosaur">Mikey</a>, who have started sponsoring me in March!
+</p>
+<p>
+    If you want to support Flott's continued development, please consider <a href="https://github.com/sponsors/hannobraun">sponsoring my work</a> as well.
+</p>
+</aside>
+<h3 id="stepper">Stepper</h3>
+<p><a href="https://github.com/flott-motion/stepper">Stepper</a> (formerly known as Step/Dir) is a library that provides a unified interface for controlling stepper motors. March saw continued development of the high-level motion control API, culminating in the release of <a href="https://flott-motion.org/news/stepper-0-5/">version 0.5</a>. This is also the first release under the new name, Stepper.</p>
+<p>Highlights:</p>
+<ul>
+<li><a href="https://github.com/flott-motion/step-dir/pull/98">#98</a> - Change motion control API to accept absolute target position</li>
+<li><a href="https://github.com/flott-motion/step-dir/pull/100">#100</a> - Support setting step mode for software-motion-controlled driver</li>
+<li><a href="https://github.com/flott-motion/step-dir/pull/107">#107</a> - Add method for resetting internal position to new value</li>
+<li><a href="https://github.com/flott-motion/step-dir/pull/108">#108</a> - Remove the need for a custom numeric type</li>
+<li><a href="https://github.com/flott-motion/step-dir/pull/112">#112</a> - Rename to Stepper</li>
+<li><a href="https://github.com/flott-motion/step-dir/pull/113">#113</a> - Update documentation</li>
+<li><a href="https://github.com/flott-motion/step-dir/pull/116">#116</a> - Make <code>SetDirection</code>/<code>Step</code> errors less weird, more flexible</li>
+<li><a href="https://github.com/flott-motion/step-dir/pull/118">#118</a> - Implement <code>SetDirection</code> and <code>Step</code> for <code>SoftwareMotionControl</code></li>
+</ul>
+<p>This is just a selection of the pull requests that were merged last month. Check out the <a href="https://github.com/flott-motion/stepper/pulls?q=is%3Apr+is%3Aclosed+created%3A2021-03-01..2021-03-31">full list</a> on GitHub, if you're interested in all the details.</p>
+<h3 id="stepper-terminal">Stepper Terminal</h3>
+<p><a href="https://github.com/flott-motion/stepper-terminal">Stepper Terminal</a> is a CLI and firmware application that saw its <a href="https://flott-motion.org/news/announcing-stepper-terminal/">initial release</a> in March. It is a tool for manual testing of Stepper, but also serves as a full usage example of the library. Going forward, it will be extended in lock-step with Stepper, as new features are being added.</p>
+<h3 id="what-i-m-working-on">What I'm working on</h3>
+<p>I just came back from vacation (or rather staycation, as they call it these days) and I'm looking forward to getting back into Flott. My next focus area is a high-level guide for <a href="https://github.com/flott-motion/stepper">Stepper</a>. Its API is already fully documented, but there are some crucial pieces of information required to use it and to implement new drivers. That information is currently scattered across a bunch of GitHub issues, if available at all.</p>
+<h3 id="funding">Funding</h3>
+<p>Right now, Flott is focused on stepper motors, but I want to build it into a full-featured toolkit for motion control software, by abstracting over other kinds of hardware (like encoders, or other motor types), as well as creating more useful building blocks on top of those hardware interfaces.</p>
+<p><strong>Doing this will take a lot of effort. Please consider supporting my work by <a href="https://github.com/sponsors/hannobraun">sponsoring me</a>.</strong></p>
+<h3 id="thank-you">Thank you</h3>
+<p>Thank you for your interest in Flott! If you want to follow its development, feel free to <a href="/atom.xml">subscribe to the news feed</a>. I also plan to set up an email newsletter, but <em>still</em> haven't gotten around to it. Again, I'm hoping to have it ready for next month's newsletter.</p>
+<p>The next newsletter is expected to arrive in early May. If you have any questions or feedback, please don't hesitate to <a href="mailto:hanno@braun-odw.eu">contact me</a>!</p>
+
+
+        </main>
+        <footer>
+            
+
+        </footer>
+    </body>
+</html>

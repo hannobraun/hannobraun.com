@@ -1,0 +1,1 @@
+(function(){"use strict";var a={};a.makePropertiesNonEnumerable=function(a){for(var b in a)Object.defineProperty(a,b,{enumerable:!1})},typeof window=="undefined"?module.exports=a:register("spell/common/util/spellUtils",a)})()

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <title>Announcing RampMaker - Flott</title>
+        
+
+        <base href="/flott/" />
+
+        <link href="base.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="news-page.css" rel="stylesheet" type="text/css" media="all" />
+
+        <link href="atom.xml" rel="alternate" type="application/atom+xml" />
+    </head>
+
+    <body>
+        <p>
+            This project is currently winding down. Please see <a href="news/winding-down-flott/">the announcement</a> for more information.
+        </p>
+
+        <header>
+            <a class="title" href="/">
+                <h1>Flott</h1>
+                <p>Motion Control in Rust</p>
+            </a>
+
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="news">News</a></li>
+                    <li><a href="contact">Contact</a></li>
+                    <li><a href="https://github.com/flott-motion" target="_blank">GitHub ↪</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            
+    <div class="title">
+        <h2>Announcing RampMaker</h2>
+        <p>
+            Posted on 2021-02-02 by <a href="https:&#x2F;&#x2F;github.com&#x2F;hannobraun">Hanno Braun</a>
+        </p>
+    </div>
+
+    <p><a href="https://crates.io/crates/ramp-maker">RampMaker</a> is a library for creating stepper motor acceleration profiles. You give it a target acceleration, a maximum speed, and a number of steps. From this information, RampMaker will create a series of step delays that constitute an acceleration ramp over that number of steps, with smooth acceleration and deceleration.</p>
+<pre style="background-color:#2b303b;">
+<code class="language-rust" data-lang="rust"><span style="color:#65737e;">// Required to call the `ramp` method.
+</span><span style="color:#b48ead;">use </span><span style="color:#c0c5ce;">ramp_maker::AccelerationProfile as _;
+
+</span><span style="color:#65737e;">// Let&#39;s use floating point numbers here to keep the example simple.
+// RampMaker also supports fixed-point numbers though.
+</span><span style="color:#b48ead;">let</span><span style="color:#c0c5ce;"> target_accel = </span><span style="color:#d08770;">1000.0</span><span style="color:#c0c5ce;">; </span><span style="color:#65737e;">// meters per second^2
+</span><span style="color:#b48ead;">let</span><span style="color:#c0c5ce;"> max_speed = </span><span style="color:#d08770;">1500.0</span><span style="color:#c0c5ce;">; </span><span style="color:#65737e;">// meters per second
+</span><span style="color:#b48ead;">let</span><span style="color:#c0c5ce;"> profile = ramp_maker::Trapezoidal::new(target_accel, max_speed);
+
+</span><span style="color:#b48ead;">let</span><span style="color:#c0c5ce;"> num_steps = </span><span style="color:#d08770;">2000</span><span style="color:#c0c5ce;">;
+</span><span style="color:#b48ead;">for</span><span style="color:#c0c5ce;"> delay in profile.</span><span style="color:#96b5b4;">ramp</span><span style="color:#c0c5ce;">(num_steps) {
+    </span><span style="color:#65737e;">// How you handle a delay depends on the platform you&#39;re running on
+    // (RampMaker works pretty much everywhere). Here, we use a fake `Timer`
+    // API, to demonstrate how the delays produced by RampMaker must be
+    // used.
+    </span><span style="color:#b48ead;">let</span><span style="color:#c0c5ce;"> timer = Timer::start(delay);
+
+    </span><span style="color:#65737e;">// RampMaker doesn&#39;t care how you actually interface with the stepper motor,
+    // so we use this fake `step` method to demonstrate the principle. If you
+    // haven&#39;t settled on a solution, why not check out Step/Dir, another
+    // library from the Flott toolkit?
+    </span><span style="color:#96b5b4;">step</span><span style="color:#c0c5ce;">();
+
+    </span><span style="color:#65737e;">// Wait until the delay is over before making the next step.
+</span><span style="color:#c0c5ce;">    timer.</span><span style="color:#96b5b4;">wait</span><span style="color:#c0c5ce;">();
+}
+</span></code></pre>
+<p>RampMaker is designed to be used on resource-constrained systems, like microcontrollers. It implements an efficient algorithm to generate approximate trapezoidal acceleration ramps in real-time.</p>
+<h3 id="why-bother">Why bother?</h3>
+<p>Motors can't just change their speed instantly. If you try to do that with a stepper motor, you will likely lose steps. Since stepper motors are often driven in an open loop, without feedback about how they actually moved, this will significantly reduce the accuracy you can achieve, or even prevent movement completely.</p>
+<p>The solution is to use a controlled acceleration to ramp up to and down from the desired speed. There are many ways to do this. RampMaker currently implements generation of trapezoidal ramps (here's an <a href="https://www.trinamic.com/technology/motion-control-technology/">overview over different ramp types</a>).</p>
+<h3 id="what-s-next">What's next?</h3>
+<p>RampMaker has quite a few limitations right now (check out the <a href="https://github.com/flott-motion/ramp-maker/issues">GitHub issues</a> for a list of known problems). I hope to address everything in due time, but for now, the following points are my priority:</p>
+<ul>
+<li>Integrate RampMaker into the <a href="https://crates.io/crates/step-dir">Step/Dir</a> library, using it there to provide a more powerful and convenient interface than what is currently available.</li>
+<li>Right now, only movement from and back to stand-still, over a defined number of steps, is supported. To support more use cases, more flexibility is required, like changing the target speed mid-movement.</li>
+</ul>
+<p>Both tasks go hand in hand, so I expect to be working on them in parallel.</p>
+<p>RampMaker is open source and <a href="https://github.com/flott-motion/ramp-maker">developed on GitHub</a>. If you have any thoughts on what the priorities should be, please open new issues, comment on existing ones, or send a pull request to help out.</p>
+<h3 id="flott">Flott</h3>
+<p>RampMaker is part of <a href="https://flott-motion.org/">Flott</a>, the open source toolkit for motion control software in Rust. For now, Flott is restricted to interfacing with stepper motors, but I plan to eventually grow it into a comprehensive toolkit that covers all common motion control needs.</p>
+<h3 id="funding">Funding</h3>
+<p>Creating and maintaining open source software is time-consuming! If you want to support my work on RampMaker and Flott, <a href="https://github.com/sponsors/hannobraun">please consider sponsoring me</a>.</p>
+
+
+        </main>
+        <footer>
+            
+
+        </footer>
+    </body>
+</html>

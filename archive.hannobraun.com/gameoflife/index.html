@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Conway's Game of Life</title>
+		
+		<meta charset="utf-8">
+
+		<base href="/gameoflife/" />
+		<!-- <base href="/archive.braun-odw.eu/gameoflife/" /> -->
+		
+		<script type="application/javascript">
+			Function.prototype.bind = function( bindTo ) {
+				var self = this
+				return function() {
+					self.apply( bindTo, arguments )
+				}
+			}
+			
+			Object.defineProperty = function( object, key, options ) {
+				if ( options.value !== undefined ) {
+					object[ key ] = options.value
+				}
+			}
+		</script>
+		
+		<!-- framework files -->
+		<script type="application/javascript" src="CommonJSIntegration.js"></script>
+		<script type="application/javascript" src="loadImagesAndPassTo.js"></script>
+		<script type="application/javascript" src="SceneView.js"></script>
+		<script type="application/javascript" src="dialect.js"></script>
+		<script type="application/javascript" src="spellUtils.js"></script>
+		<script type="application/javascript" src="Vector.js"></script>
+		<script type="application/javascript" src="component.js"></script>
+		<script type="application/javascript" src="buildEntity.js"></script>
+		<script type="application/javascript" src="Entities.js"></script>
+		<script type="application/javascript" src="EntityUpdater.js"></script>
+		<script type="application/javascript" src="MainLoop.js"></script>
+		<script type="application/javascript" src="MainLoopDefinitionLanguage.js"></script>
+		<script type="application/javascript" src="MainLoopExecutor.js"></script>
+		<script type="application/javascript" src="SpellFramework.js"></script>
+		<script type="application/javascript" src="baseComponents.js"></script>
+		<script type="application/javascript" src="defineImages.js"></script>
+		<script type="application/javascript" src="renderingComponents.js"></script>
+		<script type="application/javascript" src="Renderer.js"></script>
+		
+		<!-- game files -->
+		<script type="application/javascript" src="TiledPositionStructure.js"></script>
+	</head>
+	
+	<body>
+		<canvas id="main" width="800" height="592" style="border-style:solid; border-width: 1px"></canvas><br />
+		
+		<div style="width:400px; position:absolute; top:10px; right:10px">
+			<p>This is <a href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life">Conway's Game of Life</a>! Place
+			cells by clicking into the box to the left. Then click on <em>Start Simulation</em> below the box.</p>
+			
+			<p>The simulation works according to 4 simple rules:</p>
+			<ol>
+				<li>A cell with fewer than two neighbours dies.</li>
+				<li>A cell with two or three neighbours lives on.</li>
+				<li>A cell with more than three neighbours dies.</li>
+				<li>On a grid position with exactly three neighbours, a new cell is placed.</li>
+			</ol>
+			<p>Place some cells and try it out! If what you're seeing is not interesting enough, try to place more
+			cells. Don't spread them out too much!</p>
+			
+			<p>This is a quick prototype that I made within a few hours. Do you like it? Think it should be better? Let
+			me know!</p>
+			<ul>
+				<li><a href="http://blog.hannobraun.com/2011/04/23/conways-game-of-life-in-html5javascript/">Comment on my blog</a></li>
+				<li><a href="http://twitter.com/hannobraun">Send me a tweet</a></li>
+				<li><a href="mailto:mail@hannobraun.com">Write me an email</a></li>
+			</ul>
+			
+			<p><strong>If it doesn't work</strong> please try it with the newest version of your browser!</p>
+		</div>
+		
+		<div style="position:absolute; bottom:10px; right:10px;">
+			<p>Created by <a href="http://hannobraun.com">Hanno Braun</a> - <a href="http://twitter.com/hannobraun">
+			Follow me on Twitter</a></p>
+		</div>
+		
+		<script type="application/javascript" src="main.js"></script>
+		
+		<button type="button" id="startButton" onclick="start()">Start Simulation</button>
+		<button type="button" id="resetButton" onclick="resetSimulation()" disabled="true">Reset Simulation</button>
+	</body>
+</html>

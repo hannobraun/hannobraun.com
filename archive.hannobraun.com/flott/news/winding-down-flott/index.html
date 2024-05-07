@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <title>Winding Down Flott - Flott</title>
+        
+
+        <base href="/flott/" />
+
+        <link href="base.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="news-page.css" rel="stylesheet" type="text/css" media="all" />
+
+        <link href="atom.xml" rel="alternate" type="application/atom+xml" />
+    </head>
+
+    <body>
+        <p>
+            This project is currently winding down. Please see <a href="news/winding-down-flott/">the announcement</a> for more information.
+        </p>
+
+        <header>
+            <a class="title" href="/">
+                <h1>Flott</h1>
+                <p>Motion Control in Rust</p>
+            </a>
+
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="news">News</a></li>
+                    <li><a href="contact">Contact</a></li>
+                    <li><a href="https://github.com/flott-motion" target="_blank">GitHub ↪</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            
+    <div class="title">
+        <h2>Winding Down Flott</h2>
+        <p>
+            Posted on 2021-06-02 by <a href="https:&#x2F;&#x2F;github.com&#x2F;hannobraun">Hanno Braun</a>
+        </p>
+    </div>
+
+    <p>Instead of a monthly newsletter, here's a bit of sad news: I've decided to not continue the Flott project in its current form. Before I go into some background and the reasons that led me to this decision, here are the specific steps I plan to take next:</p>
+<ol>
+<li>I will move all repositories that contain useful software (so <a href="https://github.com/flott-motion/stepper">Stepper</a>, <a href="https://github.com/flott-motion/ramp-maker">RampMaker</a>, and <a href="https://github.com/flott-motion/stepper-terminal">Stepper Terminal</a>) to the <a href="https://github.com/braun-embedded">Braun Embedded GitHub organization</a>, where <strong>I will keep maintaining them indefinitely</strong>. Braun Embedded is my own business that focuses on Embedded Rust, and that GitHub organization is where I keep all my embedded-related open source repositories.</li>
+<li>I will archive the remaining repositories (the <a href="https://github.com/flott-motion/flott">meta repository</a> and the <a href="https://github.com/flott-motion/flott">website repository</a>).</li>
+<li>I will repurpose my <a href="https://github.com/sponsors/hannobraun">GitHub Sponsors profile</a> to cover my development and maintenance activities in the Embedded Rust ecosystem (which will include the then former Flott repositories).</li>
+<li>Longer-term, I will archive the website at a subdomain under my personal domain (braun-odw.eu). I do not plan to renew the flott-motion.org domain, so eventually the website will no longer be reachable at its current location.</li>
+<li>As I already said, I will keep maintaining the former Flott repositories. I will also develop new features (and possibly create more libraries) according to my own needs. However, there are no firm plans for doing so, no timeline, and I will not go to any great lengths to make these features and libraries generally useful beyond my own requirements.</li>
+</ol>
+<p>I would like to thank all my GitHub Sponsors who have supported me this far. It means a lot! A special shout out goes to Noah Hüsser who has started supporting me at the 32$ tier since I posted the last newsletter.</p>
+<p>Okay then, now that the minutiae is out of the way, let's dive into how I came to this decision.</p>
+<h3 id="the-reasons-i-started-flott">The Reasons I Started Flott</h3>
+<p>My work on Flott can be divided into two parts, for each of which I have separate reasons for doing them:</p>
+<ol>
+<li>Development of Stepper and RampMaker.</li>
+<li>Marketing those libraries under the Flott name.</li>
+</ol>
+<p>I created Stepper and RampMaker because I am interested in the field of motion control, because I think these libraries enrich the Embedded Rust ecosystem in a meaningful way, and not least because I have plans for some projects that I want to use those libraries for. None of this has changed, which is why I will keep maintaining them going forward.</p>
+<p>But why didn't I just create those libraries and leave it at that? Why did I create this website, wrote announcements and a monthly newsletter, and set up a GitHub Sponsors profile? Well, that's because I was (and, to a degree, still am) unhappy with my existing business. Because I wanted to do work that is more meaningful to me. And because I wanted that work to serve as marketing material for my existing business, helping me move the business as a whole into a more meaningful direction.</p>
+<h3 id="plans-meet-reality">Plans Meet Reality</h3>
+<p>From the beginning, I knew that this was going to take a while, possibly years. But there is a big difference between &quot;knowing&quot; and &quot;understanding&quot;. After I had launched the Flott website, the GitHub Sponsors profile, and had started marketing them, nothing happened for a while. That's when I understood what that long-term strategy meant: That I had to keep working in my existing business for likely years to come, always struggling to find enough time for Flott on the side.</p>
+<p>This started a thought process that led me to coming up with other strategies. More incremental ways to improve my business, that are likely to start showing results much more quickly. I don't want to make this post any longer by going into what these strategies are, but the result is simply that I don't have much time left to work on Flott. There are only so many hours in a work day, and for a while now, Flott has been getting the short end of that stick.</p>
+<h3 id="the-simple-math">The Simple Math</h3>
+<p>Since launching Flott to deafening silence, things have improved, a lot actually! I have sponsors now that are supporting me with 104$ per month! I consider that a great success, and I am very thankful to all of you who helped get me here.</p>
+<p>However, while this is a non-trivial amount of money, it is only a fraction of what I need to cover my monthly costs. And even if sponsorship grows to a point where it can cover my monthly cost, there's still a long way to go until I can make a decent living, that will allow me to buy a house and save for my future.</p>
+<p>And let's consider what it took me to get me here: 3 months of work on the side (October to December 2020), 3 months of being fully focused on Flott (January to March 2021), and another 2 months of working on Flott on the side (April 2021 until now). Most of the growth (in GitHub stars, website traffic, and most importantly sponsorship income) happened while I was fully focused on Flott. And I simply can't afford to do that for long enough to get the project to anywhere near sustainability.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Given that I can no longer afford to give Flott the time it needs to keep growing, and to give my sponsors a worthwhile return for their monthly investment in me, I have to call it quits. It's a bit sad, but that's just how it is. I considered other ways, and started talking to companies that would be in a position to sponsor Flott a few months back. But it seems to me that the kind of big professional company that would be in a position to make a dent short-term also has big professional needs that Flott simply can't meet at this stage in its development.</p>
+<p>The fact of the matter is, there don't seem to be a whole lot of people who are clamoring for a Rust-based solution to their motion control needs. If this is wrong, I don't know where they are or how to reach them. I think that's a matter of timing. If I were in a position to stick it out for a few years, things might change. I'm not though, so I have to move on to other endeavors.</p>
+<p>Thank you all for your interest in Flott, and thanks again to my sponsors for supporting me along the way! With your support, I managed to build Stepper and RampMaker, useful libraries that are available as open source today, for everyone to use. I wasn't able to take things further, but I think that's something.</p>
+
+
+        </main>
+        <footer>
+            
+
+        </footer>
+    </body>
+</html>

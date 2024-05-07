@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <title>Last Month in Flott - March 2021 - Flott</title>
+        
+
+        <base href="/flott/" />
+
+        <link href="base.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="news-page.css" rel="stylesheet" type="text/css" media="all" />
+
+        <link href="atom.xml" rel="alternate" type="application/atom+xml" />
+    </head>
+
+    <body>
+        <p>
+            This project is currently winding down. Please see <a href="news/winding-down-flott/">the announcement</a> for more information.
+        </p>
+
+        <header>
+            <a class="title" href="/">
+                <h1>Flott</h1>
+                <p>Motion Control in Rust</p>
+            </a>
+
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="news">News</a></li>
+                    <li><a href="contact">Contact</a></li>
+                    <li><a href="https://github.com/flott-motion" target="_blank">GitHub ↪</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            
+    <div class="title">
+        <h2>Last Month in Flott - March 2021</h2>
+        <p>
+            Posted on 2021-03-01 by <a href="https:&#x2F;&#x2F;github.com&#x2F;hannobraun">Hanno Braun</a>
+        </p>
+    </div>
+
+    <p>This is the monthly newsletter for <a href="https://flott-motion.org/">Flott</a>, the toolkit for motion control software in Rust. Flott aims to make developing motion control software easy, by providing libraries that abstract over hardware commonly used for motion control, like motors, encoders, and other sensors and actuators.</p>
+<p>Last month saw lots of progress on <a href="https://github.com/flott-motion/ramp-maker">RampMaker</a> and <a href="https://github.com/flott-motion/step-dir">Step/Dir</a>, libraries that can be used to control stepper motors.</p>
+<aside>
+If you want to support Flott's continued development, please consider <a href="https://github.com/sponsors/hannobraun">sponsoring my work</a>.
+</aside>
+<h3 id="rampmaker">RampMaker</h3>
+<p><a href="https://github.com/flott-motion/ramp-maker">RampMaker</a> is a library that generates acceleration ramps for stepper motors. It saw its initial release in late January. Building on that, lots of work has gone into making it more powerful, flexible, and downright more useful. This has culminated in <a href="https://flott-motion.org/news/ramp-maker-0-2/">version 0.2</a> being published.</p>
+<p>Highlights:</p>
+<ul>
+<li><a href="https://github.com/flott-motion/ramp-maker/pull/17">#17</a> - Rename <code>AccelerationProfile</code> to <code>MotionProfile</code></li>
+<li><a href="https://github.com/flott-motion/ramp-maker/pull/20">#20</a> - Improve usability of <code>MotionProfile</code></li>
+<li><a href="https://github.com/flott-motion/ramp-maker/pull/26">#26</a> - Add reusable testing infrastructure</li>
+<li><a href="https://github.com/flott-motion/ramp-maker/pull/28">#28</a> - Improve accuracy of trapezoidal motion profile</li>
+<li><a href="https://github.com/flott-motion/ramp-maker/pull/30">#30</a> - Make <code>MotionProfile</code> more powerful and flexible</li>
+<li><a href="https://github.com/flott-motion/ramp-maker/pull/31">#31</a> - Add additional iterators to <code>MotionProfile</code></li>
+<li><a href="https://github.com/flott-motion/ramp-maker/pull/32">#32</a> - Clean up trapezoidal ramp generation</li>
+<li><a href="https://github.com/flott-motion/ramp-maker/pull/33">#33</a> - Make trapezoidal ramp generation more flexible</li>
+</ul>
+<p>This is just a selection of pull requests that were merged last month. Check out the <a href="https://github.com/flott-motion/ramp-maker/pulls?q=is%3Apr+is%3Aclosed+created%3A2021-02-01..2021-02-28">full list</a> on GitHub, if you're interested in all the details.</p>
+<h3 id="step-dir">Step/Dir</h3>
+<p><a href="https://github.com/flott-motion/step-dir">Step/Dir</a> is a library that provides a unified interface for controlling stepper motors. Its development took a bit of a back-seat last month, due to the work on RampMaker. Still, some things got done, mostly clean-ups, small improvements, and the addition of a high-level motion control API.</p>
+<p>Highlights:</p>
+<ul>
+<li><a href="https://github.com/flott-motion/step-dir/pull/83">#83</a> - Rename <code>Driver</code> to <code>Stepper</code></li>
+<li><a href="https://github.com/flott-motion/step-dir/pull/87">#87</a> - Clarify nomenclature used by <code>Stepper</code></li>
+<li><a href="https://github.com/flott-motion/step-dir/pull/91">#91</a> - Make API more flexible by allowing reuse of futures</li>
+<li><a href="https://github.com/flott-motion/step-dir/pull/93">#93</a> - Make futures more flexible</li>
+<li><a href="https://github.com/flott-motion/step-dir/pull/96">#96</a> - Add high-level motion control interface</li>
+</ul>
+<p>This is just a selection of pull requests that were merged last month. Check out the <a href="https://github.com/flott-motion/step-dir/pulls?q=is%3Apr+is%3Aclosed+created%3A2021-02-01..2021-02-28">full list</a> on GitHub, if you're interested in all the details.</p>
+<h3 id="what-i-m-working-on">What I'm working on</h3>
+<p>Now that <a href="https://flott-motion.org/news/ramp-maker-0-2/">RampMaker 0.2</a> is out, I'm focused on integrating it into <a href="https://github.com/flott-motion/step-dir">Step/Dir</a> to provide a high-level motion control API for chips that don't support that in hardware. The initial version of that is already done, but it needs some polishing.</p>
+<h3 id="funding">Funding</h3>
+<p>Right now, Flott is focused on stepper motors, but I want to build it into a full-featured toolkit for motion control software, by abstracting over other kinds of hardware (like encoders, or other motor types), as well as creating more useful building blocks on top of those hardware interfaces.</p>
+<p><strong>Doing this will take a lot of effort. Please consider supporting my work by <a href="https://github.com/sponsors/hannobraun">sponsoring me</a>.</strong></p>
+<h3 id="thank-you">Thank you</h3>
+<p>Thank you for your interest in Flott! If you're interested in following its development, feel free to <a href="/atom.xml">subscribe to the news feed</a>. I also plan to set up an email newsletter, but haven't gotten around to it yet. Next month, hopefully!</p>
+<p>The next newsletter is expected to arrive in early April. If you have any questions or feedback, please don't hesitate to <a href="mailto:hanno@braun-odw.eu">contact me</a>!</p>
+
+
+        </main>
+        <footer>
+            
+
+        </footer>
+    </body>
+</html>

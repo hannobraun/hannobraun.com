@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+            <title>Stepper 0.5 (formerly Step&#x2F;Dir) - Flott</title>
+        
+
+        <base href="/flott/" />
+
+        <link href="base.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="news-page.css" rel="stylesheet" type="text/css" media="all" />
+
+        <link href="atom.xml" rel="alternate" type="application/atom+xml" />
+    </head>
+
+    <body>
+        <p>
+            This project is currently winding down. Please see <a href="news/winding-down-flott/">the announcement</a> for more information.
+        </p>
+
+        <header>
+            <a class="title" href="/">
+                <h1>Flott</h1>
+                <p>Motion Control in Rust</p>
+            </a>
+
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="news">News</a></li>
+                    <li><a href="contact">Contact</a></li>
+                    <li><a href="https://github.com/flott-motion" target="_blank">GitHub ↪</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            
+    <div class="title">
+        <h2>Stepper 0.5 (formerly Step&#x2F;Dir)</h2>
+        <p>
+            Posted on 2021-03-11 by <a href="https:&#x2F;&#x2F;github.com&#x2F;hannobraun">Hanno Braun</a>
+        </p>
+    </div>
+
+    <p><a href="https://crates.io/crates/stepper">Stepper 0.5.0</a> is now available on crates.io. Stepper is a library for controlling stepper motors. It abstracts over the actual hardware used to control the stepper motor (like a stepper driver or motion control chip) and provides a unified API on top. This library was formerly known as Step/Dir.</p>
+<p>The new version introduces a high-level motion control API. Before, you had to tell it when to make each single step, whereas now you have a nice API that lets you make a smooth movement to a target position, without having to take care of the details.</p>
+<aside>
+Please consider <a href="https://github.com/sponsors/hannobraun">sponsoring my work</a> on Stepper and other open source projects for motion control software in Rust.
+</aside>
+<h3 id="highlights">Highlights</h3>
+<p>This section summarizes the highlights of the release. You can find a more complete picture in the <a href="https://github.com/flott-motion/stepper/blob/main/CHANGELOG.md#v050-2021-03-10">changelog</a>.</p>
+<h4 id="new-name">New Name</h4>
+<p>When I originally started working on Stepper (then known as Step/Dir) I thought I was building a library to abstract over stepper drivers that are controlled via STEP and DIR pins. I expected the higher-level motion control API (and the chips it abstracts over) to live in a separate library.</p>
+<p>Turns out reality is a bit messier than that. Not all chips cleanly fall into either category, belonging to both or being something in between. I eventually decided that the best bet for now is to support everything in a single library. The old name directly refers the the STEP an DIR pins and no longer fits the new scope.</p>
+<p>Stepper is a more general name, which fits the library's new role as the universal stepper motor interface. But the crate name <code>stepper</code> was already used by another library, which provided the capabilities of <a href="https://doc.rust-lang.org/std/iter/struct.StepBy.html"><code>std::iter::StepBy</code></a>, while that was still unstable. <code>StepBy</code> has long since been stabilized, and the <code>stepper</code> library has fulfilled its original purpose and become obsolete.</p>
+<p>Its author, <a href="https://saghm.com/">Saghm Rossi</a>, gracefully allowed me to take over the name and use it as the new name for Step/Dir. Thank you, Saghm! If you're interested, also check out the old library at its <a href="https://github.com/saghm/stepper">original repository</a>.</p>
+<h4 id="motion-control-api">Motion Control API</h4>
+<p>The old API only abstracted over the ability of stepper drivers to make steps in a given direction, which left it to the user to get the timing right and produce a smooth movement (which is a decidedly non-trivial task).</p>
+<p>The new motion control API provides a much higher-level interface, so the caller doesn't have to worry about the details.</p>
+<pre style="background-color:#2b303b;">
+<code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span style="color:#c0c5ce;"> max_speed = </span><span style="color:#d08770;">1000.0</span><span style="color:#c0c5ce;">; </span><span style="color:#65737e;">// steps per second
+</span><span style="color:#b48ead;">let</span><span style="color:#c0c5ce;"> target_step = </span><span style="color:#d08770;">2000</span><span style="color:#c0c5ce;">; </span><span style="color:#65737e;">// 10 revolutions on a typical stepper motor
+</span><span style="color:#c0c5ce;">stepper
+    .</span><span style="color:#96b5b4;">move_to_position</span><span style="color:#c0c5ce;">(max_speed, target_step)
+    </span><span style="color:#65737e;">// We could do other work in parallel, but here we just wait until the
+    // movement has finished.
+    </span><span style="color:#c0c5ce;">.</span><span style="color:#96b5b4;">wait</span><span style="color:#c0c5ce;">()?; 
+</span></code></pre>
+<p>The API is designed to work with minimal software interaction, if motion control hardware is available, but can also use a software fallback, where hardware support is lacking (see next section). As of now, no motion control chips are supported.</p>
+<h4 id="rampmaker-integration">RampMaker Integration</h4>
+<p>The <a href="https://github.com/flott-motion/ramp-maker">RampMaker</a> library has been integrated to provide a software implementation of the motion control API for all hardware, even if hardware support for motion control is not natively supported.</p>
+<p>This makes the motion control API available for all currently supported drivers.</p>
+<h3 id="what-s-next">What's next</h3>
+<p>The new API makes Stepper much more capable and opens up a whole lot of possibilities. However, the library is still lacking in some key areas:</p>
+<ul>
+<li><strong>Platform support:</strong> To talk to the platform it's running on, Stepper only uses abstract interfaces that can be implemented basically everywhere. However, the combination of interfaces it uses is not implemented on most platforms.</li>
+<li><strong>Support for more drivers:</strong> Currently, only two stepper drivers are supported. Support for more stepper drivers and motion control chips is highly desirable.</li>
+<li><strong>High-level documentation:</strong> The <a href="https://docs.rs/stepper">API Reference</a> is somewhat extensive, but there is no high-level guide yet. Specifically, documentation on how to address the two previous shortcomings would be very useful.</li>
+</ul>
+<p>You can check out the <a href="https://github.com/flott-motion/stepper/issues">list of open issues</a> for more information on these and other problems.</p>
+<p>In due time, I intend to work on all of these issues, but for now, I am going to focus on something else: Providing a complete usage example. I intend to create a microcontroller-based application that controls a motor using Stepper, and accepts commands from a CLI app on the host computer. Besides rounding out the available documentation, this will be helpful for testing.</p>
+<p>In the meantime, contributions to these or other areas are highly welcome! Feel free to open issues and submit pull requests on the <a href="https://github.com/flott-motion/stepper">GitHub repository</a>.</p>
+<h3 id="flott">Flott</h3>
+<p>Stepper is part of <a href="https://flott-motion.org/">Flott</a>, the open source toolkit for motion control software in Rust. For now, Flott is restricted to interfacing with stepper motors, but I plan to eventually grow it into a comprehensive toolkit that covers all common motion control needs.</p>
+<h3 id="funding">Funding</h3>
+<p>Creating and maintaining open source software is time-consuming! If you want to support my work on Stepper and Flott, <a href="https://github.com/sponsors/hannobraun">please consider sponsoring me</a>.</p>
+
+
+        </main>
+        <footer>
+            
+
+        </footer>
+    </body>
+</html>
