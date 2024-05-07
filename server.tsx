@@ -16,6 +16,12 @@ app.all("/hannobraun.deno.dev/:path", (c) => {
   return c.redirect(`https://archive.hannobraun.com/${path}`, 308);
 });
 
+// Legacy domain
+app.all("/archive.braun-odw.eu/:path", (c) => {
+  const { path } = c.req.param();
+  return c.redirect(`https://archive.hannobraun.com/${path}`, 308);
+});
+
 app.use(
   "/archive.hannobraun.com/*",
   serveStatic({ root: "./" }),
