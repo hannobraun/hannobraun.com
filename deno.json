@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "start": "deno run --allow-net --watch server.tsx"
+    "start": "deno run --allow-net --allow-read --watch server.tsx"
   },
   "imports": {
     "hono/": "https://deno.land/x/hono@v4.3.2/"
