@@ -18,7 +18,7 @@ app.all("/hannobraun.deno.dev/:path", (c) => {
 
 app.use(
   "/archive.hannobraun.com/*",
-  serveStatic({ root: "./archive.hannobraun.com" }),
+  serveStatic({ root: "./" }),
 );
 
 // const Layout = () =>
