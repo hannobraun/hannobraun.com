@@ -16,7 +16,10 @@ app.all("/hannobraun.deno.dev/:path", (c) => {
   return c.redirect(`https://archive.hannobraun.com/${path}`, 308);
 });
 
-app.use("*", serveStatic({ root: "./archive.hannobraun.com" }));
+app.use(
+  "/archive.hannobraun.com/*",
+  serveStatic({ root: "./archive.hannobraun.com" }),
+);
 
 // const Layout = () =>
 //   html`<!DOCTYPE html>
