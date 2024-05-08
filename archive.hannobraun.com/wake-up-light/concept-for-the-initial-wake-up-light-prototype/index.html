@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" class="has-dark-text"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Concept for the initial wake-up light prototype</title>
+    <link rel="stylesheet" href="screen.css">
+
+
+    <style>
+        :root {
+            --background-color: #ffffff
+        }
+    </style>
+
+    <style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style><style>:root {--ghost-accent-color: #1921ff;}</style>
+<style>.gh-portal-account-header{display:flex;flex-direction:column;align-items:center;margin:0 0 32px}.gh-portal-account-header .gh-portal-avatar{margin:6px 0 8px!important}.gh-portal-account-data{margin-bottom:40px}footer.gh-portal-account-footer{display:flex}.gh-portal-account-footer.paid{margin-top:12px}.gh-portal-account-footermenu{display:flex;align-items:center;list-style:none;padding:0;margin:0}.gh-portal-account-footerright{display:flex;flex-grow:1;align-items:center;justify-content:flex-end}.gh-portal-account-footermenu li{margin-right:16px}.gh-portal-account-footermenu li:last-of-type{margin-right:0}.gh-portal-freeaccount-newsletter{display:flex;align-items:center;justify-content:space-between;margin-top:24px}.gh-portal-freeaccount-newsletter .label{display:flex;flex-direction:column;flex-grow:1}.gh-portal-free-ctatext{margin-top:-12px}.gh-portal-cancelcontinue-container{margin:24px 0 32px}.gh-portal-list-detail .gh-portal-email-notice{display:flex;align-items:center;gap:5px;margin-top:6px;color:var(--red);font-weight:500;font-size:1.25rem;letter-spacing:.2px}.gh-portal-email-notice-icon{width:20px;height:20px}.gh-portal-billing-button-loader{width:32px;height:32px;margin-right:-3px;opacity:.6}.gh-portal-product-icon{width:52px;margin-right:12px;border-radius:2px}.gh-portal-account-discountcontainer{position:relative;display:flex;align-items:center}.gh-portal-account-old-price{text-decoration:line-through;color:var(--grey9)!important}.gh-portal-account-tagicon{width:16px;height:16px;color:var(--brandcolor);margin-right:5px;z-index:999}@media (max-width: 390px){.gh-portal-account-footer{padding:0!important}}@media (max-width: 340px){.gh-portal-account-footer{padding:0!important;flex-wrap:wrap;gap:12px}.gh-portal-account-footer .gh-portal-account-footerright{justify-content:flex-start}}.gh-email-suppressed-page-title{margin-bottom:14px}.gh-email-suppressed-page-icon{display:block;width:38px;height:38px;margin:0 auto 18px}.gh-email-suppressed-page-text{padding:0 14px;text-align:center;color:var(--grey6)}.gh-email-faq-footer-text{color:var(--grey8)}.gh-portal-list-detail.email-newsletter .gh-email-faq-page-button{display:block;margin-top:3px}.gh-email-faq-page-button{margin-left:4px}.emailReceivingFAQ .gh-portal-btn-back,.emailReceivingFAQ .gh-portal-btn-back:hover{left:calc(6vmin - 14px)}.emailReceivingFAQ .gh-portal-closeicon-container{right:calc(6vmin - 20px)}@media (max-width: 480px){.emailReceivingFAQ .gh-portal-btn-back,.emailReceivingFAQ .gh-portal-btn-back:hover{left:16px}.emailReceivingFAQ .gh-portal-closeicon-container{right:24px}}.gh-email-faq-page-button{color:var(--brandcolor);cursor:pointer;background:none;transition:color linear .1s;font-size:1.45rem}</style><style>.App{text-align:center}.App-logo{height:40vmin;pointer-events:none}@media (prefers-reduced-motion: no-preference){.App-logo{animation:App-logo-spin infinite 20s linear}}.App-header{background-color:#282c34;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:calc(10px + 2vmin);color:#fff}.App-link{color:#61dafb}@keyframes App-logo-spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
+</style></head>
+
+<body class="post-template is-head-left-logo has-classic-feed is-dropdown-loaded">
+    <div style="width: 100%; padding: 1em; background-color: #f8f800; text-align: center; font-weight: bold;">
+        The project described here was never finished. The site has been archived for posterity.
+    </div>
+<div class="gh-site">
+
+    <header id="gh-head" class="gh-head gh-outer">
+        <div class="gh-head-inner gh-inner">
+            <div class="gh-head-brand">
+                <div class="gh-head-brand-wrapper">
+                    <a class="gh-head-logo" href="/wake-up-light/">
+                            Hanno Braun
+                    </a>
+                </div>
+                
+                <button class="gh-burger"></button>
+            </div>
+
+            <nav class="gh-head-menu">
+                <ul class="nav">
+    <li class="nav-home"><a href="/wake-up-light/">Home</a></li>
+</ul>
+
+            </nav>
+
+            
+        </div>
+    </header>
+
+    
+<main class="gh-main gh-outer">
+    <div class="gh-inner">
+            <article class="gh-article post">
+                    <header class="gh-article-header gh-canvas">
+                        <h1 class="gh-article-title">Concept for the initial wake-up light prototype</h1>
+                            <figure class="gh-article-image">
+        <img srcset="feature-image_005.png 300w, feature-image_004.png 720w, feature-image_002.png 960w, feature-image.png 1200w, feature-image_003.png 2000w, feature-image_006.png 1x" sizes="(max-width: 1200px) 100vw, 1200px" src="feature-image.png" alt="Concept for the initial wake-up light prototype">
+    </figure>
+                    </header>
+
+                <section class="gh-content gh-canvas">
+                    <p>The development of the wake-up light is going at a
+ glacial pace right now, but it is progressing. I've just finalized the 
+concept for the initial prototype this week.</p><p>I <a href="/wake-up-light/im-making-a-wake-up-light/" rel="noreferrer">wrote about my initial ideas for the prototype</a>
+ before, and honestly, I didn't expect those to change much. But I 
+wanted to go through the exercise of thinking this through properly, to 
+make sure I can order all the parts that I need in one go.</p><p>That process was very enlightening, and led to more changes than I expected.</p><h2 id="my-approach">My approach</h2><p>The
+ approach I took was centered on drawing the device, to get clarity on 
+how it would work from a user's perspective. I had already been thinking
+ about that, of course, but drawing it forced me to be much more 
+specific.</p><p>And to be clear, I'm not very good at drawing. I don't 
+need to be. It was the act of drawing, that drew out specific problems 
+and questions. The mind is just all too ready to gloss over details, if 
+you let it.</p><p>I also happened to show the drawings to a friend who 
+gave me feedback. That wasn't part of the plan, but it was very 
+worthwhile and led to further insights.</p><h2 id="the-concept">The concept</h2><p>To remind you, the initial prototype isn't a full wake-up light yet. It's <em>just</em> a digital clock face. The goal being to get to a working product as soon as practical, then improve incrementally from there.</p><p>The core of the idea didn't change: A 3D-printed housing, with seven-segment displays to show the time.</p><figure class="kg-card kg-image-card"><img src="full-view.png" class="kg-image" alt="A concept drawing of the wake-up light's first prototype." loading="lazy" width="555" height="371"></figure><p>One
+ thing that's changed is that I realized I want to integrate those 
+seven-segment displays into the housing, instead of buying them as 
+pre-made components. That should be practical to do with some LEDs and a
+ bit of 3D printing.</p><p>The right side will have a control element to adjust the brightness and set the time.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="right.png" class="kg-image" alt="Concept drawing of the wake-up light, perspective from the right side." loading="lazy" width="306" height="340"><figcaption><span style="white-space: pre-wrap;">It says "dial" here, but I've since realized this isn't a good word. It's now called the "control wheel".</span></figcaption></figure><p>The left side has a button for setting the time; and a USB-C receptacle, for power and updating the firmware.</p><figure class="kg-card kg-image-card"><img src="left.png" class="kg-image" alt="Concept drawing of the wake-up light, perspective from the left side." loading="lazy" width="577" height="447"></figure><p>How
+ did I end up with two input elements, when I initially wanted none for 
+the first prototype? Well, I realized I needed a way to set the time. 
+Then I realized that doing so by accident was too easy, and I needed an 
+extra button. And with the extra button, I could use the control wheel 
+for adjusting the brightness too.</p><p>I haven't done a detailed design
+ for the housing yet, but so far I want to print it out of three parts: A
+ front panel with the display, and two halves that hold the front panel 
+and PCB in place.</p><figure class="kg-card kg-image-card"><img src="housing-components.png" class="kg-image" alt="Concept drawing of the three housing components, and how they fit together." loading="lazy" width="538" height="306"></figure><p>If
+ I can, I'd like to avoid screws and other fasteners completely, but 
+without using glue of course. I want the two halves to snap together 
+using 3D-printed connectors that are integrated into the housing.</p><figure class="kg-card kg-image-card"><img src="housing-connectors_002.png" class="kg-image" alt="Two drawings of parts that snap together. One drawing shows them separate, the other connected." loading="lazy" width="1012" height="159" srcset="housing-connectors.png 600w, housing-connectors_003.png 1000w, housing-connectors_002.png 1012w" sizes="(min-width: 720px) 720px"></figure><p>Details
+ to be determined (it certainly won't look exactly as pictures here), 
+but based on past experience, I think this should work.</p><h2 id="already-available-to-paid-members">Already available to paid members!</h2><p>The
+ wake-up light will be open source when released. For now, the designs 
+are private, but already available to paid members of my website!</p><p>If you are a paid member and want access, create a <a href="https://github.com/?ref=hannobraun.com" rel="noreferrer">GitHub</a> account (if you don't have one already), and <a href="mailto:hello@hannobraun.com" rel="noreferrer">send me your account name</a>. I'll hook you up!</p><p>If you are not a paid member but want access, you can <a href="/wake-up-light/#/portal/account" rel="noreferrer">sign up or change your subscription right here</a>.</p><h2 id="next-steps">Next steps</h2><p>Next up, I am going to dust off <a href="https://www.kicad.org/?ref=hannobraun.com" rel="noreferrer">KiCad</a>
+ to design the electronics. Not the full PCB yet, just a wiring diagram,
+ to force me to think through all aspects of that. I want to make sure I
+ know exactly which components I need for the prototype, so I can order 
+those.</p><p>I don't know how long this will take, but given the pace I 
+have managed so far, it probably won't be quick. I will post new 
+developments here, so if you follow along, feel free to subscribe (if 
+you haven't already).</p><div class="kg-card kg-signup-card kg-width-regular " data-lexical-signup-form="" style="background-color: #F0F0F0; display: none;">
+            
+            <div class="kg-signup-card-content">
+                
+                <div class="kg-signup-card-text ">
+                    <h2 class="kg-signup-card-heading" style="color: #000000;"><span style="white-space: pre-wrap;">Subscribe for free updates</span></h2>
+                    <p class="kg-signup-card-subheading" style="color: #000000;"><span style="white-space: pre-wrap;">I post regular updates about the development of the wake-up light to this website. If you want to be notified when that happens, sign up with your email!</span></p>
+                    
+        <form class="kg-signup-card-form" data-members-form="signup">
+            
+            <div class="kg-signup-card-fields">
+                <input class="kg-signup-card-input" id="email" data-members-email="" type="email" required="true" placeholder="Your email">
+                <button class="kg-signup-card-button kg-style-accent" style="color: #FFFFFF;" type="submit">
+                    <span class="kg-signup-card-button-default">Subscribe</span>
+                    <span class="kg-signup-card-button-loading"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24">
+        <g stroke-linecap="round" stroke-width="2" fill="currentColor" stroke="none" stroke-linejoin="round" class="nc-icon-wrapper">
+            <g class="nc-loop-dots-4-24-icon-o">
+                <circle cx="4" cy="12" r="3"></circle>
+                <circle cx="12" cy="12" r="3"></circle>
+                <circle cx="20" cy="12" r="3"></circle>
+            </g>
+            <style data-cap="butt">
+                .nc-loop-dots-4-24-icon-o{--animation-duration:0.8s}
+                .nc-loop-dots-4-24-icon-o 
+*{opacity:.4;transform:scale(.75);animation:nc-loop-dots-4-anim 
+var(--animation-duration) infinite}
+                .nc-loop-dots-4-24-icon-o 
+:nth-child(1){transform-origin:4px 
+12px;animation-delay:-.3s;animation-delay:calc(var(--animation-
+duration)/-2.666)}
+                .nc-loop-dots-4-24-icon-o 
+:nth-child(2){transform-origin:12px 
+12px;animation-delay:-.15s;animation-delay:calc(var(--animation-
+duration)/-5.333)}
+                .nc-loop-dots-4-24-icon-o 
+:nth-child(3){transform-origin:20px 12px}
+                @keyframes 
+nc-loop-dots-4-anim{0%,100%{opacity:.4;transform:scale(.75)}50%{opacity:
+1;transform:scale(1)}}
+            </style>
+        </g>
+    </svg></span>
+                </button>
+            </div>
+            <div class="kg-signup-card-success" style="color: #000000;">
+                Email sent! Check your inbox to complete your signup.
+            </div>
+            <div class="kg-signup-card-error" style="color: #000000;" data-members-error=""></div>
+        </form>
+        
+                    <p class="kg-signup-card-disclaimer" style="color: #000000;"><span style="white-space: pre-wrap;">No spam. Unsubscribe anytime.</span></p>
+                </div>
+            </div>
+        </div>
+                    <aside class="gh-article-meta">
+                        <div class="gh-article-meta-inner">
+                                <div class="gh-article-meta-wrapper">
+                            <time class="gh-article-date" datetime="2024-03-16">Mar 16, 2024</time></div>
+                        </div>
+                    </aside>
+                </section>
+
+
+                <footer class="gh-article-footer gh-canvas">
+                    <nav class="gh-navigation">
+                        <div class="gh-navigation-previous">
+                                <a class="gh-navigation-link" href="/wake-up-light/behind-the-scenes-update-being-distracted-wake-up-light-writing/">← Previous</a>
+                        </div>
+
+                        <div class="gh-navigation-middle"></div>
+
+                        <div class="gh-navigation-next">
+                        </div>
+                    </nav>
+                </footer>
+            </article>
+    </div>
+</main>
+
+    <footer class="gh-foot gh-outer">
+        <div class="gh-foot-inner gh-inner">
+            <nav class="gh-foot-menu">
+                <ul class="nav">
+</ul>
+
+            </nav>
+
+            <div class="gh-copyright">
+                    Hanno Braun, Untere Pfarrgasse 19, 64720 Michelstadt, Germany - hello@hannobraun.com
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body></html>
