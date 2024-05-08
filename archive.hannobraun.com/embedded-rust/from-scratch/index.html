@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"><head><title>Embedded Rust From Scratch: Getting Started</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/embedded-rust/styles.css"><link rel="stylesheet" href="/embedded-rust/prism.css"></head><body class="w-fit mx-auto py-6"><main><article class="my-16 prose"><h1 class="mb-0">Embedded Rust From Scratch: Getting Started</h1><p>Hey, welcome to Embedded Rust from Scratch!</p>
+<p>This was supposed to be an online course that teaches you Embedded Rust from the ground up, without using any 3rd-party dependencies. Just the hardware, the Rust compiler (including the core library), and your code!</p>
+<p>(<strong>Supposed to be</strong>, because then my plans changed, and I ended up focusing on other things. This is an incomplete draft of the first chapter. I've <a href="https://github.com/hannobraun/pi-pico-examples/tree/main/from-scratch" target="_blank">uploaded the companion code to GitHub</a>, which is more complete than this.)</p>
+<p>This course is not for everyone. You can comfortably and confidently do Embedded Rust without knowing most of the low-level concepts explained here. But understanding what goes on under the hood can help you out when things go wrong. If that's important to you, or you're just curious, this is the place for you!</p>
+<p>This course requires little to no knowledge of embedded development, but there are some prerequisites:</p>
+<ul>
+<li><em>Basic computer literacy</em>: I'm going assume that you have a handle on your environment, know how to run commands in terminal, and perform other basic tasks like that.</li>
+<li><em>Basic understanding of Rust</em>: You don't need to be an expert in Rust to follow this, and I'm going to explain a lot of the concepts as they relate to embedded development. But this is not a Rust tutorial. I'm going to assume that you know <a href="https://www.rust-lang.org/learn" target="_blank">where the documentation is</a>, and can look stuff up as needed.</li>
+</ul>
+<p>If you feel like I haven't explained anything properly, please don't hesitate to reach out! I've been doing this stuff for a while, and I might accidentally skip over something that is not at all self-evident.</p>
+<p>But enough with the introduction. Let's get started!</p>
+<h2>1. Hardware</h2>
+<p>There's lots of hardware out there that we could use for this course. I've decided to go with the <a href="https://www.raspberrypi.com/products/raspberry-pi-pico/" target="_blank">Raspberry Pi Pico</a>, because it's cheap, widely available, and has a large community and ecosystem. I've been using the base model to write this course, but you should be able to substitute any of the variants (Pi Pico H, W, or WH).</p>
+<p>The Raspberry Pi Pico is a board with several components on it. The most important of those is the RP2040, which is a microcontroller. A microcontroller is basically a tiny computer, but with a few differences:</p>
+<ul>
+<li>It's not a computer with a keyboard and screen that you sit in front of, usually. Instead it is typically <em>embedded</em> into some other device, where it interfaces with hardware like LEDs, motors, or whatever else, to control them.</li>
+<li>It usually doesn't run an operating system. Instead, there's often just one program running on it, with full control over the hardware!</li>
+</ul>
+<p>The above is a bit simplified, and there are other differences. But that's the gist of it!</p>
+<h3>1a. Go buy it</h3>
+<p>So now that we know what we're dealing with, let's go buy some! Go to the official <a href="https://www.raspberrypi.com/products/raspberry-pi-pico/" target="_blank">Raspberry Pi Pico product page</a> and click the "Buy now" button. It should list some resellers that sell it in your country.</p>
+<p>You are going to need the following:</p>
+<ul>
+<li>a <strong>Raspberry Pi Pico</strong> (other variants like the Pico H/W/WH, also work)</li>
+<li>a <strong>USB Cable</strong> that can connect the Pi Pico to your computer (USB A to USB Micro-B should work)</li>
+</ul>
+<p><strong>TASK: Raspberry Pi Debug Probe.</strong></p>
+<p>Once you have the hardware, you can continue.</p>
+<h3>1b. Set it up</h3>
+<p>Once you have the Raspberry Pi Pico, you can try it out!</p>
+<ol>
+<li>Connect it to your computer using the USB cable, while holding down <code>BOOTSEL</code> (the only button on the Pi Pico).</li>
+<li>The Pi Pico should now show up as a USB storage device on your computer. Download <a href="https://rptl.io/pico-blink" target="_blank">this example program</a> and drag it over.</li>
+<li>The storage device should disconnect, and the Pi Pico should start blinking its LED.</li>
+</ol>
+<p>If you see a blinking LED, your Raspberry Pi Pico is working correctly. Congratulations! You can now continue on, to learn how to program it from scratch.</p>
+<p>If it didn't work, please reach out to let me know! I'll try my best to help you out. And even if you figured it out yourself, please tell me what went wrong. I'd like to compile a list with common problems and solutions.</p>
+<hr>
+<h2>3. Set up Rust</h2>
+<p>Now that we know that our hardware setup works, let's set up Rust! We're going to do so using Rustup, the Rust installer and version management tool.</p>
+<p>The details on how to install Rust is going to depend on the operating system you're using. Unless you already have Rustup installed, or already know how you want to install it, I recommend you start here: <a href="https://www.rust-lang.org/learn/get-started" target="_blank">https://www.rust-lang.org/learn/get-started</a></p>
+<p>Once you have Rustup installed, open a terminal and make sure you have the latest stable version of Rust installed:</p>
+<pre class="language-none" tabindex="0"><code class="language-none">rustup update stable
+</code></pre>
+<p>Now navigate to the folder where you'd like to put your Rust code, and create Rust program using Cargo, Rust's build tool and package manager:</p>
+<pre class="language-none" tabindex="0"><code class="language-none">cargo new getting-started
+</code></pre>
+<p>Feel free to replace <code>getting-started</code> with whatever name you deem appropriate. Navigate to the folder that the previous command created, and run the Rust program we created:</p>
+<pre class="language-none" tabindex="0"><code class="language-none">cargo run
+</code></pre>
+<p>If everything worked correctly, you should see some output from Cargo, as well as the message our program printed: <code>Hello, world!</code></p>
+<p>As the last step before we're ready to move on, we need to install a version of the Rust core library that we can use on the Pi Pico:</p>
+<pre class="language-none" tabindex="0"><code class="language-none">rustup target install thumbv6m-none-eabi
+</code></pre>
+<p>This should result in affirmative output, telling you that this target was downloaded and installed.</p>
+<aside><p>How do we know that we need to install the <code>thumbv6m-none-eabi</code> target specifically?</p><p>Well, the microcontroller on the Pi Pico is the <a href="https://www.raspberrypi.com/products/rp2040/" target="_blank">RP2040</a>, which has an ARM Cortex-M0+ core. For <a href="https://en.wikipedia.org/wiki/ARM_architecture_family#Thumb" target="_blank">reasons that are not immediately relevant</a>, the instruction set on ARM Cortex-M cores is called "Thumb". The <code>v6-m</code> is there because the Cortex-M0+ implements the ARMv6-M architecture.</p><p>If we were using a different Cortex-M, it might be based on ARMv7 or ARMv8 instead, which come in different variations, so we'd choose one of the <code>thumbv7</code> or <code>thumbv8</code> targets.</p><p>To see a list of all targets supported by Rust, run <code>rustup target list</code>.</p></aside>
+<h2>4. Run Rust firmware on the Pi Pico</h2>
+<p>Now that we have both the Pi Pico and Rust set up and working, it's time to write some embedded code!</p>
+<p>First, let's tell Cargo to compile code for the appropriate target. In the <code>getting-started</code> directory, create a subdirectory called <code>.cargo</code> and within it, a file called <code>config.toml</code>.</p>
+<p><strong>TASK: Update.</strong>
+<strong>TASK: Consider whether to do this here, since we need the linker script arg.</strong></p>
+<pre class="language-toml" tabindex="0"><code class="language-toml"><span class="prism-token prism-comment"># .cargo/config.toml</span>
+
+<span class="prism-token prism-punctuation">[</span><span class="prism-token prism-table prism-class-name">build</span><span class="prism-token prism-punctuation">]</span>
+<span class="prism-token prism-key prism-property">target</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"thumbv6m-none-eabi"</span>
+</code></pre>
+<p>This will break our program (you'll get errors, if you run <code>cargo run</code> or <code>cargo build</code> now), because the program is written for regular desktop operating systems, not microcontrollers.</p>
+<p>Let's fix that by replacing the contents of <code>src/main.rs</code> with the following code:</p>
+<pre class="language-rust" tabindex="0"><code class="language-rust"><span class="prism-token prism-comment">// src/main.rs</span>
+
+<span class="prism-token prism-comment">// TASK: Add code here.</span>
+</code></pre>
+<p><strong>TASK: Vector table documentation.</strong></p>
+<p><strong>TASK: Linker script.</strong></p>
+<ul>
+<li>
+<p>Documentation of vector table: <a href="https://developer.arm.com/documentation/ddi0419/c/System-Level-Architecture/System-Level-Programmers--Model/ARMv6-M-exception-model/The-vector-table?lang=en" target="_blank">https://developer.arm.com/documentation/ddi0419/c/System-Level-Architecture/System-Level-Programmers--Model/ARMv6-M-exception-model/The-vector-table?lang=en</a></p>
+</li>
+<li>
+<p>Explanation of linker scripts:</p>
+<ul>
+<li><a href="https://docs.rust-embedded.org/embedonomicon/memory-layout.html" target="_blank">https://docs.rust-embedded.org/embedonomicon/memory-layout.html</a></li>
+<li><a href="https://users.informatik.haw-hamburg.de/~krabat/FH-Labor/gnupro/5_GNUPro_Utilities/c_Using_LD/ldLinker_scripts.html" target="_blank">https://users.informatik.haw-hamburg.de/~krabat/FH-Labor/gnupro/5_GNUPro_Utilities/c_Using_LD/ldLinker_scripts.html</a></li>
+<li><a href="https://wiki.osdev.org/Linker_Scripts" target="_blank">https://wiki.osdev.org/Linker_Scripts</a></li>
+</ul>
+</li>
+<li>
+<p>What to actually use: <code>cortex-m-rt</code>, which comes with a linker script</p>
+</li>
+<li>
+<p>Real example: <code>cortex-m-rt</code> linker script (<a href="https://github.com/rust-embedded/cortex-m/blob/master/cortex-m-rt/link.x.in" target="_blank">https://github.com/rust-embedded/cortex-m/blob/master/cortex-m-rt/link.x.in</a>)</p>
+</li>
+<li>
+<p>For later: <a href="https://crates.io/crates/cargo-binutils" target="_blank">https://crates.io/crates/cargo-binutils</a></p>
+</li>
+<li>
+<p>Pi Pico data sheet: <a href="https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf" target="_blank">https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf</a></p>
+</li>
+<li>
+<p>RP2040 data sheet: <a href="https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf" target="_blank">https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf</a></p>
+</li>
+</ul>
+<p><strong>TASK: <a href="https://crates.io/crates/elf2uf2-rs" target="_blank">https://crates.io/crates/elf2uf2-rs</a></strong></p></article></main></body></html>

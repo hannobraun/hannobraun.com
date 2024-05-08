@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en"><head><title>Getting Started with Embedded Rust, Embassy, and the Raspberry Pi Pico</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/embedded-rust/styles.css"><link rel="stylesheet" href="/embedded-rust/prism.css"></head><body class="w-fit mx-auto py-6"><main><article class="my-16 prose"><h1 class="mb-0">Getting Started with Embedded Rust, Embassy, and the Raspberry Pi Pico</h1><h2>Introduction</h2>
+<p>There are many ways to get started with embedded development. Even if you already decided on Rust as a language, there's still a huge array of options to choose from. What hardware are you going to use? What software to run on it? Keep it simple, or go with some kind of operating system?</p>
+<p>These choices can be paralyzing! The goal of this article is to clear the analysis paralysis by teaching you one specific way of getting started. I'll tell you exactly what hardware to buy, what software to download, and how to set it all up. All of that without requiring much prior knowledge.</p>
+<p>No article can prepare you for all of the potential projects you might want to do. This one is designed to be your first step. If you want to branch out later, it will hopefully be manageable, because you'll have learned some of the background here.</p>
+<h2>Technology Stack</h2>
+<p>This article introduces embedded software development using the following technologies:</p>
+<ul>
+<li><a href="https://www.rust-lang.org/" target="_blank"><strong>Rust</strong></a> is a modern programming language with great tooling. For embedded development, it is by and large just as capable as more traditional choices, like C or C++.</li>
+<li><a href="https://embassy.dev/" target="_blank"><strong>Embassy</strong></a> is a framework for embedded applications (written in Rust) that is both powerful and convenient. It also supports a wide variety of hardware out of the box, providing lots of flexibility.</li>
+<li>The <a href="https://www.raspberrypi.com/products/raspberry-pi-pico/" target="_blank"><strong>Raspberry Pi Pico</strong></a> is a board that features the <a href="https://www.raspberrypi.com/products/rp2040/" target="_blank"><strong>RP2040</strong></a>, which is a pretty interesting microcontroller. The Pi Pico and the RP2040 have a big community, and there's a large ecosystem of related hardware, including many other boards that feature the RP2040.</li>
+<li><a href="https://probe.rs/" target="_blank"><strong>probe-rs</strong></a> is an embedded debugging toolkit, also written in Rust, which integrates nicely with the rest of the tooling we're going to use. We will use it together with the <a href="https://www.raspberrypi.com/products/debug-probe/" target="_blank"><strong>Raspberry Pi Debug Probe</strong></a> to interact with the Pi Pico.</li>
+</ul>
+<p>"Embedded" can mean a lot of things. By choosing a microcontroller, basically a tiny computer in a single chip, we're going for the lower end of the spectrum. Due to their small size, low power use, and lots of options to connect to other hardware, microcontrollers are very flexible and can find a place in many projects.</p>
+<p>Programming a microcontroller brings you much closer to the hardware than you'd typically get, which is fun and interesting! And while they are far from having the processing power of modern CPUs, these days they are plenty powerful for many applications.</p>
+<h2>Buying the Hardware</h2>
+<p>Okay, so we're doing embedded development, which means we need hardware! I already mentioned what we're using above, but let's get into the specifics of what you need to buy:</p>
+<ul>
+<li>The <a href="https://www.raspberrypi.com/products/raspberry-pi-pico/" target="_blank"><strong>Raspberry Pi Pico H</strong></a> is a variant of the Raspberry Pi Pico with pre-soldered GPIO headers, meaning you won't need any additional tools and skills to set it up. By clicking <code>Buy now</code> on the Pi Pico product page and selecting <code>GPIO Headers</code> -&gt; <code>Yes</code>, you should hopefully be able to find a distributor that ships to your location.</li>
+<li>The <a href="https://www.raspberrypi.com/products/debug-probe/" target="_blank"><strong>Raspberry Pi Debug Probe</strong></a> is a device that connects your computer to the Pi Pico, and provides some convenient features that are going to be useful during development.</li>
+<li>A <strong>USB A to Micro-B cable</strong>. A USB cable comes already included with the Debug Probe, but we'll need an additional one to supply power to the Pi Pico.</li>
+</ul>
+<p>That's all! I've specifically selected this hardware to keep things simple, so you don't need any more wires, tools, or skills (like soldering) to get started. You can make changes here, like substituting a different Pi Pico variant or debug probe. But unless you know what you're doing, I don't recommend it.</p>
+<h2>Installing Rust</h2>
+<p>While you wait for your hardware to arrive, we can start getting ready by installing Rust! This isn't a Rust tutorial, but even if you already know Rust, using it for embedded software is going to require some special handling.</p>
+<p>First, you need to install rustup, a tool that installs and manages Rust toolchains. The specifics of how to do that are going to depend on your operating system. A good starting point is the official <a href="https://www.rust-lang.org/tools/install" target="_blank">Install Rust</a> page.</p>
+<p>Again, please note that we need rustup specifically. It's possible to have a Rust installation without rustup, so <strong>don't skip this step, even if you already have Rust installed</strong>.</p>
+<p>Why do we need rustup? Two reasons:</p>
+<ol>
+<li>Some features of Embassy still require a nightly version of Rust to work. We <em>could</em> use Embassy without those, but I think the loss of convenience is not going to be worth it. Rustup is the easiest way to install a specific nightly version of Rust and update it later, as needed.</li>
+<li>Targeting a microcontroller requires some extra components that don't usually ship with a Rust toolchain, but which Rustup can install easily.</li>
+</ol>
+<aside class="m-5 p-5 bg-stone-200 rounded text-sm italic">Please don't be discouraged by the use of nightly! It tends to work remarkably well. Yes, there might be problems in nightly versions of Rust that never make it into a stable one, but we'll be using a specific nightly version that's known to work with our version of Embassy.</aside>
+<p>Once you have installed rustup, you can confirm that your setup works by creating a small Rust application:</p>
+<ol>
+<li>Go to the directory where you want to create your embedded project and type the following commands:</li>
+</ol>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="prism-token prism-function">cargo</span> new getting-started
+<span class="prism-token prism-builtin prism-class-name">cd</span> getting-started
+</code></pre>
+<p>This creates a new directory, <code>getting-started</code>, as well as a simple Rust application within it. We also switch to that directory right away, since that's where the following steps need to take place.</p>
+<aside class="m-5 p-5 bg-stone-200 rounded text-sm italic">You can substitute <code>getting-started</code> with another name. But the rest of this article will assume you chose <code>getting-started</code>, without explicitly calling out where you'd have to replace it.</aside>
+<ol start="2">
+<li>Within the new <code>getting-started</code> directory, create a file called <code>rust-toolchain.toml</code> and add the following contents:</li>
+</ol>
+<pre class="language-toml" tabindex="0"><code class="language-toml"><span class="prism-token prism-comment"># rust-toolchain.toml</span>
+
+<span class="prism-token prism-punctuation">[</span><span class="prism-token prism-table prism-class-name">toolchain</span><span class="prism-token prism-punctuation">]</span>
+<span class="prism-token prism-key prism-property">channel</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"nightly-2023-10-02"</span>
+<span class="prism-token prism-key prism-property">targets</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-punctuation">[</span><span class="prism-token prism-string">"thumbv6m-none-eabi"</span><span class="prism-token prism-punctuation">]</span>
+</code></pre>
+<p>This tells rustup to use a specific nightly version of Rust when doing anything in this directory. This version is known to work with the version of Embassy we're going to use. It also tells rustup to install support for the RP2040 (the <code>thumbv6m-none-eabi</code> target). We don't need this yet, but it's part of testing our setup.</p>
+<ol start="3">
+<li>Finally, run the Rust application:</li>
+</ol>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="prism-token prism-function">cargo</span> run
+</code></pre>
+<p>This should result in rustup downloading and installing the Rust toolchain we requested (which can take a while!), then run the program. If this ends with <code>Hello, world!</code> being printed to the screen, then everything is working!</p>
+<h2>Installing probe-rs</h2>
+<p>At this point, we're ready to compile Rust code that runs on the Pi Pico. We still need some way to then download the compiled program onto the hardware though (we embedded folks call that "flash the program", because flash memory is where the program usually ends up). That's what probe-rs is for!</p>
+<p>Before you can install it, you might need to install some prerequisites. Please <a href="https://probe.rs/docs/getting-started/installation/" target="_blank"><strong>follow the instructions over in the probe-rs documentation</strong></a>.</p>
+<p>Once you've got the prerequisites, the actual installation looks like this:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="prism-token prism-function">cargo</span> <span class="prism-token prism-function">install</span> probe-rs <span class="prism-token prism-parameter prism-variable">--locked</span> <span class="prism-token prism-parameter prism-variable">--features</span><span class="prism-token prism-operator">=</span>cli <span class="prism-token prism-parameter prism-variable">--version</span><span class="prism-token prism-operator">=</span><span class="prism-token prism-number">0.21</span>.0
+</code></pre>
+<aside class="m-5 p-5 bg-stone-200 rounded text-sm italic">If this is no longer the latest version by the time you're reading this, you can probably use the latest one instead. This command will install the specific one that I've tested this article with, so it might be the safer choice to get things working.</aside>
+<p><strong>If you're running Linux</strong> you need an extra step to make things work! Accessing debug probes via USB requires extra permissions, so unless you want to run probe-rs as root (not recommended!), please do the following:</p>
+<ol>
+<li><a href="https://probe.rs/files/69-probe-rs.rules" target="_blank">Download probe-rs' udev rules</a> and place them into <code>/etc/udev/rules.d</code>.</li>
+<li>Load the new rules: <code>udevadm control --reload</code></li>
+<li>Ensure the new rules are applied to already connected devices: <code>udevadm trigger</code></li>
+</ol>
+<p>There is <a href="https://probe.rs/docs/getting-started/probe-setup/" target="_blank">some more detail in the probe-rs documentation</a>.</p>
+<h2>Setting Up the Hardware</h2>
+<p>By this point, we need that hardware you ordered! If it hasn't arrived yet, maybe pass the time by learning more about <a href="https://doc.rust-lang.org/book/" target="_blank">Rust</a>, <a href="https://embassy.dev/" target="_blank">Embassy</a>, <a href="https://probe.rs/" target="_blank">probe-rs</a>, or the <a href="https://www.raspberrypi.com/products/raspberry-pi-pico/" target="_blank">Raspberry Pi Pico</a>. Or skip ahead and already look at the rest of this article. Don't forget to bookmark this page, so you find your way back once you're ready!</p>
+<p>Before we try to program the Pi Pico with our own code, let's set it up and see if it's working correctly.</p>
+<ol>
+<li>Connect the Raspberry Pi Debug probe to your PC via the USB cable included with the probe.</li>
+</ol>
+<p>A red LED should turn on immediately, to signal that the probe has power.</p>
+<aside class="m-5 p-5 bg-stone-200 rounded text-sm italic">If you don't see the red light, something's wrong! Maybe try a different USB port or a different cable. If neither of those help, maybe the probe is broken. You can try and continue, but it's possible you will need to replace it.</aside>
+<ol start="2">
+<li>
+<p>The probe has two other connectors, one labeled <code>U</code>, the other <code>D</code>. Connect the <code>D</code> port to the Pi Pico's debug port using the cable included with the probe.</p>
+</li>
+<li>
+<p>Use the other USB cable to connect the Pi Pico to a power source.</p>
+</li>
+</ol>
+<p>Here's what that should look like, fully connected.</p>
+<p><img src="debug-probe-and-pi-pico-connected-660w.webp" alt="Raspberry Pi Debug Probe and the Raspberry Pi Pico, fully connected"></p>
+<ol start="4">
+<li>Go to a fresh directory, clone the Embassy repository, and check out the specific version that is known to work with this article:</li>
+</ol>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="prism-token prism-function">git</span> clone https://github.com/embassy-rs/embassy.git
+<span class="prism-token prism-builtin prism-class-name">cd</span> embassy
+<span class="prism-token prism-function">git</span> switch <span class="prism-token prism-parameter prism-variable">-d</span> c3ef98a
+</code></pre>
+<aside class="m-5 p-5 bg-stone-200 rounded text-sm italic">We're using <a href="https://git-scm.com/" target="_blank">Git</a> here, a distributed version control system. If you don't know what that is, don't worry, we'll not be using it again in this article. Just make sure you have it installed, so those commands work as intended!</aside>
+<ol start="5">
+<li>The Embassy repository includes some example programs that are known to work on the Pi Pico. Let's run one of them, to ensure our hardware is set up correctly:</li>
+</ol>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="prism-token prism-builtin prism-class-name">cd</span> examples/rp
+<span class="prism-token prism-function">cargo</span> run <span class="prism-token prism-parameter prism-variable">--bin</span> blinky
+</code></pre>
+<p>This will take a while, when doing it for the first time! If everything went correctly, you should see confirmation from Cargo that it compiled the example, then two progress bars from probe-rs as it flashes the example.</p>
+<p>Once that is done, the green LED on the Pi Pico should start blinking, and you should see log output from the program beside that.</p>
+<h2>Writing the Application</h2>
+<p>We've confirmed that both our Rust installation and the hardware work correctly. It's finally time to write our own code!</p>
+<p>Let's go back to that <code>getting-started</code> directory we created to test our Rust installation. We've already added a <code>rust-toolchain.toml</code> there. Let's continue with some more files!</p>
+<ol>
+<li>We need a <code>.cargo/config.toml</code> (that's a file called <code>config.toml</code> in a sub-folder called <code>.config</code>), to make sure Cargo does the right thing:</li>
+</ol>
+<pre class="language-toml" tabindex="0"><code class="language-toml"><span class="prism-token prism-comment"># .cargo/config.toml</span>
+
+<span class="prism-token prism-punctuation">[</span><span class="prism-token prism-table prism-class-name">build</span><span class="prism-token prism-punctuation">]</span>
+<span class="prism-token prism-key prism-property">target</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"thumbv6m-none-eabi"</span>
+
+<span class="prism-token prism-punctuation">[</span><span class="prism-token prism-table prism-class-name">target.thumbv6m-none-eabi</span><span class="prism-token prism-punctuation">]</span>
+<span class="prism-token prism-key prism-property">runner</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"probe-rs run --chip=RP2040"</span>
+<span class="prism-token prism-key prism-property">rustflags</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-punctuation">[</span><span class="prism-token prism-string">"-C"</span><span class="prism-token prism-punctuation">,</span> <span class="prism-token prism-string">"link-args=-Tlink.x -Tlink-rp.x -Tdefmt.x"</span><span class="prism-token prism-punctuation">]</span>
+
+<span class="prism-token prism-punctuation">[</span><span class="prism-token prism-table prism-class-name">env</span><span class="prism-token prism-punctuation">]</span>
+<span class="prism-token prism-key prism-property">DEFMT_LOG</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"debug"</span>
+</code></pre>
+<p>Here we tell Cargo to do multiple things:</p>
+<ul>
+<li>Compile for <code>thumbv6m-none-eabi</code>, which is the correct target for the RP2040.</li>
+<li>Use probe-rs when we call <code>cargo run</code>, instead of trying to run the binary on the host computer.</li>
+<li>Include some linker scripts (<code>link.x</code>, <code>link-rp.x</code>, <code>defmt.x</code>, all provided by our dependencies; we'll go into that in a moment). These make sure everything ends up in the right place in the final binary. Rust (and the linker) already know how to do this when targeting an operating system, but microcontrollers are pretty diverse and need special handling.</li>
+<li>Configure a thing called "defmt", which we'll get into later.</li>
+</ul>
+<ol start="2">
+<li>Next, we need to update our <code>Cargo.toml</code> (which should already exist in the directory), to include the right dependencies. Here's what that should look like:</li>
+</ol>
+<pre class="language-toml" tabindex="0"><code class="language-toml"><span class="prism-token prism-comment"># Cargo.toml</span>
+
+<span class="prism-token prism-punctuation">[</span><span class="prism-token prism-table prism-class-name">package</span><span class="prism-token prism-punctuation">]</span>
+<span class="prism-token prism-key prism-property">name</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"getting-started"</span>
+<span class="prism-token prism-key prism-property">version</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"0.1.0"</span>
+<span class="prism-token prism-key prism-property">edition</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"2021"</span>
+
+
+<span class="prism-token prism-punctuation">[</span><span class="prism-token prism-table prism-class-name">dependencies</span><span class="prism-token prism-punctuation">]</span>
+<span class="prism-token prism-key prism-property">cortex-m-rt</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"0.7.3"</span>
+<span class="prism-token prism-key prism-property">defmt</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"0.3.5"</span>
+<span class="prism-token prism-key prism-property">defmt-rtt</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"0.4.0"</span>
+
+<span class="prism-token prism-punctuation">[</span><span class="prism-token prism-table prism-class-name">dependencies.embassy-executor</span><span class="prism-token prism-punctuation">]</span>
+<span class="prism-token prism-key prism-property">git</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"https://github.com/embassy-rs/embassy.git"</span>
+<span class="prism-token prism-key prism-property">rev</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"c3ef98a"</span>
+<span class="prism-token prism-key prism-property">features</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-punctuation">[</span><span class="prism-token prism-string">"nightly"</span><span class="prism-token prism-punctuation">,</span> <span class="prism-token prism-string">"arch-cortex-m"</span><span class="prism-token prism-punctuation">,</span> <span class="prism-token prism-string">"executor-thread"</span><span class="prism-token prism-punctuation">,</span> <span class="prism-token prism-string">"integrated-timers"</span><span class="prism-token prism-punctuation">]</span>
+
+<span class="prism-token prism-punctuation">[</span><span class="prism-token prism-table prism-class-name">dependencies.embassy-rp</span><span class="prism-token prism-punctuation">]</span>
+<span class="prism-token prism-key prism-property">git</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"https://github.com/embassy-rs/embassy.git"</span>
+<span class="prism-token prism-key prism-property">rev</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"c3ef98a"</span>
+<span class="prism-token prism-key prism-property">features</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-punctuation">[</span><span class="prism-token prism-string">"critical-section-impl"</span><span class="prism-token prism-punctuation">,</span> <span class="prism-token prism-string">"time-driver"</span><span class="prism-token prism-punctuation">]</span>
+
+<span class="prism-token prism-punctuation">[</span><span class="prism-token prism-table prism-class-name">dependencies.embassy-time</span><span class="prism-token prism-punctuation">]</span>
+<span class="prism-token prism-key prism-property">git</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"https://github.com/embassy-rs/embassy.git"</span>
+<span class="prism-token prism-key prism-property">rev</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"c3ef98a"</span>
+
+<span class="prism-token prism-punctuation">[</span><span class="prism-token prism-table prism-class-name">dependencies.panic-probe</span><span class="prism-token prism-punctuation">]</span>
+<span class="prism-token prism-key prism-property">version</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-string">"0.3.1"</span>
+<span class="prism-token prism-key prism-property">features</span> <span class="prism-token prism-punctuation">=</span> <span class="prism-token prism-punctuation">[</span><span class="prism-token prism-string">"print-defmt"</span><span class="prism-token prism-punctuation">]</span>
+</code></pre>
+<p>All we're doing here is to include a bunch of dependencies that our program is going to use. Let's go through them, one by one:</p>
+<ul>
+<li>The RP2040 is an Arm Cortex-M0+ microcontroller, and <code>cortex-m-rt</code> knows how to deal with those.</li>
+<li>Rust's formatting infrastructure is pretty heavy-weight in terms of code size. Usually we don't care, but a few kB can make a lot of difference on a microcontroller! <code>defmt</code> lets us use logging in our application, but instead of formatting those log messages on the device itself, it sends raw binary data, and those log messages get formatted on the host computer instead! <code>defmt-rtt</code> makes that all work using <a href="https://wiki.segger.com/RTT" target="_blank">RTT</a>, which is one way to transport data between the microcontroller and the host. probe-rs takes care of the host side of things.</li>
+<li>As I said above, we're using Embassy to write our application, and <code>embassy-executor</code> is a core part of that. It's an async executor which is going to make our life very easy. We'll see what that means later, when we look at the Rust code.</li>
+<li>In addition to <code>embassy-executor</code>, which supports all hardware that Embassy supports, we also need a library that knows how to talk to the RP2040 specifically (we call that a HAL, Hardware Abstraction Layer). This is what <code>embassy-rp</code> does.</li>
+<li><code>embassy-time</code> is another component of Embassy, this one making sure we can deal with time (again, we'll see in the Rust code). <code>embassy-time</code>'s API is not hardware-dependent, but <code>embassy-rp</code> needs to provide some low-level bits to make it work for our specific case.</li>
+<li>Normally, Rust knows how to panic, but again, microcontrollers tend to be a bit special. We might even want to do totally different things in case of a panic, depending on the specific deployment scenario. For our purposes, we use <code>panic-probe</code> to provide a panic handler which sends the panic message to the host using defmt (where it's handled by probe-rs).</li>
+</ul>
+<ol start="3">
+<li>With the dependencies handled, there's one more thing we need to deal with before we can get into the Rust code: Tell the linker exactly how much memory is available and where it is. We do that using a file called <code>memory.x</code>:</li>
+</ol>
+<pre class="language-ld" tabindex="0"><code class="language-ld"><span class="prism-token prism-comment">/* memory.x */</span>
+
+MEMORY <span class="prism-token prism-punctuation">{</span>
+    BOOT2 <span class="prism-token prism-operator">:</span> ORIGIN <span class="prism-token prism-operator">=</span> <span class="prism-token prism-number">0x10000000</span><span class="prism-token prism-punctuation">,</span> LENGTH <span class="prism-token prism-operator">=</span> <span class="prism-token prism-number">0x100</span>
+    FLASH <span class="prism-token prism-operator">:</span> ORIGIN <span class="prism-token prism-operator">=</span> <span class="prism-token prism-number">0x10000100</span><span class="prism-token prism-punctuation">,</span> LENGTH <span class="prism-token prism-operator">=</span> <span class="prism-token prism-number">2048K</span> <span class="prism-token prism-operator">-</span> <span class="prism-token prism-number">0x100</span>
+    RAM   <span class="prism-token prism-operator">:</span> ORIGIN <span class="prism-token prism-operator">=</span> <span class="prism-token prism-number">0x20000000</span><span class="prism-token prism-punctuation">,</span> LENGTH <span class="prism-token prism-operator">=</span> <span class="prism-token prism-number">256K</span>
+<span class="prism-token prism-punctuation">}</span>
+</code></pre>
+<p>For most of the hardware that Embassy supports, we don't need to provide that file. By depending on one of Embassy's HALs, we usually tell it everything it needs to know to provide the right file itself.</p>
+<p>It's a bit different for the RP2040 though, as unlike many microcontrollers, it doesn't have internal flash memory. The flash memory is a separate chip on the Pi Pico. For that reason, the size of the flash might vary, depending on which specific board we're using (and as I said above, there are many boards that have the RP2040).</p>
+<p>Since <code>embassy-rp</code> only knows about the RP2040 and doesn't care about the board, we need to provide that information ourselves (or risk getting a nasty linker error at compile-time).</p>
+<ol start="4">
+<li>Finally, we've set everything up and can start getting into the Rust code! Here's what we need our <code>src/main.rs</code> to look like:</li>
+</ol>
+<pre class="language-rust" tabindex="0"><code class="language-rust"><span class="prism-token prism-comment">// src/main.rs</span>
+
+<span class="prism-token prism-attribute prism-attr-name">#![no_std]</span>
+<span class="prism-token prism-attribute prism-attr-name">#![no_main]</span>
+<span class="prism-token prism-attribute prism-attr-name">#![feature(type_alias_impl_trait)]</span>
+
+<span class="prism-token prism-keyword">use</span> defmt_rtt <span class="prism-token prism-keyword">as</span> _<span class="prism-token prism-punctuation">;</span>
+<span class="prism-token prism-keyword">use</span> <span class="prism-token prism-namespace">embassy_executor<span class="prism-token prism-punctuation">::</span></span><span class="prism-token prism-class-name">Spawner</span><span class="prism-token prism-punctuation">;</span>
+<span class="prism-token prism-keyword">use</span> <span class="prism-token prism-namespace">embassy_rp<span class="prism-token prism-punctuation">::</span>gpio<span class="prism-token prism-punctuation">::</span></span><span class="prism-token prism-punctuation">{</span><span class="prism-token prism-class-name">Level</span><span class="prism-token prism-punctuation">,</span> <span class="prism-token prism-class-name">Output</span><span class="prism-token prism-punctuation">}</span><span class="prism-token prism-punctuation">;</span>
+<span class="prism-token prism-keyword">use</span> <span class="prism-token prism-namespace">embassy_time<span class="prism-token prism-punctuation">::</span></span><span class="prism-token prism-punctuation">{</span><span class="prism-token prism-class-name">Duration</span><span class="prism-token prism-punctuation">,</span> <span class="prism-token prism-class-name">Timer</span><span class="prism-token prism-punctuation">}</span><span class="prism-token prism-punctuation">;</span>
+<span class="prism-token prism-keyword">use</span> panic_probe <span class="prism-token prism-keyword">as</span> _<span class="prism-token prism-punctuation">;</span>
+
+<span class="prism-token prism-attribute prism-attr-name">#[embassy_executor::main]</span>
+<span class="prism-token prism-keyword">async</span> <span class="prism-token prism-keyword">fn</span> <span class="prism-token prism-function-definition prism-function">main</span><span class="prism-token prism-punctuation">(</span>_spawner<span class="prism-token prism-punctuation">:</span> <span class="prism-token prism-class-name">Spawner</span><span class="prism-token prism-punctuation">)</span> <span class="prism-token prism-punctuation">{</span>
+    <span class="prism-token prism-namespace">defmt<span class="prism-token prism-punctuation">::</span></span><span class="prism-token prism-macro prism-property">info!</span><span class="prism-token prism-punctuation">(</span><span class="prism-token prism-string">"Initializing..."</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">;</span>
+
+    <span class="prism-token prism-keyword">let</span> peripherals <span class="prism-token prism-operator">=</span> <span class="prism-token prism-namespace">embassy_rp<span class="prism-token prism-punctuation">::</span></span><span class="prism-token prism-function">init</span><span class="prism-token prism-punctuation">(</span><span class="prism-token prism-class-name">Default</span><span class="prism-token prism-punctuation">::</span><span class="prism-token prism-function">default</span><span class="prism-token prism-punctuation">(</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">;</span>
+    <span class="prism-token prism-keyword">let</span> <span class="prism-token prism-keyword">mut</span> led <span class="prism-token prism-operator">=</span> <span class="prism-token prism-class-name">Output</span><span class="prism-token prism-punctuation">::</span><span class="prism-token prism-function">new</span><span class="prism-token prism-punctuation">(</span>peripherals<span class="prism-token prism-punctuation">.</span><span class="prism-token prism-constant">PIN_25</span><span class="prism-token prism-punctuation">,</span> <span class="prism-token prism-class-name">Level</span><span class="prism-token prism-punctuation">::</span><span class="prism-token prism-class-name">Low</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">;</span>
+
+    <span class="prism-token prism-namespace">defmt<span class="prism-token prism-punctuation">::</span></span><span class="prism-token prism-macro prism-property">info!</span><span class="prism-token prism-punctuation">(</span><span class="prism-token prism-string">"Initialized."</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">;</span>
+
+    <span class="prism-token prism-keyword">loop</span> <span class="prism-token prism-punctuation">{</span>
+        <span class="prism-token prism-namespace">defmt<span class="prism-token prism-punctuation">::</span></span><span class="prism-token prism-macro prism-property">info!</span><span class="prism-token prism-punctuation">(</span><span class="prism-token prism-string">"LED on!"</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">;</span>
+        led<span class="prism-token prism-punctuation">.</span><span class="prism-token prism-function">set_high</span><span class="prism-token prism-punctuation">(</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">;</span>
+        <span class="prism-token prism-class-name">Timer</span><span class="prism-token prism-punctuation">::</span><span class="prism-token prism-function">after</span><span class="prism-token prism-punctuation">(</span><span class="prism-token prism-class-name">Duration</span><span class="prism-token prism-punctuation">::</span><span class="prism-token prism-function">from_millis</span><span class="prism-token prism-punctuation">(</span><span class="prism-token prism-number">50</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">.</span><span class="prism-token prism-keyword">await</span><span class="prism-token prism-punctuation">;</span>
+
+        <span class="prism-token prism-namespace">defmt<span class="prism-token prism-punctuation">::</span></span><span class="prism-token prism-macro prism-property">info!</span><span class="prism-token prism-punctuation">(</span><span class="prism-token prism-string">"LED off!"</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">;</span>
+        led<span class="prism-token prism-punctuation">.</span><span class="prism-token prism-function">set_low</span><span class="prism-token prism-punctuation">(</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">;</span>
+        <span class="prism-token prism-class-name">Timer</span><span class="prism-token prism-punctuation">::</span><span class="prism-token prism-function">after</span><span class="prism-token prism-punctuation">(</span><span class="prism-token prism-class-name">Duration</span><span class="prism-token prism-punctuation">::</span><span class="prism-token prism-function">from_millis</span><span class="prism-token prism-punctuation">(</span><span class="prism-token prism-number">950</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">)</span><span class="prism-token prism-punctuation">.</span><span class="prism-token prism-keyword">await</span><span class="prism-token prism-punctuation">;</span>
+    <span class="prism-token prism-punctuation">}</span>
+<span class="prism-token prism-punctuation">}</span>
+</code></pre>
+<p>A few things going on there:</p>
+<ul>
+<li>We tell the Rust compiler not to use the standard library (<code>#[no_std]</code>), as that would require an operating system to run on; and to not worry about the <code>main</code> function (<code>#[no_main]</code>), as - again - microcontrollers need special handling, and this is taken care of by <code>cortex-m-rt</code> and <code>embassy-executor</code>.</li>
+<li>Specify the one nightly feature (<a href="https://github.com/rust-lang/rfcs/blob/master/text/2515-type_alias_impl_trait.md" target="_blank"><code>type_alias_impl_trait</code></a>) that Embassy still needs (at least in the configuration we're using it in).</li>
+<li>Use a bunch of stuff from dependencies. <code>use defmt_rtt as _</code> and <code>use panic_probe as _</code> are notable here, as we don't directly use anything from them. They do set up important code in the background though, and unless we reference them here in some way, the compiler won't include them.</li>
+<li>Set up our <code>main</code> function. We use a special macro here to create the async executor that will run the <code>main</code> function.
+<ul>
+<li>Within the main function, we tell <code>embassy-rp</code> to initialize the hardware.</li>
+<li>We initialize a specific pin (<code>PIN_25</code>) which happens to be wired to the LED on the Pi Pico.</li>
+<li>We blink that LED in a loop.</li>
+</ul>
+</li>
+</ul>
+<p>As far as embedded applications go, this one is rather high-level. Thanks to Embassy! The special thing here is that our <code>main</code> function is async, meaning it won't run to the end in one go, but returns control to the caller at various intermediate points.</p>
+<p>Whenever we <code>.await</code> something in <code>main</code>, control is returned to the executor. The executor will then put the RP2040 into a power-saving sleep mode. The thing we <code>.await</code>, which in this examples are timers, know how to notify the executor when things are ready. When that happens, the executor wakes up and resumes our <code>main</code> function at that point.</p>
+<p>This is a great fit for embedded. Using this system, we can write code that looks sequential (just turn the LED on, wait, turn it off, wait, ...), while leaving it to the executor to run other things or go into sleep modes, as required. And of course, there's more to that system than we can see here, in this simple example.</p>
+<h2>Running the Application</h2>
+<p>So there we have it. An embedded application, for the RP2040 and the Raspberry Pi Pico, written in Rust. All that's left is to run it. Fortunately, with all the setup we've done, this is rather easy:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="prism-token prism-function">cargo</span> run
+</code></pre>
+<p>Remember, we've configured Cargo to use probe-rs as the runner, so this command will compile the application, upload it to the Pi Pico using probe-rs, and run it there. probe-rs will also stay connected to the running application, show us log messages using defmt and RTT, and, if it comes to that, a panic message.</p>
+<p>All of that is pretty neat! And as far as microcontrollers go, it's a very convenient setup.</p>
+<h2>What's next?</h2>
+<p>We've written a microcontroller application that blinks an LED. As far as embedded systems go, this basically is the equivalent of "Hello, world!". What's in front of us is a world of possibilities!</p>
+<p>We can connect to a wide variety of sensors, to measure temperature, air quality, acceleration, or whatever else we desire (and can buy a sensor for). We can connect all kinds of actuators, like a motor. Or add LEDs to build a lamp!</p>
+<p>This article ends here, but it hopefully has provided you with some basic understanding on how to write an embedded application in Rust, putting you into the position to explore further. If you are interested in anything specific, <a href="mailto:hello@hannobraun.com">please let me know</a>, so I know what to write about next!</p></article></main></body></html>
