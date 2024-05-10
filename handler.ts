@@ -52,10 +52,7 @@ const serveStatic = (hostname: string) => {
     };
 };
 
-const redirect = (
-    sources: string[],
-    target: string,
-) => {
+const redirect = (sources: string[], target: string) => {
     return (request: Request, url: URL) => {
         for (const source of sources) {
             if (url.hostname == source) {
