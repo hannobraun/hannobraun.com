@@ -3,13 +3,13 @@ import { serveDir } from "std/http/file_server.ts";
 export const handler = async (request: Request) => {
   const pipeline = new Pipeline(request);
 
-  const result = await serveStatic(
+  const result = serveStatic(
     "archive.hannobraun.com",
     pipeline.request,
     pipeline.url,
   );
-  if (result instanceof Response) {
-    return result;
+  if (result instanceof Promise) {
+    pipeline.request = result;
   }
 
   const result2 = await redirect(
