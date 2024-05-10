@@ -1,12 +1,14 @@
 import { serveDir } from "std/http/file_server.ts";
 
-export const handler = (req: Request) => {
+export const handler = async (req: Request) => {
   const url = new URL(req.url);
 
   // Primary domain. Serve from the respective directory.
   if (url.hostname == archive.hostname) {
-    const result = archive.handler(req);
-    return result;
+    const result = await archive.handler(req);
+    if (result instanceof Response) {
+      return result;
+    }
   }
 
   // This is the default domain for the Deno Deploy project. I don't want to use
