@@ -55,7 +55,7 @@ const serveStatic = (
 const redirect = (
     source: string,
     target: string,
-    req: Request | Response | Promise<Response>,
+    req: Request,
     url: URL,
 ) => {
     if (url.hostname == source) {
