@@ -3,11 +3,11 @@ import { serveDir } from "std/http/file_server.ts";
 export const handler = (request: Request) => {
     const response = new Pipeline(request)
         .on_request(
-            permanent_redirect(["hannobraun.com"], "www.hannobraun.com"),
+            redirect.permanent(["hannobraun.com"], "www.hannobraun.com"),
         )
         .on_request(serveStatic("archive.hannobraun.com"))
         .on_request(
-            permanent_redirect(
+            redirect.permanent(
                 ["hannobraun.deno.dev", "archive.braun-odw.eu"],
                 "archive.hannobraun.com",
             ),
@@ -56,19 +56,21 @@ const serveStatic = (hostname: string) => {
     };
 };
 
-const permanent_redirect = (sources: string[], target: string) => {
-    return (request: Request, url: URL) => {
-        for (const source of sources) {
-            if (url.hostname == source) {
-                return Response.redirect(
-                    `https://${target}${url.pathname}`,
-                    308,
-                );
+const redirect = {
+    permanent: (sources: string[], target: string) => {
+        return (request: Request, url: URL) => {
+            for (const source of sources) {
+                if (url.hostname == source) {
+                    return Response.redirect(
+                        `https://${target}${url.pathname}`,
+                        308,
+                    );
+                }
             }
-        }
 
-        return request;
-    };
+            return request;
+        };
+    },
 };
 
 const not_found = () => {
