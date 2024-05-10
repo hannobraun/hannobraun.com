@@ -1,9 +1,9 @@
 import { serveDir } from "std/http/file_server.ts";
 
 export const handler = async (req: Request) => {
-  const url = new URL(req.url);
+  const pipeline = new Pipeline(req);
 
-  const result = await serveStatic("archive.hannobraun.com", req, url);
+  const result = await serveStatic("archive.hannobraun.com", req, pipeline.url);
   if (result instanceof Response) {
     return result;
   }
@@ -12,7 +12,7 @@ export const handler = async (req: Request) => {
     "hannobraun.deno.dev",
     archive.hostname,
     req,
-    url,
+    pipeline.url,
   );
   if (result2 instanceof Response) {
     return result2;
@@ -22,7 +22,7 @@ export const handler = async (req: Request) => {
     "archive.braun-odw.eu",
     archive.hostname,
     req,
-    url,
+    pipeline.url,
   );
   if (result3 instanceof Response) {
     return result3;
@@ -30,6 +30,14 @@ export const handler = async (req: Request) => {
 
   return new Response("not found", { status: 404 });
 };
+
+class Pipeline {
+  url: URL;
+
+  constructor(req: Request) {
+    this.url = new URL(req.url);
+  }
+}
 
 const serveStatic = (
   hostname: string,
