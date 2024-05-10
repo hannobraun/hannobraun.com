@@ -9,21 +9,24 @@ export const handler = async (req: Request) => {
     return result;
   }
 
-  // This is the default domain for the Deno Deploy project. I don't want to use
-  // that.
-  if (url.hostname == "hannobraun.deno.dev") {
-    return Response.redirect(
-      `https://${archive.hostname}${url.pathname}`,
-      308,
-    );
+  const result2 = await redirect(
+    "hannobraun.deno.dev",
+    archive.hostname,
+    req,
+    url,
+  );
+  if (result2 instanceof Response) {
+    return result2;
   }
 
-  // These are legacy domains that I want to redirect 1:1 to the new domain.
-  if (url.hostname == "archive.braun-odw.eu") {
-    return Response.redirect(
-      `https://${archive.hostname}${url.pathname}`,
-      308,
-    );
+  const result3 = await redirect(
+    "archive.braun-odw.eu",
+    archive.hostname,
+    req,
+    url,
+  );
+  if (result3 instanceof Response) {
+    return result3;
   }
 
   return new Response("not found", { status: 404 });
@@ -40,6 +43,26 @@ const serveStatic = (
 
   if (url.hostname == hostname) {
     return serveDir(req, { fsRoot: hostname });
+  }
+
+  return req;
+};
+
+const redirect = (
+  source: string,
+  target: string,
+  req: Request | Promise<Response>,
+  url: URL,
+) => {
+  if (req instanceof Promise) {
+    return req;
+  }
+
+  if (url.hostname == source) {
+    return Response.redirect(
+      `https://${target}${url.pathname}`,
+      308,
+    );
   }
 
   return req;
