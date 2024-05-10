@@ -1,6 +1,6 @@
 import { serveDir } from "std/http/file_server.ts";
 
-Deno.serve((req) => {
+const handler = (req: Request) => {
   const url = new URL(req.url);
 
   // Primary domain. Serve from the respective directory.
@@ -26,4 +26,6 @@ Deno.serve((req) => {
   }
 
   return new Response("not found", { status: 404 });
-});
+};
+
+Deno.serve(handler);
