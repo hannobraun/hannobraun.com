@@ -4,7 +4,7 @@ export const handler = async (req: Request) => {
   const url = new URL(req.url);
 
   // Primary domain. Serve from the respective directory.
-  const result = await serveStatic(archive.hostname, req);
+  const result = await serveStatic("archive.hannobraun.com", req);
   if (result instanceof Response) {
     return result;
   }
