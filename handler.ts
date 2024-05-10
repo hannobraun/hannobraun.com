@@ -4,7 +4,7 @@ export const handler = async (req: Request) => {
   const url = new URL(req.url);
 
   // Primary domain. Serve from the respective directory.
-  const result = await archive.handler(archive.hostname, req);
+  const result = await serveStatic(archive.hostname, req);
   if (result instanceof Response) {
     return result;
   }
@@ -29,15 +29,16 @@ export const handler = async (req: Request) => {
   return new Response("not found", { status: 404 });
 };
 
+const serveStatic = (hostname: string, req: Request) => {
+  const url = new URL(req.url);
+
+  if (url.hostname == hostname) {
+    return serveDir(req, { fsRoot: hostname });
+  }
+
+  return req;
+};
+
 const archive = {
   hostname: "archive.hannobraun.com",
-  handler: (hostname: string, req: Request) => {
-    const url = new URL(req.url);
-
-    if (url.hostname == hostname) {
-      return serveDir(req, { fsRoot: hostname });
-    }
-
-    return req;
-  },
 };
