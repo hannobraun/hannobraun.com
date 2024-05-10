@@ -3,7 +3,7 @@ import { serveDir } from "std/http/file_server.ts";
 export const handler = (request: Request) => {
     const response = new Pipeline(request)
         .on_request(
-            redirect.permanent(["hannobraun.com"], "www.hannobraun.com"),
+            redirect.temporary(["hannobraun.com"], "www.hannobraun.com"),
         )
         .on_request(serveStatic("archive.hannobraun.com"))
         .on_request(
@@ -59,6 +59,9 @@ const serveStatic = (hostname: string) => {
 const redirect = {
     permanent: (sources: string[], target: string) => {
         return redirect.withCode(sources, target, 308);
+    },
+    temporary: (sources: string[], target: string) => {
+        return redirect.withCode(sources, target, 307);
     },
     withCode: (sources: string[], target: string, code: number) => {
         return (request: Request, url: URL) => {
