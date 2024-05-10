@@ -3,8 +3,8 @@ import { serveDir } from "std/http/file_server.ts";
 export const handler = (request: Request) => {
     const response = new Pipeline(request)
         .on_request(serveStatic("archive.hannobraun.com"))
-        .on_request(redirect("hannobraun.deno.dev", archive.hostname))
-        .on_request(redirect("archive.braun-odw.eu", archive.hostname))
+        .on_request(redirect(["hannobraun.deno.dev"], archive.hostname))
+        .on_request(redirect(["archive.braun-odw.eu"], archive.hostname))
         .or_else(() => new Response("not found", { status: 404 }));
 
     return response;
@@ -49,15 +49,17 @@ const serveStatic = (hostname: string) => {
 };
 
 const redirect = (
-    source: string,
+    sources: string[],
     target: string,
 ) => {
     return (request: Request, url: URL) => {
-        if (url.hostname == source) {
-            return Response.redirect(
-                `https://${target}${url.pathname}`,
-                308,
-            );
+        for (const source of sources) {
+            if (url.hostname == source) {
+                return Response.redirect(
+                    `https://${target}${url.pathname}`,
+                    308,
+                );
+            }
         }
 
         return request;
