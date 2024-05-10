@@ -6,7 +6,7 @@ export const handler = (request: Request) => {
         .on_request(
             redirect(
                 ["hannobraun.deno.dev", "archive.braun-odw.eu"],
-                archive.hostname,
+                "archive.hannobraun.com",
             ),
         )
         .or_else(() => new Response("not found", { status: 404 }));
@@ -68,8 +68,4 @@ const redirect = (
 
         return request;
     };
-};
-
-const archive = {
-    hostname: "archive.hannobraun.com",
 };
