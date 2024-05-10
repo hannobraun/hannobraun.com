@@ -39,9 +39,9 @@ class Pipeline {
   request: Request;
   url: URL;
 
-  constructor(req: Request) {
-    this.request = req;
-    this.url = new URL(req.url);
+  constructor(request: Request) {
+    this.request = request;
+    this.url = new URL(request.url);
   }
 }
 
