@@ -3,7 +3,6 @@ import { serveDir } from "std/http/file_server.ts";
 export const handler = async (req: Request) => {
   const url = new URL(req.url);
 
-  // Primary domain. Serve from the respective directory.
   const result = await serveStatic("archive.hannobraun.com", req, url);
   if (result instanceof Response) {
     return result;
