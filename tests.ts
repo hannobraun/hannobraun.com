@@ -34,7 +34,7 @@ Deno.test("redirect legacy archive domain", async () => {
     );
 });
 
-// I've had some bad experiences with framework in the past, so let's just make
+// I've had some bad experiences with frameworks in the past, so let's just make
 // sure that I'm handling all kinds of variants correctly. Once I extract some
 // better infrastructure code, I can convert this into more targeted tests for
 // that.
