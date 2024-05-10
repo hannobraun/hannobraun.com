@@ -9,7 +9,7 @@ export const handler = (request: Request) => {
                 "archive.hannobraun.com",
             ),
         )
-        .or_else(() => new Response("not found", { status: 404 }));
+        .or_else(not_found());
 
     return response;
 };
@@ -66,4 +66,8 @@ const redirect = (sources: string[], target: string) => {
 
         return request;
     };
+};
+
+const not_found = () => {
+    return () => new Response("not found", { status: 404 });
 };
