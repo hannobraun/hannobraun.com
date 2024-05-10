@@ -46,7 +46,7 @@ class Pipeline {
   }
 }
 
-type PipelineRequest = Request | Promise<Response>;
+type PipelineRequest = Request | Response | Promise<Response>;
 
 const serveStatic = (
   hostname: string,
@@ -63,7 +63,7 @@ const serveStatic = (
 const redirect = (
   source: string,
   target: string,
-  req: Request | Promise<Response>,
+  req: Request | Response | Promise<Response>,
   url: URL,
 ) => {
   if (url.hostname == source) {
