@@ -30,10 +30,20 @@ export const handler = async (req: Request) => {
 };
 
 interface Handler {
-  (hostname: string, req: Request): Request | Promise<Response>;
+  (
+    hostname: string,
+    req: Request | Promise<Response>,
+  ): Request | Promise<Response>;
 }
 
-const serveStatic: Handler = (hostname: string, req: Request) => {
+const serveStatic: Handler = (
+  hostname: string,
+  req: Request | Promise<Response>,
+) => {
+  if (req instanceof Promise) {
+    return req;
+  }
+
   const url = new URL(req.url);
 
   if (url.hostname == hostname) {
