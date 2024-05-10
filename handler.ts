@@ -43,14 +43,14 @@ type PipelineRequest = Request | Response | Promise<Response>;
 
 const serveStatic = (
     hostname: string,
-    req: Request,
+    request: Request,
     url: URL,
 ) => {
     if (url.hostname == hostname) {
-        return serveDir(req, { fsRoot: hostname });
+        return serveDir(request, { fsRoot: hostname });
     }
 
-    return req;
+    return request;
 };
 
 const redirect = (
