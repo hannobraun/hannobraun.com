@@ -56,7 +56,7 @@ const serveStatic = (
 const redirect = (
     source: string,
     target: string,
-    req: Request,
+    request: Request,
     url: URL,
 ) => {
     if (url.hostname == source) {
@@ -66,7 +66,7 @@ const redirect = (
         );
     }
 
-    return req;
+    return request;
 };
 
 const archive = {
