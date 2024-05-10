@@ -1,16 +1,9 @@
 import { serveDir } from "std/http/file_server.ts";
 
 export const handler = async (request: Request) => {
-  const pipeline = new Pipeline(request);
-
-  const result = serveStatic(
-    "archive.hannobraun.com",
-    pipeline.request,
-    pipeline.url,
+  const pipeline = new Pipeline(request).on_request((request, url) =>
+    serveStatic("archive.hannobraun.com", request, url)
   );
-  if (result instanceof Promise) {
-    pipeline.request = result;
-  }
 
   const result2 = await redirect(
     "hannobraun.deno.dev",
@@ -43,19 +36,23 @@ class Pipeline {
     this.request = request;
     this.url = new URL(request.url);
   }
+
+  on_request(f: (request: Request, url: URL) => PipelineRequest): Pipeline {
+    if (this.request instanceof Request) {
+      this.request = f(this.request, this.url);
+    }
+
+    return this;
+  }
 }
 
 type PipelineRequest = Request | Promise<Response>;
 
 const serveStatic = (
   hostname: string,
-  req: Request | Promise<Response>,
+  req: Request,
   url: URL,
 ) => {
-  if (req instanceof Promise) {
-    return req;
-  }
-
   if (url.hostname == hostname) {
     return serveDir(req, { fsRoot: hostname });
   }
