@@ -2,9 +2,7 @@ import { serveDir } from "std/http/file_server.ts";
 
 export const handler = (request: Request) => {
     const response = new Pipeline(request)
-        .on_request(
-            serveStatic("archive.hannobraun.com"),
-        )
+        .on_request(serveStatic("archive.hannobraun.com"))
         .on_request((request, url) =>
             redirect("hannobraun.deno.dev", archive.hostname, request, url)
         )
