@@ -5,7 +5,8 @@ export const handler = (req: Request) => {
 
   // Primary domain. Serve from the respective directory.
   if (url.hostname == archive.hostname) {
-    return archive.handler(req);
+    const result = archive.handler(req);
+    return result;
   }
 
   // This is the default domain for the Deno Deploy project. I don't want to use
