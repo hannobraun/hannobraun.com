@@ -36,7 +36,7 @@ export const handler = async (request: Request) => {
 };
 
 class Pipeline {
-  request: Request | Promise<Response>;
+  request: PipelineRequest;
   url: URL;
 
   constructor(request: Request) {
@@ -44,6 +44,8 @@ class Pipeline {
     this.url = new URL(request.url);
   }
 }
+
+type PipelineRequest = Request | Promise<Response>;
 
 const serveStatic = (
   hostname: string,
