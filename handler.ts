@@ -4,7 +4,7 @@ export const handler = (request: Request) => {
     const response = new Pipeline(request)
         .on_request(serveStatic("archive.hannobraun.com"))
         .on_request(
-            redirect(
+            permanent_redirect(
                 ["hannobraun.deno.dev", "archive.braun-odw.eu"],
                 "archive.hannobraun.com",
             ),
@@ -53,7 +53,7 @@ const serveStatic = (hostname: string) => {
     };
 };
 
-const redirect = (sources: string[], target: string) => {
+const permanent_redirect = (sources: string[], target: string) => {
     return (request: Request, url: URL) => {
         for (const source of sources) {
             if (url.hostname == source) {
