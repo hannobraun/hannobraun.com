@@ -4,11 +4,14 @@ export const handler = (request: Request) => {
     const response = new Pipeline(request)
         .on_request(
             serveStatic("archive.hannobraun.com"),
-        ).on_request((request, url) =>
+        )
+        .on_request((request, url) =>
             redirect("hannobraun.deno.dev", archive.hostname, request, url)
-        ).on_request((request, url) =>
+        )
+        .on_request((request, url) =>
             redirect("archive.braun-odw.eu", archive.hostname, request, url)
-        ).or_else(() => new Response("not found", { status: 404 }));
+        )
+        .or_else(() => new Response("not found", { status: 404 }));
 
     return response;
 };
