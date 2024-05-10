@@ -4,7 +4,7 @@ export const handler = async (req: Request) => {
   const url = new URL(req.url);
 
   // Primary domain. Serve from the respective directory.
-  const result = await serveStatic("archive.hannobraun.com", req);
+  const result = await serveStatic("archive.hannobraun.com", req, url);
   if (result instanceof Response) {
     return result;
   }
@@ -33,18 +33,18 @@ interface Handler {
   (
     hostname: string,
     req: Request | Promise<Response>,
+    url: URL,
   ): Request | Promise<Response>;
 }
 
 const serveStatic: Handler = (
   hostname: string,
   req: Request | Promise<Response>,
+  url: URL,
 ) => {
   if (req instanceof Promise) {
     return req;
   }
-
-  const url = new URL(req.url);
 
   if (url.hostname == hostname) {
     return serveDir(req, { fsRoot: hostname });
