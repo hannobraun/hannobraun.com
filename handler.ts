@@ -41,9 +41,7 @@ class Pipeline {
 
 type PipelineRequest = Request | Response | Promise<Response>;
 
-const serveStatic = (
-    hostname: string,
-) => {
+const serveStatic = (hostname: string) => {
     return (request: Request, url: URL) => {
         if (url.hostname == hostname) {
             return serveDir(request, { fsRoot: hostname });
