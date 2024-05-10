@@ -4,11 +4,9 @@ export const handler = async (req: Request) => {
   const url = new URL(req.url);
 
   // Primary domain. Serve from the respective directory.
-  if (url.hostname == archive.hostname) {
-    const result = await archive.handler(req);
-    if (result instanceof Response) {
-      return result;
-    }
+  const result = await archive.handler(archive.hostname, req);
+  if (result instanceof Response) {
+    return result;
   }
 
   // This is the default domain for the Deno Deploy project. I don't want to use
@@ -33,5 +31,13 @@ export const handler = async (req: Request) => {
 
 const archive = {
   hostname: "archive.hannobraun.com",
-  handler: (req: Request) => serveDir(req, { fsRoot: archive.hostname }),
+  handler: (hostname: string, req: Request) => {
+    const url = new URL(req.url);
+
+    if (url.hostname == hostname) {
+      return serveDir(req, { fsRoot: hostname });
+    }
+
+    return req;
+  },
 };
