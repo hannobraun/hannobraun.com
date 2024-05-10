@@ -5,7 +5,7 @@ export const handler = (req: Request) => {
 
   // Primary domain. Serve from the respective directory.
   if (url.hostname == archive.hostname) {
-    return serveDir(req, { fsRoot: archive.hostname });
+    return archive.handler(req);
   }
 
   // This is the default domain for the Deno Deploy project. I don't want to use
@@ -30,4 +30,5 @@ export const handler = (req: Request) => {
 
 const archive = {
   hostname: "archive.hannobraun.com",
+  handler: (req: Request) => serveDir(req, { fsRoot: archive.hostname }),
 };
