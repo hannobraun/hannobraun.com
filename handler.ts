@@ -66,10 +66,6 @@ const redirect = (
   req: Request | Promise<Response>,
   url: URL,
 ) => {
-  if (req instanceof Promise) {
-    return req;
-  }
-
   if (url.hostname == source) {
     return Response.redirect(
       `https://${target}${url.pathname}`,
