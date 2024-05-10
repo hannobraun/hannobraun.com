@@ -29,15 +29,7 @@ export const handler = async (req: Request) => {
   return new Response("not found", { status: 404 });
 };
 
-interface Handler {
-  (
-    hostname: string,
-    req: Request | Promise<Response>,
-    url: URL,
-  ): Request | Promise<Response>;
-}
-
-const serveStatic: Handler = (
+const serveStatic = (
   hostname: string,
   req: Request | Promise<Response>,
   url: URL,
