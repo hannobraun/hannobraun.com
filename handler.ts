@@ -36,7 +36,7 @@ export const handler = async (request: Request) => {
 };
 
 class Pipeline {
-  request: Request;
+  request: Request | Promise<Response>;
   url: URL;
 
   constructor(request: Request) {
