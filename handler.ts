@@ -3,8 +3,12 @@ import { serveDir } from "std/http/file_server.ts";
 export const handler = (request: Request) => {
     const response = new Pipeline(request)
         .on_request(serveStatic("archive.hannobraun.com"))
-        .on_request(redirect(["hannobraun.deno.dev"], archive.hostname))
-        .on_request(redirect(["archive.braun-odw.eu"], archive.hostname))
+        .on_request(
+            redirect(
+                ["hannobraun.deno.dev", "archive.braun-odw.eu"],
+                archive.hostname,
+            ),
+        )
         .or_else(() => new Response("not found", { status: 404 }));
 
     return response;
