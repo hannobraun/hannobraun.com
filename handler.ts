@@ -1,13 +1,14 @@
 import { serveDir } from "std/http/file_server.ts";
 
 export const handler = (request: Request) => {
-  const pipeline = new Pipeline(request).on_request((request, url) =>
-    serveStatic("archive.hannobraun.com", request, url)
-  ).on_request((request, url) =>
-    redirect("hannobraun.deno.dev", archive.hostname, request, url)
-  ).on_request((request, url) =>
-    redirect("archive.braun-odw.eu", archive.hostname, request, url)
-  );
+  const pipeline = new Pipeline(request)
+    .on_request((request, url) =>
+      serveStatic("archive.hannobraun.com", request, url)
+    ).on_request((request, url) =>
+      redirect("hannobraun.deno.dev", archive.hostname, request, url)
+    ).on_request((request, url) =>
+      redirect("archive.braun-odw.eu", archive.hostname, request, url)
+    );
 
   if (
     pipeline.request instanceof Response || pipeline.request instanceof Promise
