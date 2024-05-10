@@ -3,7 +3,11 @@ import { serveDir } from "std/http/file_server.ts";
 export const handler = async (req: Request) => {
   const pipeline = new Pipeline(req);
 
-  const result = await serveStatic("archive.hannobraun.com", req, pipeline.url);
+  const result = await serveStatic(
+    "archive.hannobraun.com",
+    pipeline.request,
+    pipeline.url,
+  );
   if (result instanceof Response) {
     return result;
   }
@@ -11,7 +15,7 @@ export const handler = async (req: Request) => {
   const result2 = await redirect(
     "hannobraun.deno.dev",
     archive.hostname,
-    req,
+    pipeline.request,
     pipeline.url,
   );
   if (result2 instanceof Response) {
@@ -21,7 +25,7 @@ export const handler = async (req: Request) => {
   const result3 = await redirect(
     "archive.braun-odw.eu",
     archive.hostname,
-    req,
+    pipeline.request,
     pipeline.url,
   );
   if (result3 instanceof Response) {
@@ -32,9 +36,11 @@ export const handler = async (req: Request) => {
 };
 
 class Pipeline {
+  request: Request;
   url: URL;
 
   constructor(req: Request) {
+    this.request = req;
     this.url = new URL(req.url);
   }
 }
