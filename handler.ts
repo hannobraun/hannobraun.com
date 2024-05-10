@@ -4,15 +4,15 @@ export const handler = (req: Request) => {
   const url = new URL(req.url);
 
   // Primary domain. Serve from the respective directory.
-  if (url.hostname == "archive.hannobraun.com") {
-    return serveDir(req, { fsRoot: "archive.hannobraun.com" });
+  if (url.hostname == archive) {
+    return serveDir(req, { fsRoot: archive });
   }
 
   // This is the default domain for the Deno Deploy project. I don't want to use
   // that.
   if (url.hostname == "hannobraun.deno.dev") {
     return Response.redirect(
-      `https://archive.hannobraun.com${url.pathname}`,
+      `https://${archive}${url.pathname}`,
       308,
     );
   }
@@ -20,10 +20,12 @@ export const handler = (req: Request) => {
   // These are legacy domains that I want to redirect 1:1 to the new domain.
   if (url.hostname == "archive.braun-odw.eu") {
     return Response.redirect(
-      `https://archive.hannobraun.com${url.pathname}`,
+      `https://${archive}${url.pathname}`,
       308,
     );
   }
 
   return new Response("not found", { status: 404 });
 };
+
+const archive = "archive.hannobraun.com";
