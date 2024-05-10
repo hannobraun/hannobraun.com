@@ -31,7 +31,7 @@ class Pipeline {
         return this;
     }
 
-    or_else(f: () => Response): Response | Promise<Response> {
+    or_else(f: () => Response): PipelineResponse {
         if (this.request instanceof Request) {
             return f();
         }
@@ -40,7 +40,8 @@ class Pipeline {
     }
 }
 
-type PipelineRequest = Request | Response | Promise<Response>;
+type PipelineRequest = Request | PipelineResponse;
+type PipelineResponse = Response | Promise<Response>;
 
 const serveStatic = (hostname: string) => {
     return (request: Request, url: URL) => {
