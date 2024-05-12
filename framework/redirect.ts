@@ -19,11 +19,7 @@ export const fromHosts = (hosts: string[]) => {
     });
 };
 
-const redirectWithCode = (
-    selector: Selector,
-    target: string,
-    code: number,
-) => {
+const redirectWithCode = (selector: Selector, target: string, code: number) => {
     return (request: Request, url: URL) => {
         if (selector.select(url)) {
             return Response.redirect(
