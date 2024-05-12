@@ -13,7 +13,7 @@ export const handler = (request: Request) => {
         .onRequest(
             redirect.permanent(
                 fromHosts(["www.hannobraun.com"]).andPathPrefix(
-                    "/getting-started",
+                    ["/getting-started"],
                 ),
                 to("https://archive.hannobraun.com/embedded-rust").plusPath(),
             ),
