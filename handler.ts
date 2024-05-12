@@ -1,20 +1,20 @@
 import { serveDir } from "std/http/file_server.ts";
 
-import { fromHosts, redirect } from "./framework/redirect.ts";
+import { fromHosts, redirect, to } from "./framework/redirect.ts";
 
 export const handler = (request: Request) => {
     const response = new Pipeline(request)
         .on_request(
             redirect.temporary(
                 fromHosts(["hannobraun.com"]),
-                "www.hannobraun.com",
+                to("www.hannobraun.com"),
             ),
         )
         .on_request(serveStatic("archive.hannobraun.com"))
         .on_request(
             redirect.permanent(
                 fromHosts(["hannobraun.deno.dev", "archive.braun-odw.eu"]),
-                "archive.hannobraun.com",
+                to("archive.hannobraun.com"),
             ),
         )
         .or_else(not_found());
