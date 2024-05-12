@@ -41,6 +41,16 @@ class Selector {
         return this;
     }
 
+    andPathPrefix(pathPrefix: string): Selector {
+        this.selectorFns.push((url: URL) => {
+            console.log(url);
+            console.log(url.pathname.startsWith(pathPrefix));
+            return url.pathname.startsWith(pathPrefix);
+        });
+
+        return this;
+    }
+
     select(url: URL): boolean {
         let selected = true;
 
