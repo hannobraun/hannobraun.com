@@ -21,10 +21,7 @@ const redirectWithCode = (selector: Selector, target: Target, code: number) => {
     return (request: Request, url: URL) => {
         if (selector.select(url)) {
             const builtTarget = target.buildTarget(url);
-            return Response.redirect(
-                builtTarget,
-                code,
-            );
+            return Response.redirect(builtTarget, code);
         }
 
         return request;
