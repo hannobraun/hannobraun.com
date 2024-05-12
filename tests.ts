@@ -34,6 +34,17 @@ Deno.test("redirect legacy archive domain", async () => {
     );
 });
 
+Deno.test("redirect embedded article", async () => {
+    const req = new Request("https://www.hannobraun.com/getting-started/");
+    const res = await handler(req);
+
+    assertEquals(res.status, 308);
+    assertEquals(
+        res.headers.get("location"),
+        "https://archive.hannobraun.com/embedded-rust/getting-started/",
+    );
+});
+
 // I've had some bad experiences with frameworks in the past, so let's just make
 // sure that I'm handling all kinds of variants correctly. Once I extract some
 // better infrastructure code, I can convert this into more targeted tests for

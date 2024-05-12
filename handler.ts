@@ -10,6 +10,14 @@ export const handler = (request: Request) => {
                 to("https://www.hannobraun.com").plusPath(),
             ),
         )
+        .on_request(
+            redirect.permanent(
+                fromHosts(["www.hannobraun.com"]).andPathPrefix(
+                    "/getting-started",
+                ),
+                to("https://archive.hannobraun.com/embedded-rust").plusPath(),
+            ),
+        )
         .on_request(serveStatic("archive.hannobraun.com"))
         .on_request(
             redirect.permanent(
