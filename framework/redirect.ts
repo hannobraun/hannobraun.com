@@ -12,9 +12,7 @@ export const fromHosts = (hosts: string[]) => {
 };
 
 export const to = (target: string) => {
-    return new Target((_url: URL) => {
-        return `${target}`;
-    });
+    return new Target(target);
 };
 
 const redirectWithCode = (selector: Selector, target: Target, code: number) => {
@@ -69,8 +67,10 @@ class Selector {
 class Target {
     targetFns: ((url: URL) => string)[];
 
-    constructor(targetFn: (url: URL) => string) {
-        this.targetFns = [targetFn];
+    constructor(target: string) {
+        this.targetFns = [(_url: URL) => {
+            return `${target}`;
+        }];
     }
 
     plusPath(): Target {
