@@ -4,13 +4,13 @@ import { fromHosts, redirect, to } from "./framework/redirect.ts";
 
 export const handler = (request: Request) => {
     const response = new Pipeline(request)
-        .on_request(
+        .onRequest(
             redirect.temporary(
                 fromHosts(["hannobraun.com"]),
                 to("https://www.hannobraun.com").plusPath(),
             ),
         )
-        .on_request(
+        .onRequest(
             redirect.permanent(
                 fromHosts(["www.hannobraun.com"]).andPathPrefix(
                     "/getting-started",
@@ -18,8 +18,8 @@ export const handler = (request: Request) => {
                 to("https://archive.hannobraun.com/embedded-rust").plusPath(),
             ),
         )
-        .on_request(serveStatic("archive.hannobraun.com"))
-        .on_request(
+        .onRequest(serveStatic("archive.hannobraun.com"))
+        .onRequest(
             redirect.permanent(
                 fromHosts(["hannobraun.deno.dev", "archive.braun-odw.eu"]),
                 to("https://archive.hannobraun.com").plusPath(),
@@ -39,7 +39,7 @@ class Pipeline {
         this.url = new URL(request.url);
     }
 
-    on_request(f: (request: Request, url: URL) => PipelineRequest): Pipeline {
+    onRequest(f: (request: Request, url: URL) => PipelineRequest): Pipeline {
         if (this.request instanceof Request) {
             this.request = f(this.request, this.url);
         }
