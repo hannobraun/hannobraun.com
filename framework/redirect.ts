@@ -8,15 +8,7 @@ export const redirect = {
 };
 
 export const fromHosts = (hosts: string[]) => {
-    return new Selector((url: URL) => {
-        for (const host of hosts) {
-            if (url.hostname == host) {
-                return true;
-            }
-        }
-
-        return false;
-    });
+    return new Selector().andHosts(hosts);
 };
 
 const redirectWithCode = (selector: Selector, target: string, code: number) => {
@@ -35,8 +27,22 @@ const redirectWithCode = (selector: Selector, target: string, code: number) => {
 class Selector {
     selectorFns: SelectorFn[];
 
-    constructor(selectorFn: SelectorFn) {
-        this.selectorFns = [selectorFn];
+    constructor() {
+        this.selectorFns = [];
+    }
+
+    andHosts(hosts: string[]): Selector {
+        this.selectorFns.push((url: URL) => {
+            for (const host of hosts) {
+                if (url.hostname == host) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+
+        return this;
     }
 
     select(url: URL): boolean {
