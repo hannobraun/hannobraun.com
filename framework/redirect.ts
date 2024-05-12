@@ -1,8 +1,8 @@
 export const redirect = {
-    permanent: (selector: Selector, target: string) => {
+    permanent: (selector: SelectorFn, target: string) => {
         return redirectWithCode(selector, target, 308);
     },
-    temporary: (selector: Selector, target: string) => {
+    temporary: (selector: SelectorFn, target: string) => {
         return redirectWithCode(selector, target, 307);
     },
 };
@@ -19,7 +19,11 @@ export const fromHosts = (hosts: string[]) => {
     };
 };
 
-const redirectWithCode = (selector: Selector, target: string, code: number) => {
+const redirectWithCode = (
+    selector: SelectorFn,
+    target: string,
+    code: number,
+) => {
     return (request: Request, url: URL) => {
         if (selector(url)) {
             return Response.redirect(
@@ -32,6 +36,6 @@ const redirectWithCode = (selector: Selector, target: string, code: number) => {
     };
 };
 
-interface Selector {
+interface SelectorFn {
     (url: URL): boolean;
 }
