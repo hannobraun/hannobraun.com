@@ -1,14 +1,14 @@
 export const redirect = {
-    permanent: (selector: SelectorFn, target: string) => {
+    permanent: (selector: Selector, target: string) => {
         return redirectWithCode(selector, target, 308);
     },
-    temporary: (selector: SelectorFn, target: string) => {
+    temporary: (selector: Selector, target: string) => {
         return redirectWithCode(selector, target, 307);
     },
 };
 
 export const fromHosts = (hosts: string[]) => {
-    return (url: URL) => {
+    return new Selector((url: URL) => {
         for (const host of hosts) {
             if (url.hostname == host) {
                 return true;
@@ -16,16 +16,16 @@ export const fromHosts = (hosts: string[]) => {
         }
 
         return false;
-    };
+    });
 };
 
 const redirectWithCode = (
-    selector: SelectorFn,
+    selector: Selector,
     target: string,
     code: number,
 ) => {
     return (request: Request, url: URL) => {
-        if (selector(url)) {
+        if (selector.select(url)) {
             return Response.redirect(
                 `https://${target}${url.pathname}`,
                 code,
@@ -35,6 +35,24 @@ const redirectWithCode = (
         return request;
     };
 };
+
+class Selector {
+    selectorFns: SelectorFn[];
+
+    constructor(selectorFn: SelectorFn) {
+        this.selectorFns = [selectorFn];
+    }
+
+    select(url: URL): boolean {
+        let selected = true;
+
+        for (const fn of this.selectorFns) {
+            selected = selected && fn(url);
+        }
+
+        return selected;
+    }
+}
 
 interface SelectorFn {
     (url: URL): boolean;
