@@ -2,6 +2,16 @@ import { assertEquals } from "std/assert/mod.ts";
 
 import { handler } from "./handler.ts";
 
+Deno.test("serve hub website", async () => {
+    const req = new Request("https://www.hannobraun.com/");
+    const res = await handler(req);
+
+    assertEquals(res.status, 200);
+
+    // Consume response, so test doesn't leak resources.
+    await res.text();
+});
+
 Deno.test("serve archive", async () => {
     const req = new Request("https://archive.hannobraun.com/missile-miner/");
     const res = await handler(req);

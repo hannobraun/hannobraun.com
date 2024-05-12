@@ -32,6 +32,7 @@ export const handler = (request: Request) => {
                 to("https://archive.hannobraun.com/embedded-rust").plusPath(),
             ),
         )
+        .onRequest(serveStatic("www.hannobraun.com"))
         .onRequest(serveStatic("archive.hannobraun.com"))
         .onRequest(
             redirect.permanent(
