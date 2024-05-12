@@ -45,8 +45,8 @@ class Selector {
 
     andPathPrefixes(pathPrefixes: string[]): Selector {
         this.selectorFns.push((url: URL) => {
-            for (const prefix of pathPrefixes) {
-                if (url.pathname.startsWith(prefix)) {
+            for (const pathPrefix of pathPrefixes) {
+                if (url.pathname.startsWith(pathPrefix)) {
                     return true;
                 }
             }
