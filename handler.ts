@@ -7,14 +7,14 @@ export const handler = (request: Request) => {
         .on_request(
             redirect.temporary(
                 fromHosts(["hannobraun.com"]),
-                to("https://www.hannobraun.com"),
+                to("https://www.hannobraun.com").plusPath(),
             ),
         )
         .on_request(serveStatic("archive.hannobraun.com"))
         .on_request(
             redirect.permanent(
                 fromHosts(["hannobraun.deno.dev", "archive.braun-odw.eu"]),
-                to("https://archive.hannobraun.com"),
+                to("https://archive.hannobraun.com").plusPath(),
             ),
         )
         .or_else(not_found());

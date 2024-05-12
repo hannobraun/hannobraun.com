@@ -12,8 +12,8 @@ export const fromHosts = (hosts: string[]) => {
 };
 
 export const to = (target: string) => {
-    return new Target((url: URL) => {
-        return `${target}${url.pathname}`;
+    return new Target((_url: URL) => {
+        return `${target}`;
     });
 };
 
@@ -71,6 +71,14 @@ class Target {
 
     constructor(targetFn: (url: URL) => string) {
         this.targetFns = [targetFn];
+    }
+
+    plusPath(): Target {
+        this.targetFns.push((url) => {
+            return `${url.pathname}`;
+        });
+
+        return this;
     }
 
     buildTarget(url: URL): string {
