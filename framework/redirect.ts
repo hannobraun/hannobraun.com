@@ -12,16 +12,16 @@ export const fromHosts = (hosts: string[]) => {
 };
 
 export const to = (target: string) => {
-    return (url: URL) => {
+    return new Target((url: URL) => {
         return `${target}${url.pathname}`;
-    };
+    });
 };
 
 const redirectWithCode = (selector: Selector, target: Target, code: number) => {
     return (request: Request, url: URL) => {
         if (selector.select(url)) {
             return Response.redirect(
-                target(url),
+                target.buildTarget(url),
                 code,
             );
         }
@@ -68,6 +68,14 @@ class Selector {
     }
 }
 
-interface Target {
-    (url: URL): string;
+class Target {
+    targetFn: (url: URL) => string;
+
+    constructor(targetFn: (url: URL) => string) {
+        this.targetFn = targetFn;
+    }
+
+    buildTarget(url: URL): string {
+        return this.targetFn(url);
+    }
 }
