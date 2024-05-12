@@ -25,7 +25,7 @@ export const handler = (request: Request) => {
                 to("https://archive.hannobraun.com").plusPath(),
             ),
         )
-        .or_else(not_found());
+        .orElse(not_found());
 
     return response;
 };
@@ -47,7 +47,7 @@ class Pipeline {
         return this;
     }
 
-    or_else(f: () => Response): PipelineResponse {
+    orElse(f: () => Response): PipelineResponse {
         if (this.request instanceof Request) {
             return f();
         }
