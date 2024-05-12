@@ -13,6 +13,20 @@ export const handler = (request: Request) => {
         .onRequest(
             redirect.permanent(
                 fromHosts(["www.hannobraun.com"]).andPathPrefixes(
+                    [
+                        "/i-enjoyed-making-notebooks",
+                        "/so-whats-the-plan",
+                        "/im-making-a-wake-up-light",
+                        "/behind-the-scenes-update-being-distracted-wake-up-light-writing",
+                        "/concept-for-the-initial-wake-up-light-prototype",
+                    ],
+                ),
+                to("https://archive.hannobraun.com/wake-up-light").plusPath(),
+            ),
+        )
+        .onRequest(
+            redirect.permanent(
+                fromHosts(["www.hannobraun.com"]).andPathPrefixes(
                     ["/getting-started"],
                 ),
                 to("https://archive.hannobraun.com/embedded-rust").plusPath(),
