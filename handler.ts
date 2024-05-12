@@ -49,7 +49,7 @@ type PipelineResponse = Response | Promise<Response>;
 const serveStatic = (hostname: string) => {
     return (request: Request, url: URL) => {
         if (url.hostname == hostname) {
-            return serveDir(request, { fsRoot: hostname });
+            return serveDir(request, { fsRoot: `websites/${hostname}` });
         }
 
         return request;
