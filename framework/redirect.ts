@@ -67,16 +67,16 @@ class Selector {
 }
 
 class Target {
-    targetFn: ((url: URL) => string)[];
+    targetFns: ((url: URL) => string)[];
 
     constructor(targetFn: (url: URL) => string) {
-        this.targetFn = [targetFn];
+        this.targetFns = [targetFn];
     }
 
     buildTarget(url: URL): string {
         let target = "";
 
-        for (const targetFn of this.targetFn) {
+        for (const targetFn of this.targetFns) {
             target = target.concat(targetFn(url));
         }
 
