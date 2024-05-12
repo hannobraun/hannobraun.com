@@ -13,7 +13,7 @@ export const fromHosts = (hosts: string[]) => {
 
 export const to = (target: string) => {
     return (url: URL) => {
-        return `https://${target}${url.pathname}`;
+        return `${target}${url.pathname}`;
     };
 };
 
