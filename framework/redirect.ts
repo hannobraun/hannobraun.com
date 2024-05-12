@@ -25,11 +25,7 @@ const redirectWithCode = (selector: Selector, target: string, code: number) => {
 };
 
 class Selector {
-    selectorFns: SelectorFn[];
-
-    constructor() {
-        this.selectorFns = [];
-    }
+    selectorFns: SelectorFn[] = [];
 
     andHosts(hosts: string[]): Selector {
         this.selectorFns.push((url: URL) => {
