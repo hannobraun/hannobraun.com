@@ -75,7 +75,7 @@ class Target {
 
     plusPath(): Target {
         this.targetFns.push((url) => {
-            return `${url.pathname}`;
+            return url.pathname;
         });
 
         return this;
