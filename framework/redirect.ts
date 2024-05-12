@@ -25,7 +25,7 @@ const redirectWithCode = (selector: Selector, target: string, code: number) => {
 };
 
 class Selector {
-    selectorFns: SelectorFn[] = [];
+    selectorFns: ((url: URL) => boolean)[] = [];
 
     andHosts(hosts: string[]): Selector {
         this.selectorFns.push((url: URL) => {
@@ -60,8 +60,4 @@ class Selector {
 
         return selected;
     }
-}
-
-interface SelectorFn {
-    (url: URL): boolean;
 }
