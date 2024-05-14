@@ -1,4 +1,4 @@
-import { serveDir } from "std/http/file_server.ts";
+import { serveDir } from "@std/http/file-server";
 
 import { fromHosts, redirect, to } from "./framework/redirect.ts";
 

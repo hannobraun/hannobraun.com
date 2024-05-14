@@ -4,6 +4,7 @@
         "test": "deno test --allow-read --watch tests.ts"
     },
     "imports": {
+        "@std/http": "jsr:@std/http@^0.224.0",
         "std/": "https://deno.land/std@0.224.0/"
     },
     "fmt": {
