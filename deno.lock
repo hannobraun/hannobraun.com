@@ -7,7 +7,9 @@
       "jsr:@std/cli@^0.224.0": "jsr:@std/cli@0.224.1",
       "jsr:@std/encoding@^0.224.0": "jsr:@std/encoding@0.224.0",
       "jsr:@std/fmt@^0.224.0": "jsr:@std/fmt@0.224.0",
+      "jsr:@std/fmt@^0.225.0": "jsr:@std/fmt@0.225.0",
       "jsr:@std/http@^0.224.0": "jsr:@std/http@0.224.0",
+      "jsr:@std/internal@^0.225.0": "jsr:@std/internal@0.225.0",
       "jsr:@std/media-types@^0.224.0": "jsr:@std/media-types@0.224.0",
       "jsr:@std/path@^0.224.0": "jsr:@std/path@0.224.0",
       "jsr:@std/streams@^0.224.0": "jsr:@std/streams@0.224.0"
@@ -17,7 +19,11 @@
         "integrity": "8643233ec7aec38a940a8264a6e3eed9bfa44e7a71cc6b3c8874213ff401967f"
       },
       "@std/assert@0.225.1": {
-        "integrity": "7342fa32a6d82c2c7c98ffea566baa9a892d04b22815b9fcf62cedeee5764f9c"
+        "integrity": "7342fa32a6d82c2c7c98ffea566baa9a892d04b22815b9fcf62cedeee5764f9c",
+        "dependencies": [
+          "jsr:@std/fmt@^0.225.0",
+          "jsr:@std/internal@^0.225.0"
+        ]
       },
       "@std/cli@0.224.1": {
         "integrity": "f631d47fc9802541399d00a1f77ac62ac709e7465b6bc52547caa358c486b36e",
@@ -31,6 +37,9 @@
       "@std/fmt@0.224.0": {
         "integrity": "e20e9a2312a8b5393272c26191c0a68eda8d2c4b08b046bad1673148f1d69851"
       },
+      "@std/fmt@0.225.0": {
+        "integrity": "982e7d1a8b8869338cc5b58e2669f7c6889ea9822f1278494dc43edba7f4c4b4"
+      },
       "@std/http@0.224.0": {
         "integrity": "fde48c9133d1d7bb94c134d8f0f01c1a737e6e3879f52580e9ca92217a011e82",
         "dependencies": [
@@ -41,6 +50,9 @@
           "jsr:@std/path@^0.224.0",
           "jsr:@std/streams@^0.224.0"
         ]
+      },
+      "@std/internal@0.225.0": {
+        "integrity": "6f501a91aa5ee992f8f9ffb45fa103bc04031df65f6a3550e1c5d7e6304cd34a"
       },
       "@std/media-types@0.224.0": {
         "integrity": "5ac87989393f8cb1c81bee02aef6f5d4c8289b416deabc04f9ad25dff292d0b0"
@@ -136,6 +148,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@std/assert@^0.225.1",
       "jsr:@std/http@^0.224.0"
     ]
   }
