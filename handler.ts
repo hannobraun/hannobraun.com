@@ -40,6 +40,13 @@ export const handler = (request: Request) => {
                 to("https://archive.hannobraun.com").plusPath(),
             ),
         )
+        .onRequest(
+            redirect.permanent(
+                fromHosts(["hanno.braun-odw.eu"]),
+                to("https://archive.hannobraun.com/hanno.braun-odwu.eu")
+                    .plusPath(),
+            ),
+        )
         .orElse(not_found());
 
     return response;
