@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        
+            
+    
+        <title>Fillamentum NonOilen on Prusa Mini - Hanno Braun</title>
+    
+
+        
+
+        <link href="/hanno.braun-odw.eu/style.css" rel="stylesheet" type="text/css" media="all" />
+
+        
+    
+
+        
+    </head>
+    <body>
+        <div style="width: 100%; background-color: yellow; font-weight: bold; text-align: center;">
+            <p>
+                This website has been archived and is no longer being updated. Mostly because my life took a different turn at some point, with less making/manufacturing stuff to write about.
+            </p>
+            <p>
+                Check out <a href="https://www.hannobraun.com">hannobraun.com</a>, to see what I'm up to these days.
+            </p>
+        </div>
+        <header>
+            <div class="header-top">
+                <address>
+                    <strong>Contact me:</strong>
+                    
+    <a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">
+        hello@hannobraun.com
+    </a>
+
+                </address>
+                <a class="title" href="/hanno.braun-odw.eu/">
+                    <h1>Hanno Braun</h1>
+                    <h2>making and small-scale manufacturing</h2>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    
+    
+
+    
+        
+    
+
+    
+        
+            
+        
+    
+
+    <li><a class="" href="/hanno.braun-odw.eu/">Home</a></li>
+
+                    
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    <li><a class="active" href="/hanno.braun-odw.eu/notes">Notes</a></li>
+
+                    
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    <li><a class="" href="/hanno.braun-odw.eu/updates">Updates</a></li>
+
+                    
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    <li><a class="" href="/hanno.braun-odw.eu/contact">Contact</a></li>
+
+                </ul>
+            </nav>
+        </header>
+        <main>
+            
+    
+    
+
+    <a href="/hanno.braun-odw.eu/notes">🢐🢐 back to Notes</a>
+
+
+    <article class="note">
+        <header>
+            
+    <h2>Fillamentum NonOilen on Prusa Mini</h2>
+    <p class="published">
+        
+            <strong>Published:</strong> 2021-11-11
+        
+    </p>
+
+        </header>
+
+        
+            <p>Fillamentum NonOilen is an exciting new material that promises better biodegradability than PLA, high temperature resistance, and other advantageous attributes. I figured out how to print it on the Prusa Mini.</p>
+
+        
+
+        <p>I'm interested in manufacturing and selling my own 3D-printed products, but I don't want to add to the numerous problems being caused by plastic in our world. A <a href="/hanno.braun-odw.eu/notes/biodegradable-filaments/">biodegradable filament</a> seems like the right solution, and <a href="https://www.fillamentumnonoilen.com/" target="_blank">Fillamentum NonOilen</a> looks the most promising.</p>
+<p>I want to print NonOilen on my Prusa Mini, but there is no built-in profile in PrusaSlicer (not a surprise, for such a young product). I've never created a slicer profile for a Filament before, but I figured I'd give it a try, adapting the built-in PLA profile by following the <a href="https://fillamentum.com/wp-content/uploads/2021/01/FILL_Printing_Guide_NonOilen.pdf" target="_blank">NonOilen 3D printing guide</a>.</p>
+<p><a
+    class="download"
+    href="/hanno.braun-odw.eu/notes/fillamentum-nonoilen-on-prusa-mini/Fillamentum%20NonOilen.ini">
+Download PrusaSlicer profile for NonOilen
+</a></p>
+<h3 id="summary">Summary</h3>
+<p>In case you're in a hurry, here's the short summary:</p>
+<ul>
+<li>Use adhesive! I've had success with 3DLAC.</li>
+<li>I recommend the textured PEI sheet.</li>
+<li>Use nozzle temperature of 185°C and bed temperature of 50°C.</li>
+<li>Set the extrusion multiplier to 1.05.</li>
+<li>Use normal PLA settings for everything else.</li>
+</ul>
+<h3 id="adhesive">Adhesive</h3>
+<p>NonOilen poses a weird challenge: On the one hand, it can stick extremely well to the smooth PEI sheet, especially if you print only one layer. On the other hand, any real print will either be dragged around by the nozzle, sooner or later (if it's small) or show significant warping (if it's larger).</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/fillamentum-nonoilen-on-prusa-mini/warping.jpg"
+        alt="An aborted NonOilen print, showing significant warping."
+        width="600" />
+</div>
+<p>I've seen <a href="https://www.reddit.com/r/3Dprinting/comments/mpntmy/anyone_tried_nonoilen_filament/gv2ol8j/" target="_blank">speculation on Reddit</a>, that this is really just a warping problem that shows up in different ways, and I concur. At least this is the only way these observations make sense for me.</p>
+<p>Fillamentum recommends printing with an adhesive, and that addresses both problems: Causing the print to stick, which also providing separation between print and bed, allowing it to be removed without damaging the bed.</p>
+<p>I've tried to get around it, but without any luck. Maybe it's possible with an enclosure, but in the meantime, I've had great success with <a href="https://www.3dlac.com/" target="_blank">3DLAC</a>.</p>
+<h3 id="sheet">Sheet</h3>
+<p>As mentioned above, NonOilen can stick really well to the smooth PEI sheet. This can pose a problem, if you don't apply adhesive everywhere you end up printing, or forget completely.</p>
+<p>I've had great success with the textured PEI sheet. It's easy to remove NonOilen prints from that after you let it cool down, but they still stick great with 3DLAC.</p>
+<h3 id="temperatures">Temperatures</h3>
+<p>There's not much to say here. The printing guide gives a range of 175°C - 195°C for the nozzle temperature. I chose 185°C, directly in the middle.</p>
+<p>Bed temperature range is given as 0°C - 50°C. I chose the upper end at 50°C.</p>
+<h3 id="extrusion-multiplier">Extrusion Multiplier</h3>
+<p>Testing with a vase mode print turned out that the single-perimeter wall thickness was slightly too small. I've adjusted the extrusion multiplier to a value of 1.05, which made it more accurate.</p>
+<h3 id="results">Results</h3>
+<p>Following the guidelines I've laid out here, printing Fillamentum NonOilen on the Prusa Mini has been pleasant and reliable. However, I've yet to print anything serious with it, beyond the various test prints required to dial in these settings.</p>
+<p>I intend to use it for some upcoming projects. If that requires any further adjustments, I will update this note with my latest findings.</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/fillamentum-nonoilen-on-prusa-mini/test-prints.jpg"
+        alt="Three successful test prints, printed with Fillamentum NonOilen. One larger cube, printed in vase mode, one calibration cube, and a one-layer square."
+        width="600" />
+</div>
+
+
+        <footer>
+            
+        </footer>
+    </article>
+
+    
+    
+
+    <a href="/hanno.braun-odw.eu/notes">🢐🢐 back to Notes</a>
+
+
+        </main>
+        <hr />
+        <footer>
+            <div class="made-in-odenwald">
+                <a href="/hanno.braun-odw.eu/made-in-odenwald/0.jpg" target="_blank">
+                    Made in Odenwald ♥
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        
+            
+    
+        <title>3D Printer Issues: Accuracy of Thin Walls - Hanno Braun</title>
+    
+
+        
+
+        <link href="/hanno.braun-odw.eu/style.css" rel="stylesheet" type="text/css" media="all" />
+
+        
+    
+
+        
+    </head>
+    <body>
+        <div style="width: 100%; background-color: yellow; font-weight: bold; text-align: center;">
+            <p>
+                This website has been archived and is no longer being updated. Mostly because my life took a different turn at some point, with less making/manufacturing stuff to write about.
+            </p>
+            <p>
+                Check out <a href="https://www.hannobraun.com">hannobraun.com</a>, to see what I'm up to these days.
+            </p>
+        </div>
+        <header>
+            <div class="header-top">
+                <address>
+                    <strong>Contact me:</strong>
+                    
+    <a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">
+        hello@hannobraun.com
+    </a>
+
+                </address>
+                <a class="title" href="/hanno.braun-odw.eu/">
+                    <h1>Hanno Braun</h1>
+                    <h2>making and small-scale manufacturing</h2>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    
+    
+
+    
+        
+    
+
+    
+        
+            
+        
+    
+
+    <li><a class="" href="/hanno.braun-odw.eu/">Home</a></li>
+
+                    
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    <li><a class="active" href="/hanno.braun-odw.eu/notes">Notes</a></li>
+
+                    
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    <li><a class="" href="/hanno.braun-odw.eu/updates">Updates</a></li>
+
+                    
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    <li><a class="" href="/hanno.braun-odw.eu/contact">Contact</a></li>
+
+                </ul>
+            </nav>
+        </header>
+        <main>
+            
+    
+    
+
+    <a href="/hanno.braun-odw.eu/notes">🢐🢐 back to Notes</a>
+
+
+    <article class="note">
+        <header>
+            
+    <h2>3D Printer Issues: Accuracy of Thin Walls</h2>
+    <p class="published">
+        
+            <strong>Published:</strong> 2021-12-20
+        
+    </p>
+
+        </header>
+
+        
+            <p>3D printers can be pretty accurate. How accurate depends on lots of factors, of course, but usually it's not a problem to create relatively tight-fitting mechanical parts. How can it happen then, that the thickness of thin walls can be way off?</p>
+
+        
+
+        <p>Let's look at an example. It's just a ring with a thin wall (0.6mm thick).</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/3d-printer-issues-accuracy-of-thin-walls/model.png"
+        alt="A CAD model of a short ring with a thin wall."
+        width="600" />
+</div>
+<p>Nothing wild so far. Let's print it!</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/3d-printer-issues-accuracy-of-thin-walls/printed-part.jpg"
+        alt="A 3D-printed ring with a thin wall."
+        width="600" />
+</div>
+<p>Looks reasonable. Let's measure the wall thickness.</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/3d-printer-issues-accuracy-of-thin-walls/wall-measurement.jpg"
+        alt="A 3D-printed ring with a thin wall. The wall thickness is being measured with a vernier caliper. The scale shows 0.9mm."
+        width="600" />
+</div>
+<p>What's this? The wall is 0.9mm thick! Why such a large deviation?</p>
+<h3 id="so-what-happened">So what happened?</h3>
+<p>While this is the kind of thing that can drive you crazy for extended periods of time (well, at least that's what happened to me), it's actually pretty straight-forward: The wall is supposed to be 0.6mm thick. The printer has a 0.4mm nozzle. In the print settings, the extrusion width for perimeters is set to 0.45mm.</p>
+<p>One perimeter with 0.45mm thickness would be thinner than the 0.6mm specified for the wall thickness. So the slicer decides to use two perimeters. Two times 0.45mm is 0.9mm. Which is exactly the value we measured.</p>
+<h3 id="understanding-the-issue">Understanding the issue</h3>
+<p>When printing walls, neighboring perimeters are laid out next to each other, without a gap between them. That means that the total width of multiple perimeters is always going to be a multiple of the extrusion width.</p>
+<p>This is <em>not</em> the case, if the perimeters are not directly next to each other. In thicker walls, there would typically be a few perimeters on each side, then some infill in the middle. Since the width of the infill doesn't depend on the extrusion width, we would not be running into the same issue then.</p>
+<p>This is important to understand: This problem only shows up, if there are perimeters side by side, and the wall thickness is not a multiple of the extrusion width of those perimeters. This gives us some hints on how to prevent this issue from bothering us.</p>
+<p>Please note that, while we're looking at a thin wall here, this is not the only case where this issue can appear. Think, for example, about some small feature protruding from a larger print. As long as the slicer doesn't generate any infill within that feature (i.e. its thickness is defined by perimeters), it's going to be affected by this problem.</p>
+<h3 id="so-how-to-fix-it">So how to fix it?</h3>
+<h4 id="1-change-wall-thickness-to-a-multiple-of-the-extrusion-width">1. Change wall thickness to a multiple of the extrusion width.</h4>
+<p>If we have the freedom to change the dimensions in our model, we can just make the wall thickness a multiple of the perimeter extrusion width. If the wall thickness in my example model had been 0.9mm in the first place, we wouldn't have noticed a problem.</p>
+<h4 id="2-make-the-wall-thicker">2. Make the wall thicker.</h4>
+<p>Again, if we can change the dimensions in our model, we can just make the wall so thick that it no longer just contains perimeters, but infill too. Then the slicer can adapt the width of the infill to achieve the desired wall thickness.</p>
+<h4 id="3-reduce-the-number-of-perimeters">3. Reduce the number of perimeters.</h4>
+<p>This won't help, if we just have two perimeters, as in the example I've shown here. But if we have a slightly thicker wall with more perimeters, we can adjust the print settings and reduce the minimum number of perimeters. This will result in infill being generated in the wall, thereby sidestepping this problem.</p>
+<p>Please note that with fewer perimeters, the wall will be weaker. This might or might not be acceptable, depending on the model.</p>
+<h4 id="4-fiddle-with-the-extrusion-width">4. Fiddle with the extrusion width.</h4>
+<p>If there's only a slight gap between the actual and desired dimensions, maybe we can fiddle with the extrusion width in the print settings to get a match. This has limits, however. We can't just set the extrusion width to a value that's completely different than the width of the nozzle.</p>
+<p>I haven't tried this idea, so I don't know how much of a difference between nozzle and extrusion widths we could get away with. But it might be worth a try, in some situations.</p>
+<h4 id="5-use-a-different-nozzle">5. Use a different nozzle.</h4>
+<p>With a smaller nozzle, we'll have a smaller extrusion width. This doesn't eliminate the problem, but the increased resolution might make it easier to get things to work. Especially, if we combine this measure with the other ideas presented here. A smaller nozzle would lead to longer print times, however, so it's a trade-off.</p>
+<p>We could even use a larger nozzle, in some cases! In the example I showed here, we have a 0.6mm wall. This would be straight-forward to achieve with a 0.6mm nozzle. We'd have to deal with the lower resolution in the rest of the model too, though, so again, it's a trade-off.</p>
+<h4 id="any-other-ideas">Any other ideas?</h4>
+<p>Do you have any other ideas that I should present here? If so, <a href="/hanno.braun-odw.eu/contact">let me know</a>! I'm happy to update this note with your suggestions.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>I hope I was able to explain how this kind of inaccuracy happens, and what can be done to prevent it. Even if you're not facing this issue right now, it's useful to keep this in mind. This is the kind of problem that can sneak up on you when you least expect it.</p>
+<p>If you want to experiment a bit yourself, you can download the OpenSCAD model I used as an example here:</p>
+<p><a
+    class="download"
+    href="/hanno.braun-odw.eu/notes/3d-printer-issues-accuracy-of-thin-walls/example.scad">
+Download example OpenSCAD model
+</a></p>
+
+
+        <footer>
+            
+        </footer>
+    </article>
+
+    
+    
+
+    <a href="/hanno.braun-odw.eu/notes">🢐🢐 back to Notes</a>
+
+
+        </main>
+        <hr />
+        <footer>
+            <div class="made-in-odenwald">
+                <a href="/hanno.braun-odw.eu/made-in-odenwald/0.jpg" target="_blank">
+                    Made in Odenwald ♥
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>

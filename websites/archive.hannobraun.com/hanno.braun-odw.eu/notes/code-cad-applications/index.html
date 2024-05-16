@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        
+            
+    
+        <title>Code-CAD Applications - Hanno Braun</title>
+    
+
+        
+
+        <link href="/hanno.braun-odw.eu/style.css" rel="stylesheet" type="text/css" media="all" />
+
+        
+    
+
+        
+    </head>
+    <body>
+        <div style="width: 100%; background-color: yellow; font-weight: bold; text-align: center;">
+            <p>
+                This website has been archived and is no longer being updated. Mostly because my life took a different turn at some point, with less making/manufacturing stuff to write about.
+            </p>
+            <p>
+                Check out <a href="https://www.hannobraun.com">hannobraun.com</a>, to see what I'm up to these days.
+            </p>
+        </div>
+        <header>
+            <div class="header-top">
+                <address>
+                    <strong>Contact me:</strong>
+                    
+    <a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">
+        hello@hannobraun.com
+    </a>
+
+                </address>
+                <a class="title" href="/hanno.braun-odw.eu/">
+                    <h1>Hanno Braun</h1>
+                    <h2>making and small-scale manufacturing</h2>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    
+    
+
+    
+        
+    
+
+    
+        
+            
+        
+    
+
+    <li><a class="" href="/hanno.braun-odw.eu/">Home</a></li>
+
+                    
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    <li><a class="active" href="/hanno.braun-odw.eu/notes">Notes</a></li>
+
+                    
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    <li><a class="" href="/hanno.braun-odw.eu/updates">Updates</a></li>
+
+                    
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    <li><a class="" href="/hanno.braun-odw.eu/contact">Contact</a></li>
+
+                </ul>
+            </nav>
+        </header>
+        <main>
+            
+    
+    
+
+    <a href="/hanno.braun-odw.eu/notes">🢐🢐 back to Notes</a>
+
+
+    <article class="note">
+        <header>
+            
+    <h2>Code-CAD Applications</h2>
+    <p class="published">
+        
+            <strong>Published:</strong> 2021-09-16 (<a href="#changes">updated</a> 2022-01-17)
+        
+    </p>
+
+        </header>
+
+        
+            <p>CAD software usually comes with a graphical user interface, but this is not the only approach. It's possible to write a CAD model as a computer program, either using a specialized programming language, or a general-purpose language with an appropriate API. This approach is called Code-CAD or programmatic CAD.</p>
+
+        
+
+        <p>As a software developer, Code-CAD makes complete sense to me. You get all the power of a programming language and you can use all the established tools for programming. Creating intricate models with no repetitive work, collaborating with other team members, adding comments to document your model... <a href="/hanno.braun-odw.eu/notes/code-cad-advantages">all this and more</a> is available without needing to be explicitly supported by the CAD software.</p>
+<p>I'm always on the look-out for applications using this approach, and this note represents a snapshot of my research into this topic. I'm publishing it both for my own future reference, and in the hope that it might be useful for others too. If you think that I've missed or misrepresented something, <a href="/hanno.braun-odw.eu/contact">please let me know</a>!</p>
+<h3 id="cad-kernels">CAD Kernels</h3>
+<p>A CAD kernel is a software library that provides the core data structures and algorithms required for building CAD software. While some CAD programs come with their own custom kernel (or might not make such a distinction), there are some independently developed kernels that CAD programs can build on on top of.</p>
+<p>I've restricted my research to open source CAD kernels.</p>
+<h4 id="open-cascade-technology-occt">Open CASCADE Technology (OCCT)</h4>
+<p><a href="https://www.opencascade.com/open-cascade-technology/" target="_blank">OCCT</a> is a widely used kernel, being the basis for the well-known FreeCAD, as well as some of the CAD programs presented in the next section.</p>
+<h4 id="cgal">CGAL</h4>
+<p><a href="https://www.cgal.org/" target="_blank">CGAL</a> is another example of a widely used CAD kernel, being the basis for OpenSCAD (see next section). It seems to be less advanced than OCCT, providing fewer features.</p>
+<h4 id="libfive">libfive</h4>
+<p><a href="https://libfive.com/" target="_blank">libfive</a> seems to be less widely-used than OCCT or CGAL, but is still very interesting. In contrast to those other two, it is based on <a href="https://en.wikipedia.org/wiki/Function_representation" target="_blank">function representation</a>.</p>
+<h3 id="cad-programs">CAD Programs</h3>
+<p>CAD programs (sometimes called CAD packages), are intended for use by end users, as opposed to the CAD kernels they build on. Some of the CAD programs presented here are based on the aforementioned CAD kernels, others use their own custom code to handle geometry.</p>
+<h3 id="openscad">OpenSCAD</h3>
+<p><a href="https://openscad.org/" target="_blank">OpenSCAD</a> is well-known in the open source CAD space. It's been around for a while and is widely used.</p>
+<p>Advantages:</p>
+<ul>
+<li>Mature. Very solid solution for many kinds of models.</li>
+<li>Large community, easy to get into.</li>
+<li>Can export to a large variety of file formats.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>Uses a custom language that can be very weird, for example around variable scoping, or the implicit nature of geometry.</li>
+<li>Limited feature set. Lets you generate geometry based on constructive solid geometry, but offers little else.</li>
+<li>Built-in library that is very basic. 3rd-party libraries are available, but need to be managed manually, by copying files around. It can also be hard to figure out which ones are suitable to your needs.</li>
+</ul>
+<p>I've done most of my CAD modeling with OpenSCAD. Overall, I'm not too fond of it, but I still keep coming back to it, and it's the one I compare all the others to, which says a lot.</p>
+<h3 id="libfive-studio">libfive Studio</h3>
+<p><a href="https://libfive.com/studio/" target="_blank">libfive Studio</a> seems less well-known than OpenSCAD. It is built on the libfive kernel, and made by the same author.</p>
+<p>Advantages:</p>
+<ul>
+<li>Supports limited editing through the GUI.</li>
+<li>Comes with support for Guile and Python as modeling languages.</li>
+<li>Seems to do a great job rendering sharp edges, which is not a given when using function representation.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>Limited feature set. Not much there beyond Constructive Solid Geometry.</li>
+<li>Editor is lacking lots of small convenience features compared to more powerful editors.</li>
+<li>Only supports exporting to STL.</li>
+<li>Not as widely packaged as OpenSCAD, and compiling it yourself can be problematic.</li>
+</ul>
+<p>I've used it <a href="https://github.com/hannobraun/prusa-mini-enclosure" target="_blank">for one project</a> and it worked well enough. In the end, I found no good reason to keep using it over OpenSCAD.</p>
+<h3 id="cadquery">CadQuery</h3>
+<p><a href="https://cadquery.readthedocs.io/" target="_blank">CadQuery</a> is written in Python and based on OCCT.</p>
+<p>Advantages:</p>
+<ul>
+<li>Uses Python as the modeling language.</li>
+<li>Based on OCCT, which is more advanced than OpenSCAD's CGAL.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>Haven't used it yet.</li>
+<li>Not as widely packaged as OpenSCAD.</li>
+</ul>
+<p>I tried to use it on multiple occasions, but it's not packaged for Arch Linux (which is what I use), and compiling it from source always failed for one reason or another.</p>
+<h3 id="implicitcad">ImplicitCAD</h3>
+<p><a href="https://implicitcad.org/" target="_blank">ImplicitCAD</a> is an alternative to OpenSCAD that uses function representation under the hood, like libfive.</p>
+<p>Advantages:</p>
+<ul>
+<li>Backwards-compatible with OpenSCAD (mostly?).</li>
+<li>Also available as a Haskell library.</li>
+<li>Is a native application, but a browser-based editor is available on its website.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>Haven't really used it, except for the browser-based editor here or there.</li>
+<li>Doesn't do a great job rendering geometry, specifically around sharp corners.</li>
+<li>Not as widely packaged as OpenSCAD, and compiling it yourself can be problematic.</li>
+</ul>
+<h3 id="cascade-studio">Cascade Studio</h3>
+<p><a href="https://github.com/zalo/CascadeStudio" target="_blank">Cascade Studio</a> is browser-based and uses JavaScript as the modeling language.</p>
+<p>Advantages:</p>
+<ul>
+<li>Browser-based, which is a convenient capability to have.</li>
+<li>Uses JavaScript as the modeling language.</li>
+<li>Based on OCCT.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>Haven't used it seriously.</li>
+<li>Not available as a native application.</li>
+<li>Uses JavaScript as the modeling language.</li>
+</ul>
+<h3 id="sdfx">sdfx</h3>
+<p><a href="https://github.com/deadsy/sdfx" target="_blank">sdfx</a> is another not-that-well-known contender, written in Go. It also uses function representation.</p>
+<p>Advantages:</p>
+<ul>
+<li>Uses Go as the modeling language. Not a huge fan, but with static typing and fast compile times, it sounds like a great fit for this use case.</li>
+<li>Has recently received updates that improve the rendering of sharp edges.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>Haven't tried it.</li>
+</ul>
+<h3 id="jscad">JSCAD</h3>
+<p><a href="https://github.com/jscad/OpenJSCAD.org" target="_blank">JSCAD</a> is a CAD application written in JavaScript.</p>
+<p>Advantages:</p>
+<ul>
+<li>Has been consistently developed for many years.</li>
+<li>Documentation looks good.</li>
+<li>Runs in browsers.</li>
+<li>Uses JavaScript as the modeling language.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>Haven't tried it.</li>
+<li>Limited feature set. Seems to be roughly on par with OpenSCAD.</li>
+<li>Uses JavaScript as the modeling language.</li>
+</ul>
+<h3 id="fornjot">Fornjot</h3>
+<p>Last, and also least, my own effort, <a href="https://github.com/hannobraun/fornjot" target="_blank">Fornjot</a>. After experimenting with function representation and other techniques for a while, I finally settled on a more traditional approach based on boundary representation.</p>
+<p>Advantages:</p>
+<ul>
+<li>Written by me, in Rust, which is lots of fun.</li>
+<li>I literally know it inside out.</li>
+<li>Uses Rust as the modeling language, which is fun, powerful, and reliable.</li>
+<li>Found a way to keep compile times down, to make using Rust as a modeling language practical (at least so far).</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>Experimental, incomplete, at this point still basically useless.</li>
+</ul>
+
+
+        <footer>
+            
+                <section id="changes" class="changes">
+                    <h3>Changes</h3>
+                    <table>
+                        <tr>
+                            <th>2021-09-16</th>
+                            <td>Initial release.</td>
+                        </tr>
+                        
+                            <tr>
+                                <th>2021-10-13</th>
+                                <td><p>Added separate section about CAD kernels; updated section about programs to refer back to it. Other minor tweaks.</p>
+</td>
+                            </tr>
+                        
+                            <tr>
+                                <th>2022-01-17</th>
+                                <td><p>Renamed to &quot;Code-CAD Applications&quot; (from &quot;Programmatic CAD&quot;). Updated a bunch of things all over. Added JSCAD.</p>
+</td>
+                            </tr>
+                        
+                    </table>
+                </section>
+            
+        </footer>
+    </article>
+
+    
+    
+
+    <a href="/hanno.braun-odw.eu/notes">🢐🢐 back to Notes</a>
+
+
+        </main>
+        <hr />
+        <footer>
+            <div class="made-in-odenwald">
+                <a href="/hanno.braun-odw.eu/made-in-odenwald/0.jpg" target="_blank">
+                    Made in Odenwald ♥
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>

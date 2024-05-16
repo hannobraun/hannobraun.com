@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        
+            
+    
+        <title>First Layer Calibration on the Prusa Mini - Hanno Braun</title>
+    
+
+        
+
+        <link href="/hanno.braun-odw.eu/style.css" rel="stylesheet" type="text/css" media="all" />
+
+        
+    
+
+        
+    </head>
+    <body>
+        <div style="width: 100%; background-color: yellow; font-weight: bold; text-align: center;">
+            <p>
+                This website has been archived and is no longer being updated. Mostly because my life took a different turn at some point, with less making/manufacturing stuff to write about.
+            </p>
+            <p>
+                Check out <a href="https://www.hannobraun.com">hannobraun.com</a>, to see what I'm up to these days.
+            </p>
+        </div>
+        <header>
+            <div class="header-top">
+                <address>
+                    <strong>Contact me:</strong>
+                    
+    <a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">
+        hello@hannobraun.com
+    </a>
+
+                </address>
+                <a class="title" href="/hanno.braun-odw.eu/">
+                    <h1>Hanno Braun</h1>
+                    <h2>making and small-scale manufacturing</h2>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    
+    
+
+    
+        
+    
+
+    
+        
+            
+        
+    
+
+    <li><a class="" href="/hanno.braun-odw.eu/">Home</a></li>
+
+                    
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    <li><a class="active" href="/hanno.braun-odw.eu/notes">Notes</a></li>
+
+                    
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    <li><a class="" href="/hanno.braun-odw.eu/updates">Updates</a></li>
+
+                    
+    
+
+    
+        
+    
+
+    
+        
+    
+
+    <li><a class="" href="/hanno.braun-odw.eu/contact">Contact</a></li>
+
+                </ul>
+            </nav>
+        </header>
+        <main>
+            
+    
+    
+
+    <a href="/hanno.braun-odw.eu/notes">🢐🢐 back to Notes</a>
+
+
+    <article class="note">
+        <header>
+            
+    <h2>First Layer Calibration on the Prusa Mini</h2>
+    <p class="published">
+        
+            <strong>Published:</strong> 2021-12-14
+        
+    </p>
+
+        </header>
+
+        
+            <p>The Prusa Mini comes with a built-in first layer calibration procedure. I find it lacking, however, and have come with my own technique for calibrating the first layer.</p>
+
+        
+
+        <p>So what are the problems with the build-in calibration procedure? Here's the list of problems, as I see them:</p>
+<ul>
+<li>It assumes that the default 0.4mm nozzle is installed. If you've switched to a nozzle with a different diameter, that's a deal breaker right there.</li>
+<li>Most of the procedure consists of printing a single line. Maybe it's me, but I find it extremely hard to judge anything based on that line.</li>
+<li>It's printing a rectangular patch at the end, but that is too small to allow for much live adjustment. And you have to first wait through the rest of the procedure to get to it.</li>
+</ul>
+<p>The alternative approach I've come up with consists of the following steps:</p>
+<ol>
+<li>Create a 1-layer model in <a href="https://www.prusa3d.com/page/prusaslicer_424/" target="_blank">PrusaSlicer</a>.</li>
+<li>Print that model. Live-adjust the Z offset during the print, as necessary.</li>
+<li>Check results. Try again with adjusted Z offset, if necessary.</li>
+</ol>
+<p>But let's take a look at the details. The following description is based on PrusaSlicer 2.3.3 (<a href="/hanno.braun-odw.eu/contact">please let me know</a>, if any of this has become out of date).</p>
+<h3 id="the-procedure">The Procedure</h3>
+<h4 id="1-create-the-calibration-model">1. Create the calibration model</h4>
+<p>In an empty PrusaSlicer project, create a box. Just right-click on the build plate, Select <code>Add Shape</code> -&gt; <code>Box</code>.</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/first-layer-calibration-on-the-prusa-mini/1-create-box.png"
+        alt="A screenshot of PrusaSlicer. Add Shape -&gt; Box is being selected in the context menu."
+        width="600" />
+</div>
+<p>The box doesn't do us a whole lot of good, as it is many layers high. We need to modify at least the height. Currently, the X/Y/Z dimensions of the box are locked together, meaning we can only change them together.</p>
+<p>Let's unlock them first by clicking the lock symbol in the <code>Object Manipulation</code> section on the right of the screen.</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/first-layer-calibration-on-the-prusa-mini/2-unlock-size.png"
+        alt="A screenshot of PrusaSlicer. The lock symbol that controls independent manipulation of width/depth/height is highlighted."
+        width="600" />
+</div>
+<p>Once unlocked, you can set the size in X, Y, and Z independently. Set the Z size to the height of your first layer. How much that is, depends on your print settings.</p>
+<p>I recommend setting Y to 10mm. Your X value depends on whether you want to live-adjust your Z offset during the print, or create different prints at a single setting, to compare with each other.</p>
+<p>For creating independent prints to compare with each other, I prefer setting X to 20mm. To allow for live-adjustment, I prefer a larger value, like 90mm.</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/first-layer-calibration-on-the-prusa-mini/3-set-size.png"
+        alt="A screenshot of PrusaSlicer. The size of the box from the previous screenshots has been modified. The size settings are highlighted."
+        width="600" />
+</div>
+<p>Now you can slice your calibration model and send it to the printer, like you would do with any other model.</p>
+<h4 id="2-print-the-calibration-model">2. Print the calibration model</h4>
+<p><strong>TASK: Once screenshots are added, adjust as necessary.</strong></p>
+<p>There's not much to this. Just print the calibration model. If you want, you can live-adjust the Z offset while the calibration model is printing. To do so, select <code>Tune</code> while the print is ongoing.</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/first-layer-calibration-on-the-prusa-mini/4-tune.jpg"
+        alt="A screenshot of the Prusa Mini Firmware. The Tune symbol is selected during an ongoing print."
+        width="600" />
+</div>
+<p>Then select <code>Live Adjust Z</code>.</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/first-layer-calibration-on-the-prusa-mini/5-live-adjust-z.jpg"
+        alt="A screenshot of the Prusa Mini Firmware. In the Tune menu during an ongoing print, Live Adjust Z is selected."
+        width="600" />
+</div>
+<p>Now you can adjust the Z offset while the printer is printing.</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/first-layer-calibration-on-the-prusa-mini/6-adjust-nozzle-height.jpg"
+        alt="A screenshot of the Prusa Mini Firmware. The screen on which the Z offset can be adjusted during an ongoing print is shown."
+        width="600" />
+</div>
+<p>Alternatively, you can just print the calibration model with a single setting, then adjust and print another one.</p>
+<p><strong>WARNING:</strong> Be careful when lowering the Z offset value. If you lower it too much, you can get it to a point where the nozzle can no longer extrude material, or even crash the nozzle into your bed. Only make small adjustments, then inspect the result before adjusting further. If you make adjustments that are a fraction of your initial layer height, let's say half at most, you should be on the safe side.</p>
+<p><strong>WARNING 2:</strong> If you're doing this calibration because you switched to another sheet print, make sure that you are not using a setting from the previous sheet that is already too low. Maybe switch to a high Z offset value before the print, then adjust downwards as you go.</p>
+<h4 id="3-inspect-the-results">3. Inspect the results</h4>
+<p>It can be hard to know what to look for at first, but once you get the hang of it, inspecting your calibration print and adjusting the Z offset value becomes pretty easy.</p>
+<p>First off, if your print doesn't stick at all, you're probably way too high. Adjust the Z offset downwards, until the extruded material starts to stick to the sheet.</p>
+<p>Now let's look at a print that sticks without problems, but is still too high.</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/first-layer-calibration-on-the-prusa-mini/result-too-high.jpg"
+        alt="A rectangular one-layer calibration print. There are visible gaps between the extruded lines."
+        width="600" />
+</div>
+<p>You can see clear gaps between the extruded lines. If your calibration print looks like this, you need to decrease the Z offset value.</p>
+<p>Now let's look at a print where the Z offset is too low.</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/first-layer-calibration-on-the-prusa-mini/result-too-low.jpg"
+        alt="A rectangular one-layer calibration print, photographed at a low angle. There are ridges visible where the nozzle dragged through the material."
+        width="600" />
+</div>
+<p>You can clearly see ridges where the nozzle dragged through the material. If your calibration print looks like this, you need to increase the Z offset value.</p>
+<p>Finally, here's a calibration print that looks correct.</p>
+
+
+<div class="preview">
+    <img
+        src="/hanno.braun-odw.eu/notes/first-layer-calibration-on-the-prusa-mini/result-just-right.jpg"
+        alt="A rectangular one-layer calibration print. Neither gaps between extruded lines, nor ridges are visible."
+        width="600" />
+</div>
+<p>There are neither gaps between the lines, nor ridges dragged up by the nozzle. I've made good experiences with Z offset settings that resulted in prints looking like that.</p>
+<p>As you close in on the correct value, both the gaps and the ridges become more subtle. There's a grey area between too high and too low, where it can be hard to tell. If you want to get a good feeling for that, I recommend doing many prints with small adjustments in Z offset, and compare them.</p>
+<p>Remember, your setting doesn't need to be perfect. If there are no obvious problems and your first layer sticks to the bed, it's probably good enough.</p>
+<p>Personally, I like to err on the lower side, setting the Z offset low enough that the lines look squished, but without any ridges being visible. I don't know if that's optimal, but it has worked well for me.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>With this procedure, you should be able to get your first layer calibrated, regardless of what slicer settings and nozzle you're using. I hope this was helpful. If you have any questions or comments, <a href="/hanno.braun-odw.eu/contact">please get in touch</a>.</p>
+
+
+        <footer>
+            
+        </footer>
+    </article>
+
+    
+    
+
+    <a href="/hanno.braun-odw.eu/notes">🢐🢐 back to Notes</a>
+
+
+        </main>
+        <hr />
+        <footer>
+            <div class="made-in-odenwald">
+                <a href="/hanno.braun-odw.eu/made-in-odenwald/0.jpg" target="_blank">
+                    Made in Odenwald ♥
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>
