@@ -6,7 +6,11 @@ export const handler = (request: Request) => {
     const response = new Pipeline(request)
         .onRequest(
             redirect.temporary(
-                fromHosts(["hannobraun.com"]),
+                fromHosts([
+                    "hannobraun.com",
+                    "hannobraun.de",
+                    "www.hannobraun.de",
+                ]),
                 to("https://www.hannobraun.com").plusPath(),
             ),
         )
@@ -47,6 +51,7 @@ export const handler = (request: Request) => {
                     "braun-odw.eu",
                     "www.braun-odw.eu",
                     "made-by.braun-odw.eu",
+                    "madeby.hannobraun.de",
                 ]),
                 to("https://archive.hannobraun.com/hanno.braun-odw.eu")
                     .plusPath(),
