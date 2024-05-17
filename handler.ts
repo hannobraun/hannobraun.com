@@ -43,7 +43,7 @@ export const handler = (request: Request) => {
         .onRequest(
             redirect.permanent(
                 fromHosts(["hanno.braun-odw.eu"]),
-                to("https://archive.hannobraun.com/hanno.braun-odwu.eu")
+                to("https://archive.hannobraun.com/hanno.braun-odw.eu")
                     .plusPath(),
             ),
         )
