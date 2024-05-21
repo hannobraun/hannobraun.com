@@ -8,6 +8,13 @@ export const handler = (request: Request) => {
             redirect.temporary(
                 fromHosts([
                     "hannobraun.com",
+                ]),
+                to("https://www.hannobraun.com").plusPath(),
+            ),
+        )
+        .onRequest(
+            redirect.permanent(
+                fromHosts([
                     "hannobraun.de",
                     "www.hannobraun.de",
                 ]),
