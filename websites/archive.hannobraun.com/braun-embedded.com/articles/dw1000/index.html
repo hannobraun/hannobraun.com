@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+            <title>DW1000 Driver in Rust - Braun Embedded</title>
+        
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="/braun-embedded.com/style.css" rel="stylesheet" type="text/css" media="all" />
+    </head>
+
+    <body>
+        <p class="notice">
+            <strong>
+                Hey there! I no longer provide services in the embedded field, and this website is archived. To see what I'm up to these days, please visit <a href="https://www.hannobraun.com/">hannobraun.com</a>.
+            </strong>
+        </p>
+        <header class="site-header">
+            <a class="title" href="/braun-embedded.com/">
+                <h1>Braun Embedded</h1>
+                <h2>Software Development and Consulting Services</h2>
+            </a>
+
+            <div class="contact-short">
+                <p>Hanno Braun</p>
+                <p>Michelstadt, Germany</p>
+                <p>
+                    
+<a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">hello@hannobraun.com</a>
+
+                </p>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="/braun-embedded.com/">Home</a>
+                </li>
+                <li>
+                    <a href="/braun-embedded.com/articles">Articles</a>
+                </li>
+                <li>
+                    <a href="/braun-embedded.com/glossary">Glossary</a>
+                </li>
+                <li>
+                    <a href="/braun-embedded.com/contact">Contact</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            
+<article>
+	<header>
+		<h1>DW1000 Driver in Rust</h1>
+		<h2>The DW1000 is a radio transceiver chip that is capable of IEEE 802.15.4 communication and position tracking. This article introduces the chip and its Rust driver.
+</h2>
+		<span class="last-updated">
+			Last updated:
+			<time datetime="2020-03-31">
+				2020-03-31
+			</time>
+		</span>
+	</header>
+
+	<h3 id="introduction">Introduction</h3>
+<p>The <a href="https://www.decawave.com/product/dw1000-radio-ic/">Decawave DW1000 Radio IC</a> is an ultra-wideband wireless transceiver chip, supporting wireless communication based on the <a href="https://en.wikipedia.org/wiki/IEEE_802.15.4">IEEE 802.15.4</a> standard. It is low-cost, low-power, has a high data rate, and, according to the manufacturer, a range of up to 290 meters.</p>
+<p>But arguably the main feature is its ability to measure the distance between two DW1000 nodes, by precisely measuring the in-flight time of the wireless packages sent between them. This makes it possible to build highly accurate (within 10 cm, according to Decawave) position tracking solutions based on this chip.</p>
+<p>I worked on building Rust support for the DW1000 and some related hardware (namely the <a href="https://www.decawave.com/product/dwm1001-module/">DWM1001 Module</a> and <a href="https://www.decawave.com/product/dwm1001-development-board/">DWM1001 Development Board</a>), which resulted in the release of the <a href="https://crates.io/crates/dw1000"><code>dw1000</code></a> and <a href="https://crates.io/crates/dwm1001"><code>dwm1001</code></a> crates, as well as the more broadly applicable <a href="https://crates.io/crates/ieee802154"><code>ieee802154</code></a> and <a href="https://crates.io/crates/embedded-timeout-macros"><code>embedded-timeout-macros</code></a> crates.</p>
+<p>The initial work, starting in 2018, was sponsored by <a href="https://ferrous-systems.com/">Ferrous Systems</a>. Since then, I've taken care of the ongoing maintenance myself, with lots of help from <a href="https://jamesmunns.com/">James Munns</a> and other members of the community.</p>
+<p>The goal of this project was to create a solid foundation for everyone who wants to build something with the DW1000 using the <a href="https://www.rust-lang.org/">Rust programming language</a>. While the libraries are not complete and will likely see more development going forward, I believe I succeeded in that goal.</p>
+<h3 id="dw1000-dwm1001-dwm1001-dev">DW1000, DWM1001, DWM1001-Dev</h3>
+<p>Before we proceed to take a look at the <code>dw1000</code>/<code>dwm1001</code> crates, let's get a good overview of the hardware first.</p>
+<p>Let's start with the <a href="https://www.decawave.com/product/dw1000-radio-ic/">DW1000</a>. As noted above, it's a radio chip and the core of the whole thing. It's not very useful by itself, but if you want to create your own board and have full control over the design, the DW1000 is what you'd use.</p>
+<p>The <a href="https://www.decawave.com/product/dwm1001-module/">DWM1001 Module</a> contains the DW1000, a <a href="https://www.nordicsemi.com/Products/Low-power-short-range-wireless/nRF52832">Nordic nRF52832</a> microcontroller (which can communicate via Bluetooth), a 3-axis accelerometer, and other things like antennas. Again, this is not very useful by itself, but you can use it as part of your design.</p>
+<p>Finally, the <a href="https://www.decawave.com/product/dwm1001-development-board/">DWM1001 Development Board</a> is what you'd use for development, playing around, or maybe as a complete solution for your own product. It contains a DWM1001 Module, plus everything needed to make it accessible: An on-board programmer, pins that you can solder standard pin headers onto, LEDs, buttons, and more.</p>
+<p>If you're interested in the DW1000 but are not sure what to get, I recommend you buy a handful of DWM1001 Development Boards, as that's the easiest way to get started.</p>
+<h3 id="the-dw1000-driver">The <code>dw1000</code> Driver</h3>
+<p>Now that we know about the hardware, let's start talking about the software. Let's start with the <a href="https://crates.io/crates/dw1000"><code>dw1000</code></a> driver crate.</p>
+<p>In the embedded world, the word &quot;driver&quot; is a bit overloaded, but in our embedded Rust corner, it usually means something specific: A crate (Rust parlance for &quot;library&quot;) that interfaces with an external sensor or actuator (in this case the DW1000).</p>
+<p>Drivers usually depend on the <a href="https://crates.io/crates/embedded-hal"><code>embedded-hal</code></a> API to abstract over the hardware that they run on. This means the driver is completely portable, as long as there is an implementation of <code>embedded-hal</code> for the target hardware, which is often the case.</p>
+<p>Let's take look at the driver itself. As of this writing, it consists of 4 modules:</p>
+<ul>
+<li>The <a href="https://docs.rs/dw1000/0.4.0/dw1000/ll/index.html"><code>ll</code></a> module provides a low-level, register-based interface. It is not very convenient to use, but it serves as the base for the higher-level interface that the driver also provides, as well as a fallback, in case the higher-level interface doesn't cover your use case. The low-level interface isn't complete yet, but adding more registers is quite easy.</li>
+<li>The <a href="https://docs.rs/dw1000/0.4.0/dw1000/hl/index.html"><code>hl</code></a> provides a high-level interface. It is the recommended way of using the driver, however, it does not nearly support all the features of the chip.</li>
+<li>The <a href="https://docs.rs/dw1000/0.4.0/dw1000/ranging/index.html"><code>ranging</code></a> module provides an implementation of a ranging algorithm on top of the high-level interface. It can be used by an application to measure the distance between nodes.</li>
+<li>The <a href="https://docs.rs/dw1000/0.4.0/dw1000/time/index.html"><code>time</code></a> modules contains some types to deal with the DW1000's system time.</li>
+</ul>
+<p>Here's a piece of code that uses the high-level API to listen for messages and returning them to the sender:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">loop </span><span>{
+</span><span>    </span><span style="color:#65737e;">// Start receiving a message
+</span><span>    </span><span style="color:#b48ead;">let mut</span><span> receiving = dw1000.</span><span style="color:#96b5b4;">receive</span><span>(RxConfig::default())?;
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// Wait for the message to be received
+</span><span>    </span><span style="color:#b48ead;">let mut</span><span> buffer = [</span><span style="color:#d08770;">0</span><span>; </span><span style="color:#d08770;">1024</span><span>];
+</span><span>    </span><span style="color:#b48ead;">let</span><span> message = block!(receiving.</span><span style="color:#96b5b4;">wait</span><span>(&amp;</span><span style="color:#b48ead;">mut</span><span> buffer))?;
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// Receiving data put `dw1000` into the receiving state, moving out of our
+</span><span>    </span><span style="color:#65737e;">// original variable. Now that we&#39;re done, return it to the &quot;ready&quot; state
+</span><span>    </span><span style="color:#65737e;">// and move it back.
+</span><span>    dw1000 = receiving.</span><span style="color:#96b5b4;">finish_receiving</span><span>()
+</span><span>        .</span><span style="color:#96b5b4;">map_err</span><span>(|(_, </span><span style="color:#bf616a;">err</span><span>)| err)?;
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// Send the message back to where it came from
+</span><span>    </span><span style="color:#b48ead;">let mut</span><span> sending = dw1000.</span><span style="color:#96b5b4;">send</span><span>(
+</span><span>        message.frame.payload,
+</span><span>        message.frame.header.source,
+</span><span>        None,
+</span><span>    )?;
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// Wait for the message to be sent
+</span><span>    block!(sending.</span><span style="color:#96b5b4;">wait</span><span>())?;
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// Get `dw1000` ready to receive again in the next loop iteration.
+</span><span>    dw1000 = sending.</span><span style="color:#96b5b4;">finish_sending</span><span>()
+</span><span>        .</span><span style="color:#96b5b4;">map_err</span><span>(|(_, </span><span style="color:#bf616a;">err</span><span>)| err)?;
+</span><span>}
+</span></code></pre>
+<p>There are many more examples <a href="https://github.com/braun-embedded/rust-dw1000/tree/master/dwm1001/examples">available in the repository</a>.</p>
+<h3 id="the-dwm1001-board-support-crate">The <code>dwm1001</code> Board Support Crate</h3>
+<p>The <a href="https://crates.io/crates/dwm1001"><code>dwm1001</code></a> crate is designed to support applications that use the DWM1001 module or development board. This kind of library is often called a board support package (BSP), or as Rust people like to call it, a board support crate (BSC).</p>
+<p>Like the DWM1001 boards contain various pieces of hardware (like the DW1000, the nRF52832, and more), the <code>dwm1001</code> crate contains the various libraries required to access that hardware (like <code>dw1000</code>, <code>nrf52832-hal</code>, and more). The configuration of the software reflects the design of the hardware: Since on the DWM1001 module, the nRF52832 is hooked up to the DW1000 via SPI, the <code>dwm1001</code> crate hooks up the <code>nrf52832-hal</code> and <code>dw1000</code> crates in the same way.</p>
+<p>The design of <code>dwm1001</code> is rather simple: The <a href="https://docs.rs/dwm1001/0.4.0/dwm1001/struct.DWM1001.html"><code>DWM1001</code> struct</a> provides access to all the hardware. Here's a piece of code using that:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#65737e;">// Get an instance of the `DWM1001` struct by calling its `take` method. Since
+</span><span style="color:#65737e;">// we know we&#39;re only doing this once in our program, we can safely `unwrap`
+</span><span style="color:#65737e;">// and be sure this will never panic.
+</span><span style="color:#b48ead;">let mut</span><span> dwm1001 = </span><span style="color:#d08770;">DWM1001</span><span>::take().</span><span style="color:#96b5b4;">unwrap</span><span>();
+</span><span>
+</span><span style="color:#65737e;">// Reset the DW1000, to make sure it&#39;s in a known state.
+</span><span>dwm1001.</span><span style="color:#d08770;">DW_RST</span><span>.</span><span style="color:#96b5b4;">reset_dw1000</span><span>(&amp;</span><span style="color:#b48ead;">mut</span><span> delay);
+</span><span>
+</span><span style="color:#65737e;">// Initialize the DW1000 and store the initialized driver in this local
+</span><span style="color:#65737e;">// variable.
+</span><span style="color:#b48ead;">let mut</span><span> dw1000 = dwm1001.</span><span style="color:#d08770;">DW1000</span><span>.</span><span style="color:#96b5b4;">init</span><span>()?;
+</span><span>
+</span><span style="color:#65737e;">// Insert code using the DW1000 here.
+</span></code></pre>
+<h3 id="an-example-ranging">An Example: Ranging</h3>
+<p>As mentioned above, arguably the main feature of the DW1000 is its ability to measure the distance between two nodes with up to 10 cm accuracy. There are various ways to realize that, and the <code>dw1000</code> crate implements one such scheme.</p>
+<p>For this scheme, the nodes (all of which have a DW1000) are divided into two groups: Tags, whose position we want to determine, and anchors, that are placed in known positions. Anchors send out regular ping messages that tags listen for.</p>
+<p>Each ping message contains the timestamp from when it was sent. Once a tag receives a ping, it replies with a ranging request message that includes the following information:</p>
+<ul>
+<li>The same timestamp that the ping included.</li>
+<li>A timestamp from when the ranging request was sent.</li>
+<li>The time that passed between the ping being received and the ranging request being sent.</li>
+</ul>
+<p>Once the anchor receives the ranging request, it has all the information it needs to compute the round-trip-time for the ping (the time from the ping being sent to the ranging request being received). It then sends a ranging reply, which includes the following information:</p>
+<ul>
+<li>The ping round-trip-time it just computed.</li>
+<li>The time it took the tag to reply to the ping (received with the ranging request).</li>
+<li>The timestamp from when the ranging request was sent (received with the ranging request).</li>
+<li>The time passed between the ranging request being received and the ranging reply being sent.</li>
+</ul>
+<p>Finally, the tag receives the ranging reply and can now calculate the round-trip-time of the ranging request (the time from the ranging request being sent to the ranging reply being received).</p>
+<p>The tag now has all the information it needs to calculate the distance:</p>
+<ul>
+<li>The round-trip-time of the ping (<code>Tround1</code>).</li>
+<li>The rount-trip-time of the ranging request (<code>Tround2</code>).</li>
+<li>The time passed between the ping being received and the ranging request being sent (<code>Treply1</code>).</li>
+<li>The time passed between the ranging request being received and the ranging response being sent (<code>Treply2</code>).</li>
+</ul>
+<p>From this, the estimated time-of-flight (<code>Tprop</code>) can be calculated according to the following formula:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Tprop = (Tround1 * Tround2 - Treply1 * Treply2) / (Tround1 + Tround2 + Treply1 + Treply2)
+</span></code></pre>
+<p>Since we know the speed of light (299,792,458 m/s), we can calculate the distance from this.</p>
+<p>Some notes:</p>
+<ul>
+<li>As mentioned, there's more than one way to do it. This one is called double-sided two-way ranging using three messages. See DW1000 user manual, section 12.3.2.</li>
+<li>Please note that no clock synchronization is required. Yes, nodes send local timestamps to other nodes, but this is only done to make the protocol stateless, thereby keeping the implementation simple. Each node only makes calculations based on its own timestamps, and time intervals measured by other nodes.</li>
+<li>This alone will not get you fully accurate measurements. You also need to apply a range bias to the distance measurement. Support for this doesn't exist yet in the driver, see (<a href="https://github.com/braun-embedded/rust-dw1000/issues/105">#105</a>).</li>
+</ul>
+<h3 id="conclusion">Conclusion</h3>
+<p>In this article, I introduced the DW1000 chip, some of the hardware ecosystem around it, as well as the Rust libraries that can be used to access it. I've also presented a high-level overview of a ranging algorithm that can be used to measure the distance between two nodes.</p>
+<p>If you're interested in using the Rust libraries presented here, the following resources might be useful to you:</p>
+<ul>
+<li>If you want to learn more about Rust and how it can be used for embedded development, the official documentation (<a href="https://www.rust-lang.org/learn">general</a>, <a href="https://docs.rust-embedded.org/">embedded-specific</a>) is a great place to start.</li>
+<li>As already mentioned, there are <a href="https://github.com/braun-embedded/rust-dw1000/tree/master/dwm1001/examples">examples</a> in the repository that demonstrate basic usage.</li>
+<li>If you're looking for more usage examples, the <a href="https://github.com/ferrous-systems/internet-of-streams">Internet of Streams</a> project might be of interest to you. It consists of a code repository, as well as a number of live streams.</li>
+</ul>
+<p>If you'd like to use the <code>dw1000</code> driver (or any of the other libraries) but it's lacking some feature you need, don't worry, everything's open source! Feel free to open a pull request with your changes in the <a href="https://github.com/braun-embedded/rust-dw1000">repository</a>. Or, if you don't have the time to do that, you can 
+<a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">hire me</a>
+
+ to do it for you.</p>
+<p>Do you have any questions or comments about this article? Please 
+<a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">contact me</a>
+
+ and let me know!</p>
+
+</article>
+
+        </main>
+
+        <footer>
+            <div class="made-in-odenwald">
+                <a href="/braun-embedded.com/made-in-odenwald/1.jpg" target="_blank">
+                    Made in Odenwald ♥
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>

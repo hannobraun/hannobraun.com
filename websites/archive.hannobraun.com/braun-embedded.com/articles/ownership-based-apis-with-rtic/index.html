@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+            <title>Using ownership-based APIs with RTIC - Braun Embedded</title>
+        
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="/braun-embedded.com/style.css" rel="stylesheet" type="text/css" media="all" />
+    </head>
+
+    <body>
+        <p class="notice">
+            <strong>
+                Hey there! I no longer provide services in the embedded field, and this website is archived. To see what I'm up to these days, please visit <a href="https://www.hannobraun.com/">hannobraun.com</a>.
+            </strong>
+        </p>
+        <header class="site-header">
+            <a class="title" href="/braun-embedded.com/">
+                <h1>Braun Embedded</h1>
+                <h2>Software Development and Consulting Services</h2>
+            </a>
+
+            <div class="contact-short">
+                <p>Hanno Braun</p>
+                <p>Michelstadt, Germany</p>
+                <p>
+                    
+<a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">hello@hannobraun.com</a>
+
+                </p>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="/braun-embedded.com/">Home</a>
+                </li>
+                <li>
+                    <a href="/braun-embedded.com/articles">Articles</a>
+                </li>
+                <li>
+                    <a href="/braun-embedded.com/glossary">Glossary</a>
+                </li>
+                <li>
+                    <a href="/braun-embedded.com/contact">Contact</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            
+<article>
+	<header>
+		<h1>Using ownership-based APIs with RTIC</h1>
+		<h2>Many APIs in the Embedded Rust ecosystem utilize Rust&#x27;s ownership system to encode state at compile time, consuming an old instance of a type and returning a new one when changing state. How can such an API be used with RTIC, when RTIC only gives us mutable references to resources?
+</h2>
+		<span class="last-updated">
+			Last updated:
+			<time datetime="2021-05-27">
+				2021-05-27
+			</time>
+		</span>
+	</header>
+
+	<p>Let's say we have a peripheral API that encodes in its type whether it is enabled or not.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">struct </span><span>Peripheral&lt;State&gt; {
+</span><span>    </span><span style="color:#65737e;">// ...
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">impl </span><span>Peripheral&lt;Disabled&gt; {
+</span><span>    </span><span style="color:#b48ead;">pub fn </span><span style="color:#8fa1b3;">enable</span><span>(</span><span style="color:#bf616a;">self</span><span>) -&gt; Peripheral&lt;Enabled&gt; {
+</span><span>        </span><span style="color:#65737e;">// ...
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">impl </span><span>Peripheral&lt;Enabled&gt; {
+</span><span>    </span><span style="color:#b48ead;">pub fn </span><span style="color:#8fa1b3;">use_peripheral</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>) {
+</span><span>        </span><span style="color:#65737e;">// ...
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">pub fn </span><span style="color:#8fa1b3;">disable</span><span>(</span><span style="color:#bf616a;">self</span><span>) -&gt; Peripheral&lt;Disabled&gt; {
+</span><span>        </span><span style="color:#65737e;">// ...
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="color:#65737e;">// `Enabled` and `Disabled` are just types that we use as markers. They could be
+</span><span style="color:#65737e;">// defined like this, for example:
+</span><span style="color:#b48ead;">pub struct </span><span>Disabled;
+</span><span style="color:#b48ead;">pub struct </span><span>Enabled;
+</span></code></pre>
+<p>This pattern is often called &quot;<a href="/braun-embedded.com/glossary/#type-state">type state</a>&quot;. The <code>use_peripheral</code> method is only available, if the peripheral is enabled, and this is checked at compile-time. This pattern can be very useful, to prevent accidental misuse of the API.</p>
+<p>Another example of using ownership in a similar way are <a href="/braun-embedded.com/glossary/#dma">DMA</a> APIs, which often involve a <code>Transfer</code> type that consumes the peripheral, a buffer, and whatever else it needs to do its job, giving all of it back once the DMA transfer has finished.</p>
+<p>If we use this API in an <a href="/braun-embedded.com/glossary/#rtic">RTIC</a> task, it could look like this (using RTIC 0.5.x):</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#65737e;">// Most of the RTIC application omitted for brevity.
+</span><span>
+</span><span style="color:#b48ead;">struct </span><span>Resources {
+</span><span>    </span><span style="color:#bf616a;">peripheral</span><span>: Peripheral&lt;Enabled&gt;,
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#bf616a;">init</span><span>]
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">init</span><span>(</span><span style="color:#bf616a;">cx</span><span>: init::Context) -&gt; init::LateResources {
+</span><span>    </span><span style="color:#65737e;">// Let&#39;s say whatever HAL we&#39;re using is giving us the peripheral in the
+</span><span>    </span><span style="color:#65737e;">// `Disabled` state.
+</span><span>    </span><span style="color:#b48ead;">let</span><span> peripheral: Peripheral&lt;Disabled&gt; = cx.device.peripheral;
+</span><span>
+</span><span>    init::LateResources {
+</span><span>        peripheral: peripheral.</span><span style="color:#96b5b4;">enable</span><span>(),
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#bf616a;">task</span><span>(resources = [peripheral])]
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">task</span><span>(</span><span style="color:#bf616a;">cx</span><span>: task::Context) {
+</span><span>    </span><span style="color:#65737e;">// `use_peripheral` requires `&amp;mut self` and we got a `&amp;mut Peripheral`
+</span><span>    </span><span style="color:#65737e;">// here. Everything&#39;s great!
+</span><span>    cx.resources.peripheral.</span><span style="color:#96b5b4;">use_peripheral</span><span>();
+</span><span>}
+</span></code></pre>
+<p>All is well: the peripheral is enabled on initialization, and then used during runtime from the task. A more complete version of this example is <a href="https:&#x2F;&#x2F;github.com&#x2F;braun-embedded&#x2F;braun-embedded.com&#x2F;tree&#x2F;main&#x2F;rust&#x2F;example-rtic-type-state-init" target="_blank">available on GitHub</a>
+
+.</p>
+<p>But what if we only want to enable the peripheral while it is used in the task?</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">struct </span><span>Resources {
+</span><span>    </span><span style="color:#bf616a;">peripheral</span><span>: Peripheral&lt;Disabled&gt;,
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#bf616a;">task</span><span>(resources = [peripheral])]
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">task</span><span>(</span><span style="color:#bf616a;">cx</span><span>: task::Context) {
+</span><span>    </span><span style="color:#65737e;">// This won&#39;t compile! `enable` and `disable` take `self`, meaning they
+</span><span>    </span><span style="color:#65737e;">// consume a whole `Peripheral`. We only have a `&amp;mut Peripheral` here.
+</span><span>    cx.resources.peripheral.</span><span style="color:#96b5b4;">enable</span><span>();
+</span><span>    cx.resources.peripheral.</span><span style="color:#96b5b4;">use_peripheral</span><span>();
+</span><span>    cx.resources.peripheral.</span><span style="color:#96b5b4;">disable</span><span>();
+</span><span>}
+</span></code></pre>
+<p>We need to move the peripheral out of the resources somehow, but doing this is not straight-forward.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#[</span><span style="color:#bf616a;">task</span><span>(resources = [peripheral])]
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">task</span><span>(</span><span style="color:#bf616a;">cx</span><span>: task::Context) {
+</span><span>    </span><span style="color:#65737e;">// This won&#39;t compile either! We can&#39;t just move out of a `&amp;mut Peripheral`,
+</span><span>    </span><span style="color:#65737e;">// as we can&#39;t leave the memory it references unoccupied.
+</span><span>    </span><span style="color:#b48ead;">let</span><span> peripheral = cx.resources.peripheral.</span><span style="color:#96b5b4;">enable</span><span>();
+</span><span>    peripheral.</span><span style="color:#96b5b4;">use_peripheral</span><span>();
+</span><span>    cx.resources.peripheral = peripheral.</span><span style="color:#96b5b4;">disable</span><span>();
+</span><span>}
+</span></code></pre>
+<p>So what to do? Fortunately, there are a few solutions.</p>
+<h3 id="solution-1-option-peripheral">Solution 1: <code>Option&lt;Peripheral&gt;</code></h3>
+<p>We might not be able to move out of a <code>&amp;mut Peripheral</code>, but we certainly can move out of an <code>Option&lt;Peripheral&gt;</code> using <a href="https:&#x2F;&#x2F;doc.rust-lang.org&#x2F;core&#x2F;option&#x2F;enum.Option.html#method.take" target="_blank">`Option::take`</a>
+
+.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">struct </span><span>Resources {
+</span><span>    </span><span style="color:#bf616a;">peripheral</span><span>: Option&lt;Peripheral&lt;Disabled&gt;&gt;,
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#bf616a;">task</span><span>(resources = [peripheral])]
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">task</span><span>(</span><span style="color:#bf616a;">cx</span><span>: task::Context) {
+</span><span>    </span><span style="color:#65737e;">// `take` moves the peripheral out of `&amp;mut Option&lt;Peripheral&gt;`,
+</span><span>    </span><span style="color:#65737e;">// leaving `None` in its place. Since there could have been a `None` in
+</span><span>    </span><span style="color:#65737e;">// the first place, `take` returns an `Option&lt;Peripheral&gt;` which we
+</span><span>    </span><span style="color:#65737e;">// `unwrap` here.
+</span><span>    </span><span style="color:#b48ead;">let mut</span><span> peripheral = cx.resources.peripheral.</span><span style="color:#96b5b4;">take</span><span>().</span><span style="color:#96b5b4;">unwrap</span><span>().</span><span style="color:#96b5b4;">enable</span><span>();
+</span><span>    peripheral.</span><span style="color:#96b5b4;">use_peripheral</span><span>();
+</span><span>    *cx.resources.peripheral = Some(peripheral.</span><span style="color:#96b5b4;">disable</span><span>());
+</span><span>}
+</span></code></pre>
+<p>As long as we make sure we start out with a <code>Some</code> and are careful to always put the peripheral back after using it, <code>unwrap</code> will never panic. Check out the more complete <a href="https:&#x2F;&#x2F;github.com&#x2F;braun-embedded&#x2F;braun-embedded.com&#x2F;tree&#x2F;main&#x2F;rust&#x2F;example-rtic-type-state-option" target="_blank">example on GitHub</a>
+
+.</p>
+<p>This solution is usually fine, but the additional <code>Option&lt;...&gt;</code> is a bit ugly. And it's not zero-overhead, as we unnecessarily keep track of whether there currently is a <code>Some</code> or a <code>None</code> in the resource.</p>
+<h3 id="solution-2-replace-with">Solution 2: replace_with</h3>
+<p>The previous solution worked around the limitation that we can't move out of a mutable reference. But is that really true? There surely is no harm done, if we make sure to move something of the same type back, before anyone else has a chance to notice, right?</p>
+<p>That's indeed right, and there's even a function in the core library to do it: <a href="https:&#x2F;&#x2F;doc.rust-lang.org&#x2F;core&#x2F;mem&#x2F;fn.replace.html" target="_blank">`mem::replace`</a>
+
+. That doesn't really help us though, as we'd need a replacement right away, and we won't have one until after we used and re-disabled the peripheral.</p>
+<p>We could cook something up using <code>unsafe</code>, but fortunately there's already a library that does just that: <a href="https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;replace_with" target="_blank">replace_with</a>
+
+</p>
+<p>Using replace_with, we can replicate what we did in solution 1, but without the additional overhead of the <code>Option</code>.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">struct </span><span>Resources {
+</span><span>    </span><span style="color:#bf616a;">peripheral</span><span>: Peripheral&lt;Disabled&gt;,
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#bf616a;">task</span><span>(resources = [peripheral])]
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">task</span><span>(</span><span style="color:#bf616a;">cx</span><span>: task::Context) {
+</span><span>    </span><span style="color:#65737e;">// Here we move the peripheral out of the mutable reference and put it
+</span><span>    </span><span style="color:#65737e;">// back after using it.
+</span><span>    </span><span style="color:#96b5b4;">replace_with</span><span>(
+</span><span>        cx.resources.peripheral,
+</span><span>        || {
+</span><span>            </span><span style="color:#65737e;">// The closure below uses the peripheral. If there&#39;s a panic
+</span><span>            </span><span style="color:#65737e;">// while we do this, `replace_with` can&#39;t put a `Peripheral`
+</span><span>            </span><span style="color:#65737e;">// back, and calls this closure to get a default instance of
+</span><span>            </span><span style="color:#65737e;">// `Peripheral&lt;Disabled&gt;`.
+</span><span>            </span><span style="color:#65737e;">//
+</span><span>            </span><span style="color:#65737e;">// We&#39;ll just panic here instead. Please note that this can
+</span><span>            </span><span style="color:#65737e;">// result in a double-panic, which could be problematic, and the
+</span><span>            </span><span style="color:#65737e;">// `replace_with` documentation explicitly recommends not to
+</span><span>            </span><span style="color:#65737e;">// panic here.
+</span><span>            </span><span style="color:#65737e;">//
+</span><span>            </span><span style="color:#65737e;">// In a real application, you might want to do something better,
+</span><span>            </span><span style="color:#65737e;">// like logging an error and restarting the application in a
+</span><span>            </span><span style="color:#65737e;">// controlled manner.
+</span><span>            panic!(&quot;</span><span style="color:#a3be8c;">Panic while using peripheral</span><span>&quot;)
+</span><span>        },
+</span><span>        |</span><span style="color:#bf616a;">peripheral</span><span>| {
+</span><span>            </span><span style="color:#b48ead;">let mut</span><span> peripheral = peripheral.</span><span style="color:#96b5b4;">enable</span><span>();
+</span><span>            peripheral.</span><span style="color:#96b5b4;">use_peripheral</span><span>();
+</span><span>            peripheral.</span><span style="color:#96b5b4;">disable</span><span>()
+</span><span>        },
+</span><span>    );
+</span><span>}
+</span></code></pre>
+<p>This is a nice and elegant solution to the problem, but it requires an external dependency. There's also the danger of a panic causing a hard-to-debug problem, but that's always the case with embedded code.</p>
+<p>There's a more complete example <a href="https:&#x2F;&#x2F;github.com&#x2F;braun-embedded&#x2F;braun-embedded.com&#x2F;tree&#x2F;main&#x2F;rust&#x2F;example-rtic-type-state-replace-with" target="_blank">available on GitHub</a>
+
+.</p>
+<h3 id="going-beyond">Going beyond</h3>
+<p>The previous solutions work fine, if all we need is to keep the peripheral enabled within a single task. But what if we need to enable the peripheral based on some external circumstance, keep it enabled for a while, then disable it later? This would require the peripheral to be enabled, disabled, and used in different tasks.</p>
+<p>This is possible by combining the previous two solutions: Using an enum to track the peripheral state at runtime (except, instead of an option, we use a custom enum with <code>Enabled</code>/<code>Disabled</code> variants) and use replace_with for the state transitions.</p>
+<p>That's a topic for a different article though. Please 
+<a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">let me know</a>
+
+ if you want to read that, so I can prioritize writing it accordingly.</p>
+
+</article>
+
+        </main>
+
+        <footer>
+            <div class="made-in-odenwald">
+                <a href="/braun-embedded.com/made-in-odenwald/1.jpg" target="_blank">
+                    Made in Odenwald ♥
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+            <title>Setup Instructions for Embedded Workshop - Braun Embedded</title>
+        
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="/braun-embedded.com/style.css" rel="stylesheet" type="text/css" media="all" />
+    </head>
+
+    <body>
+        <p class="notice">
+            <strong>
+                Hey there! I no longer provide services in the embedded field, and this website is archived. To see what I'm up to these days, please visit <a href="https://www.hannobraun.com/">hannobraun.com</a>.
+            </strong>
+        </p>
+        <header class="site-header">
+            <a class="title" href="/braun-embedded.com/">
+                <h1>Braun Embedded</h1>
+                <h2>Software Development and Consulting Services</h2>
+            </a>
+
+            <div class="contact-short">
+                <p>Hanno Braun</p>
+                <p>Michelstadt, Germany</p>
+                <p>
+                    
+<a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">hello@hannobraun.com</a>
+
+                </p>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="/braun-embedded.com/">Home</a>
+                </li>
+                <li>
+                    <a href="/braun-embedded.com/articles">Articles</a>
+                </li>
+                <li>
+                    <a href="/braun-embedded.com/glossary">Glossary</a>
+                </li>
+                <li>
+                    <a href="/braun-embedded.com/contact">Contact</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            
+    <h1 id="setup-instructions-for-embedded-workshop">Setup Instructions for Embedded Workshop</h1>
+<p>Hey there, thanks for registering for our workshop! To participate, you need to install some software on your computer. If you want to make sure that your experience during the workshop is as smooth as it can be, we recommend doing this <em>before</em> the workshop.</p>
+<p><strong>If you don't have the time or patience to read all my explanations, just skip everything except for the bold summaries at the end of each section.</strong></p>
+<p>Our experience with previous workshops has shown that installing the software is the most problematic part for many participants. Since many of these problems are highly specific to a participant's computer and its configuration, they are also the problems we're least equipped to help you with.</p>
+<p>We're also somewhat concerned about what's going to happen to the wi-fi once a room full of people starts to download stuff all at once, so that's another reason to get this done before the workshop, if possible.</p>
+<p>If you have any problems with the instructions here, feel free to contact me (
+<a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">hello@hannobraun.com</a>
+
+), or just ask during the workshop.</p>
+<h2 id="rust">Rust</h2>
+<p>To develop in Rust, we need to install it, obviously. The recommended way to do this is via Rustup. If your operating system provides a package, feel free to install that. If not, just follow the instructions here: <a href="https://www.rust-lang.org/learn/get-started">https://www.rust-lang.org/learn/get-started</a></p>
+<p>We're going to use the latest stable version of the Rust compiler. In many cases, that will already be installed automatically with Rustup. To make sure, run the following command:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>rustup default stable
+</span></code></pre>
+<p>Many operating systems provide Rust packages without Rustup. We need Rustup though, as we're going to use it to install a pre-compiled core library for our microcontroller target:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>rustup target add thumbv6m-none-eabi
+</span></code></pre>
+<h3 id="summary">Summary</h3>
+<ol>
+<li><strong>Install Rustup using your system's package manager or from the <a href="https://www.rust-lang.org/learn/get-started">official website</a>.</strong></li>
+<li><strong>Run <code>rustup default stable</code>.</strong></li>
+<li><strong>Run <code>rustup target add thumbv6m-none-eabi</code>.</strong></li>
+</ol>
+<h2 id="gdb">GDB</h2>
+<p>What we have so far will allow us to compile Rust applications for our microcontroller. To actually run them, we need a way to upload them to the microcontroller. There are many ways to do this. We're going to use GDB, as that also gives us debugging support.</p>
+<p>GDB comes in different variations for each target platform, so if you already have GDB installed to debug your non-embedded applications, that might not work. What we need is the variant for bare-metal ARM targets.</p>
+<p>Many operating systems have that packaged under the name <code>arm-none-eabi-gdb</code>, but it might also be called <code>gdb-multiarch</code> or just <code>gdb</code>. There are also binaries you can download directly from ARM: <a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads">https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads</a></p>
+<h3 id="summary-1">Summary</h3>
+<p><strong>Install <code>arm-none-eabi-gdb</code> through your operating system's package manager (it might have a different name there), or <a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads">directly from ARM</a>.</strong></p>
+<h2 id="openocd">OpenOCD</h2>
+<p>GDB doesn't know how to talk to the hardware directly, so we need another piece of software to run/debug applications on the target hardware. We're going to use OpenOCD for that.</p>
+<p>OpenOCD is actively developed, but it looks like the project stopped doing releases. The latest release from the official website (0.10) is almost 3 years old and doesn't support our target hardware.</p>
+<p>If your operating system packages a Git version of OpenOCD, you can use that. If not, you can use the binary release from xPack: <a href="https://xpack.github.io/openocd/">https://xpack.github.io/openocd/</a></p>
+<p>xPack is some kind of package manager for embedded developers. You don't need to install it to get OpenOCD though, as they provide direct downloads: <a href="https://github.com/xpack-dev-tools/openocd-xpack/releases/">https://github.com/xpack-dev-tools/openocd-xpack/releases/</a></p>
+<h3 id="summary-2">Summary</h3>
+<p><strong>Install a Git version of OpenOCD from your package manager, or use the <a href="https://github.com/xpack-dev-tools/openocd-xpack/releases/">binary release from xPack</a>.</strong></p>
+<h2 id="linux-bonus-step-udev">Linux Bonus Step: udev</h2>
+<p>One problem that usually pops up on Linux systems is that your user doesn't have the permissions required for OpenOCD to talk to the board. There's a crude workaround for this that involves <code>sudo</code> (we'll go into it during the workshop, if really necessary). The proper solution is to add a udev rule.</p>
+<p>OpenOCD already comes with a udev configuration file that you can use. The specifics are going to depend on your system, but here's how it should roughly work:</p>
+<ol>
+<li>Locate the file <code>60-openocd.rules</code>. It might be in <code>/usr/share/openocd/contrib</code> (or similar), or it might have been installed directly into <code>/usr/lib/udev/rules.d</code>.</li>
+<li>Copy <code>60-openocd.rules</code> into <code>/etc/udev/rules.d/</code></li>
+</ol>
+<p>This might already work, or you might need to edit the file slightly. The udev rules from that file contain <code>GROUP=&quot;plugdev&quot;</code>. This group doesn't exist on many Linux systems and you can just remove that part.</p>
+<p>The line you need to edit should look like this:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span># CMSIS-DAP compatible adapters
+</span><span>ATTRS{product}==&quot;*CMSIS-DAP*&quot;, MODE=&quot;660&quot;, GROUP=&quot;plugdev&quot;, TAG+=&quot;uaccess&quot;
+</span></code></pre>
+<p>After the edit, it should look like this:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span># CMSIS-DAP compatible adapters
+</span><span>ATTRS{product}==&quot;*CMSIS-DAP*&quot;, MODE=&quot;660&quot;, TAG+=&quot;uaccess&quot;
+</span></code></pre>
+<ol start="3">
+<li>If necessary, edit the file according to the instructions above. If you want to also use OpenOCD with other boards, feel free to remove the <code>GROUP=&quot;plugdev&quot;</code> bit from all the lines in that file.</li>
+<li>Reload the udev rules: <code>sudo udevadm control --reload</code></li>
+</ol>
+<h2 id="verification">Verification</h2>
+<p>If you followed all the instructions here, everything <em>should</em> work. If you happen to already have the target hardware for this workshop (the LPC845-BRK board from NXP), you can verify that everything works by connecting the board via USB and executing the following commands:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>git clone git@github.com:lpc-rs/lpc8xx-hal.git
+</span><span>cd lpc8xx-hal
+</span><span>cargo run --features=845-rt --example gpio_delay
+</span></code></pre>
+<p>If successful, the blue LED on the board should blink slowly.</p>
+<p>If you have a different ARM Cortex-M board for which Rust support exists, you might be able to verify your setup using the respective support libraries for that board.</p>
+
+
+        </main>
+
+        <footer>
+            <div class="made-in-odenwald">
+                <a href="/braun-embedded.com/made-in-odenwald/1.jpg" target="_blank">
+                    Made in Odenwald ♥
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>

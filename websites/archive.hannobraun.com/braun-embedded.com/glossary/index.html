@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+            <title>Embedded Rust Glossary - Braun Embedded</title>
+        
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="/braun-embedded.com/style.css" rel="stylesheet" type="text/css" media="all" />
+    </head>
+
+    <body>
+        <p class="notice">
+            <strong>
+                Hey there! I no longer provide services in the embedded field, and this website is archived. To see what I'm up to these days, please visit <a href="https://www.hannobraun.com/">hannobraun.com</a>.
+            </strong>
+        </p>
+        <header class="site-header">
+            <a class="title" href="/braun-embedded.com/">
+                <h1>Braun Embedded</h1>
+                <h2>Software Development and Consulting Services</h2>
+            </a>
+
+            <div class="contact-short">
+                <p>Hanno Braun</p>
+                <p>Michelstadt, Germany</p>
+                <p>
+                    
+<a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">hello@hannobraun.com</a>
+
+                </p>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="/braun-embedded.com/">Home</a>
+                </li>
+                <li>
+                    <a href="/braun-embedded.com/articles">Articles</a>
+                </li>
+                <li>
+                    <a href="/braun-embedded.com/glossary">Glossary</a>
+                </li>
+                <li>
+                    <a href="/braun-embedded.com/contact">Contact</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            
+    <h2 id="embedded-rust-glossary">Embedded Rust Glossary</h2>
+<p>This glossary is an attempt at explaining basic concepts from the Embedded Rust ecosystem. I will attempt to extend and update it going forward.</p>
+<p>Is anything missing here? Is an entry not well explained? Do you have any questions? If so, please contact me (per 
+<a href="mailto:Hanno%20Braun%20%3Chello@hannobraun.com%3E">email</a>
+
+ or <a href="https://matrix.to/#/@hanno:braun-odw.eu" target="_blank">Matrix</a>
+), <a href="https:&#x2F;&#x2F;github.com&#x2F;braun-embedded&#x2F;braun-embedded.com&#x2F;issues" target="_blank">open an issue</a>
+
+, or <a href="https:&#x2F;&#x2F;github.com&#x2F;braun-embedded&#x2F;braun-embedded.com&#x2F;blob&#x2F;main&#x2F;content&#x2F;glossary.md" target="_blank">edit this glossary on GitHub</a>
+
+.</p>
+<section class="glossary">
+<header>
+    <a id="direct-memory-access"></a>
+    <a class="title-anchor" href="#direct-memory-access">
+        <h3>Direct Memory Access</h3>
+    </a>
+</header>
+
+<p>See <a href="https://braun-embedded.com/glossary/#dma">DMA</a>.</p>
+</section>
+<section class="glossary">
+<header>
+    <a id="dma"></a>
+    <a class="title-anchor" href="#dma">
+        <h3>DMA</h3>
+    </a>
+</header>
+
+<p>DMA (short for <a href="https://braun-embedded.com/glossary/#direct-memory-access">Direct Memory Access</a>) is a hardware feature that allows microcontroller peripherals to directly access memory. This allows for larger amounts of work to be done without software interaction, improving performance and efficiency.</p>
+</section>
+<section class="glossary">
+<header>
+    <a id="hal"></a>
+    <a class="title-anchor" href="#hal">
+        <h3>HAL</h3>
+    </a>
+</header>
+
+<p>HALs (short for <a href="https://braun-embedded.com/glossary/#hardware-abstraction-layer">Hardware Abstraction Layer</a>) are libraries that interface with microcontrollers. They are specific to the microcontrollers they interface with, and there are many different HALs for different types of microcontroller. They can be quite specific, only covering a few microcontroller models, or more general, covering multiple microcontroller families.</p>
+<p>Hardware Abstraction Layers usually aim to provide APIs that are high-level, convenient, and safe. For that reason, they are often the preferred way to program a microcontroller. They are often not feature-complete though, especially if they target niche hardware that is not used by many developers.</p>
+<p>HALs are usually built on top of one or several <a href="https://braun-embedded.com/glossary/#peripheral-access-crate">Peripheral Access Crates</a> (<a href="https://braun-embedded.com/glossary/#pac">PAC</a>, for short). These can usually be accessed through the HAL API, and serve as a fallback for accessing hardware features that are not yet supported by the HAL.</p>
+<p>If you're looking for a HAL for your target hardware, good places to search are <a href="https:&#x2F;&#x2F;github.com&#x2F;" target="_blank">GitHub</a>
+
+, <a href="https:&#x2F;&#x2F;crates.io&#x2F;" target="_blank">crates.io</a>
+
+, and <a href="https:&#x2F;&#x2F;github.com&#x2F;rust-embedded&#x2F;awesome-embedded-rust" target="_blank">Awesome Embedded Rust</a>
+
+. There are also community groups that develop HALs for specific kinds of microcontrollers, like <a href="https:&#x2F;&#x2F;github.com&#x2F;stm32-rs" target="_blank">stm32-rs</a>
+
+, <a href="https:&#x2F;&#x2F;github.com&#x2F;nrf-rs" target="_blank">nRF Rust</a>
+
+, and <a href="https:&#x2F;&#x2F;github.com&#x2F;lpc-rs" target="_blank">lpc-rs</a>
+
+.</p>
+</section>
+<section class="glossary">
+<header>
+    <a id="hardware-abstraction-layer"></a>
+    <a class="title-anchor" href="#hardware-abstraction-layer">
+        <h3>Hardware Abstraction Layer</h3>
+    </a>
+</header>
+
+<p>See <a href="https://braun-embedded.com/glossary/#hal">HAL</a>.</p>
+</section>
+<section class="glossary">
+<header>
+    <a id="pac"></a>
+    <a class="title-anchor" href="#pac">
+        <h3>PAC</h3>
+    </a>
+</header>
+
+<p>PACs (short for <a href="https://braun-embedded.com/glossary/#peripheral-access-crate">Peripheral Access Crate</a>) are low-level, machine-generated libraries that aim to cover that usually provide a complete or near-complete interface to a given microcontroller. <a href="https://braun-embedded.com/glossary/#hal">Hardware Abstraction Layers</a> are usually built on top of them, and provide a higher-level interface to the same hardware.</p>
+<p>Peripheral Access Crates provide register-level access to the target hardware. Their APIs tend to have some level of type-safety, but do otherwise not attempt to restrict or guide the user in any way. Using them is very error-prone and requires a solid understanding of the target hardware. For that reason, using a <a href="https://braun-embedded.com/glossary/#hal">Hardware Abstraction Layer</a> is usually preferred.</p>
+<p>PACs are generated from <a href="https://braun-embedded.com/glossary/#svd">SVD</a> files, using <a href="https://braun-embedded.com/glossary/#svd2rust">svd2rust</a>. <a href="https://braun-embedded.com/glossary/#svd">SVD</a> files are provided by the hardware vendor and are of varying quality. Low-quality SVD files result in PACs that are buggy, miss features, and lack type-safety. Most widely-used PACs use patched <a href="https://braun-embedded.com/glossary/#svd">SVD</a> files to fix any problems that have been discovered.</p>
+<p>If you're looking for a PAC for your target hardware, good places to search are <a href="https:&#x2F;&#x2F;github.com&#x2F;" target="_blank">GitHub</a>
+
+, <a href="https:&#x2F;&#x2F;crates.io&#x2F;" target="_blank">crates.io</a>
+
+, and <a href="https:&#x2F;&#x2F;github.com&#x2F;rust-embedded&#x2F;awesome-embedded-rust" target="_blank">Awesome Embedded Rust</a>
+
+. There are also community groups that provide PACs for specific kinds of microcontrollers, like <a href="https:&#x2F;&#x2F;github.com&#x2F;stm32-rs&#x2F;stm32-rs" target="_blank">stm32-rs</a>
+
+, <a href="https:&#x2F;&#x2F;github.com&#x2F;nrf-rs" target="_blank">nRF Rust</a>
+
+, and <a href="https:&#x2F;&#x2F;github.com&#x2F;lpc-rs&#x2F;lpc-pac" target="_blank">lpc-rs</a>
+
+.</p>
+</section>
+<section class="glossary">
+<header>
+    <a id="peripheral-access-crate"></a>
+    <a class="title-anchor" href="#peripheral-access-crate">
+        <h3>Peripheral Access Crate</h3>
+    </a>
+</header>
+
+<p>See <a href="https://braun-embedded.com/glossary/#pac">PAC</a>.</p>
+</section>
+<section class="glossary">
+<header>
+    <a id="real-time-interrupt-driven-concurrency"></a>
+    <a class="title-anchor" href="#real-time-interrupt-driven-concurrency">
+        <h3>Real-Time Interrupt-driven Concurrency</h3>
+    </a>
+</header>
+
+<p>See <a href="https://braun-embedded.com/glossary/#rtic">RTIC</a>.</p>
+</section>
+<section class="glossary">
+<header>
+    <a id="rtic"></a>
+    <a class="title-anchor" href="#rtic">
+        <h3>RTIC</h3>
+    </a>
+</header>
+
+<p>RTIC (short for <a href="https://braun-embedded.com/glossary/#real-time-interrupt-driven-concurrency">Real-Time Interrupt-driven Concurrency</a>; <a href="https:&#x2F;&#x2F;rtic.rs&#x2F;" target="_blank">official website</a>
+
+) is a lightweight framework for building Embedded Rust applications. It provides a task abstraction, efficient and safe sharing of resources between tasks, message passing, and more.</p>
+<p>RTIC systematically solves many of the problems that any non-trivial Embedded Rust application would end up solving in an ad-hoc way anyway. It is therefore a widely held belief within the Embedded Rust community, that most firmware applications should use RTIC, unless there is a specific reason not to.</p>
+</section>
+<section class="glossary">
+<header>
+    <a id="svd"></a>
+    <a class="title-anchor" href="#svd">
+        <h3>SVD</h3>
+    </a>
+</header>
+
+<p>SVD (short for <a href="https://braun-embedded.com/glossary/#system-view-description">System View Description</a>) is an XML-based file format that describes a microcontroller from the perspective of the software that is running on it. More specifically, it describes the register-based interface of the microcontroller's peripherals, but also contains some other information, like available hardware interrupts.</p>
+<p>SVD files are the basis for <a href="https://braun-embedded.com/glossary/#pac">PACs</a>, which are generated from an SVD file using <a href="https://braun-embedded.com/glossary/#svd2rust">svd2rust</a>. SVD files are of varying quality, which can lead to bugs and other quality problems in the generated <a href="https://braun-embedded.com/glossary/#pac">PAC</a>. <a href="https://braun-embedded.com/glossary/#pac">PACs</a> are often generated from patched files for that reason, but reporting issues to the hardware vendor can also be worthwhile.</p>
+<p>SVD files can be hard to find, depending on the vendor. Some provide them for download on their websites (like <a href="https:&#x2F;&#x2F;www.st.com&#x2F;" target="_blank">ST</a>
+
+) or distribute them with their IDEs (like <a href="https:&#x2F;&#x2F;mcuxpresso.nxp.com&#x2F;" target="_blank">NXP</a>
+
+).</p>
+</section>
+<section class="glossary">
+<header>
+    <a id="svd2rust"></a>
+    <a class="title-anchor" href="#svd2rust">
+        <h3>svd2rust</h3>
+    </a>
+</header>
+
+<p>svd2rust (<a href="https:&#x2F;&#x2F;github.com&#x2F;rust-embedded&#x2F;svd2rust" target="_blank">official repository</a>
+
+) is a tool that converts <a href="https://braun-embedded.com/glossary/#svd">SVD</a> files into <a href="https://braun-embedded.com/glossary/#pac">Peripheral Access Crates</a>.</p>
+</section>
+<section class="glossary">
+<header>
+    <a id="system-view-description"></a>
+    <a class="title-anchor" href="#system-view-description">
+        <h3>System View Description</h3>
+    </a>
+</header>
+
+<p>See <a href="https://braun-embedded.com/glossary/#svd">SVD</a>.</p>
+</section>
+<section class="glossary">
+<header>
+    <a id="type-state"></a>
+    <a class="title-anchor" href="#type-state">
+        <h3>Type State</h3>
+    </a>
+</header>
+
+<p>In the context of Embedded Rust, type state refers to a pattern that uses types to encode the state of an API at compile-time. This can be useful in preventing accidental misuse of the API. For example, if the API controls a microcontroller peripheral, methods that will only work when the peripheral is enabled will simply be unavailable (trying to use them will cause a compiler error), until the peripheral has been enabled.</p>
+<p>Rust's ownership system makes this pattern more useful then in most languages, as it provides much more control over how APIs can be used.</p>
+</section>
+<section class="glossary">
+<header>
+    <a id="system-view-description"></a>
+    <a class="title-anchor" href="#system-view-description">
+        <h3>System View Description</h3>
+    </a>
+</header>
+
+<p>See <a href="https://braun-embedded.com/glossary/#svd">SVD</a>.</p>
+</section>
+
+
+        </main>
+
+        <footer>
+            <div class="made-in-odenwald">
+                <a href="/braun-embedded.com/made-in-odenwald/1.jpg" target="_blank">
+                    Made in Odenwald ♥
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>
