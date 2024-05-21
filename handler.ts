@@ -57,6 +57,18 @@ export const handler = (request: Request) => {
                     .plusPath(),
             ),
         )
+        .onRequest(
+            redirect.permanent(
+                fromHosts([
+                    "braun-embedded.com",
+                    "www.braun-embedded.com",
+                    "braun-robotics.com",
+                    "www.braun-robotics.com",
+                ]),
+                to("https://archive.hannobraun.com/braun-embedded.com")
+                    .plusPath(),
+            ),
+        )
         .orElse(not_found());
 
     return response;
