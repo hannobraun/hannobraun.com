@@ -47,7 +47,7 @@ export const handler = (request: Request) => {
         .onRequest(
             redirect.temporary(
                 fromHosts(["archive.hannobraun.com"]).andPaths(
-                    ["/crosscut"],
+                    ["/crosscut", "/crosscut/"],
                 ),
                 to("https://archive.hannobraun.com/crosscut/daily"),
             ),
