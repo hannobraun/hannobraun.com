@@ -45,7 +45,7 @@ class Selector {
 
     andPaths(paths: string[]): Selector {
         this.selectorFns.push((url: URL) => {
-            for (const path in paths) {
+            for (const path of paths) {
                 if (url.pathname == path) {
                     return true;
                 }
