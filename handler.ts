@@ -44,6 +44,14 @@ export const handler = (request: Request) => {
             ),
         )
         .onRequest(serveStatic("www.hannobraun.com"))
+        .onRequest(
+            redirect.temporary(
+                fromHosts(["archive.hannobraun.com"]).andPaths(
+                    ["/crosscut"],
+                ),
+                to("https://archive.hannobraun.com/crosscut/daily"),
+            ),
+        )
         .onRequest(serveStatic("archive.hannobraun.com"))
         .onRequest(
             redirect.permanent(

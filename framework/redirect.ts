@@ -43,6 +43,20 @@ class Selector {
         return this;
     }
 
+    andPaths(paths: string[]): Selector {
+        this.selectorFns.push((url: URL) => {
+            for (const path in paths) {
+                if (url.pathname == path) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+
+        return this;
+    }
+
     andPathPrefixes(pathPrefixes: string[]): Selector {
         this.selectorFns.push((url: URL) => {
             for (const pathPrefix of pathPrefixes) {
