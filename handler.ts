@@ -62,6 +62,16 @@ export const handler = (request: Request) => {
         .onRequest(
             redirect.permanent(
                 fromHosts([
+                    "crosscut.cc",
+                    "www.crosscut.cc",
+                    "capi.hannobraun.com",
+                ]),
+                to("https://archive.hannobraun.com/crosscut").plusPath(),
+            ),
+        )
+        .onRequest(
+            redirect.permanent(
+                fromHosts([
                     "hanno.braun-odw.eu",
                     "braun-odw.eu",
                     "www.braun-odw.eu",
